@@ -155,7 +155,7 @@ En lista dentro de las carpetas que se pasa como argumento:
 sysadmin@localhost:~$ ls /etc/ppp /etc/ssh
 ```
 
-**Flats**
+**Flags**
 
 ```bash
 ls -l #lista
@@ -276,7 +276,7 @@ total 160
 -rw-r--r-- 1 root root   2489 Mar 14  2016 sshd_config
 ```
 
-### Doble amperson `&&`
+### Doble amperson `&&` [`AND`]
 
 El símbolo de ampersand doble `&&` actúa como un operador "y" lógico. Si el primer comando tiene éxito, entonces el segundo comando (a la derecha de la `&&`) también se ejecutará. Si el primer comando falla, entonces el segundo comando no se ejecutará.
 
@@ -288,7 +288,7 @@ sysadmin@localhost:~$ ls /etc/junk && echo success
 ls: cannot access /etc/junk: No such file or directory
 ```
 
-### Doble pipe `||`
+### Doble pipe `||` [`OR`]
 
 La línea vertical doble `||` es un operador lógico "o".
 Con la línea vertical doble, si el primer comando se ejecuta con éxito, el segundo comando es omitido. Si el primer comando falla, entonces se ejecutará el segundo comando. En otras palabras, esencialmente estás diciendo al shell, "O bien ejecuta este primer comando o bien el segundo".
@@ -398,12 +398,16 @@ sysadmin@localhost:~$ echo Today is `date`
 Today is Mon Nov 2 03:40:04 UTC 2015
 ```
 
-### Man
+### Manual o información de comandos `Man`
 
 Para buscar todos los tipos de archivo
 
 ```bash
 man -f passwd
+```
+
+```bash
+whatis passwd
 ```
 
 ```bash
@@ -419,6 +423,10 @@ man -k passwd
 ```
 
 ```bash
+apropos command
+```
+
+```bash
 chgpasswd (8)        - update group passwords in batch mode
 chpasswd (8)         - update passwords in batch mode
 gpasswd (1)          - administer /etc/group and /etc/gshadow
@@ -428,6 +436,57 @@ passwd (1ssl)        - compute password hashes
 passwd (5)           - the password file
 update-passwd (8)    - safely update /etc/passwd, /etc/shadow and /etc/group
 ```
+
+#### Encontrar archivos `whereis` `locate`
+
+`locate - find files by name`
+
+El comando whereis está diseñado para encontrar de manera específica las páginas man y los comandos. Si bien esto es útil, hay veces en las que quieras encontrar un archivo o directorio, no sólo archivos de comandos o páginas mas.
+
+Para encontrar cualquier archivo o directorio, puede utilizar el comando locate. Este comando buscará en una base de datos de todos los archivos y directorios que estaban en el sistema cuando se creó la base de datos. Por lo general, el comando que genera tal base de datos se ejecuta por la noche.
+
+```bash
+sysadmin@localhost:~$ whereis ls
+ls: /bin/ls /usr/share/man/man1/ls.1.gz
+```
+
+```bash
+sysadmin@localhost:~$ locate ls
+/bin/false
+/bin/ls
+/bin/lsblk
+/bin/lsmod
+/etc/initramfs-tools
+```
+
+Puede que quieras **empezar listando cuántos archivos coincidirán**. Lo puedes hacer mediante la opción `-c` del comando `locate`:
+
+```bash
+sysadmin@localhost:~$ locate -c passwd
+97
+```
+
+**Para limitar la salida aún más, coloca un carácter** `\` delante del término de búsqueda. Este carácter limita la salida a los nombres de archivo que coincidan exactamente con el término:
+
+```bash
+sysadmin@localhost:~$ locate -b "\passwd"                              
+/etc/passwd                                                           
+/etc/cron.daily/passwd                                                 
+/etc/pam.d/passwd                                                      
+/usr/bin/passwd                                                        
+/usr/share/doc/passwd                                                 
+/usr/share/lintian/overrides/passwd 
+```
+
+Los archivos que creaste hoy normalmente no los vas a poder buscar con el comando `locate`. Si tienes acceso al sistema como usuario root (con la cuenta del administrador de sistema), puede actualizar manualmente la base de datos `locate` ejecutando el comando `updatedb`. Los usuarios regulares no pueden actualizar el archivo de base de datos.
+
+#### `updatedb`
+
+```bash
+updatedb
+```
+
+`updatedb - update a database for mlocate`
 
 ### Trucos
 

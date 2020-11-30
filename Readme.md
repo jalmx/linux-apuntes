@@ -538,6 +538,94 @@ updatedb
 
 `updatedb - update a database for mlocate`
 
+### Comando `ls`
+
+- `-S` ordena por size
+- `-R` muestra todo los archivos, inlcuyendo los subdirectorios
+- `-t` ordena por fecha
+- `--full-time` visualiza la fecha y la hora completas (incluyendo horas, segundos, minutos...):
+- `-r` los ordena de forma inversa
+  
+
+### Comando copiar `cp`
+
+`cp` - copy files and directories
+
+```bash
+cp [fuente] [destino]
+```
+
+Argumentos
+
+- `-v` verboso
+- `-i` al copiar verificar si existe, en caso de existir pregunta si se desea sobreescribir
+- `-n` se pasa para indicar que no sobreescriba
+  - `cp -i -n archivo.txt archivo.copy`
+- `-r` copia el directorio completo
+  - `cp -r /usr/share/doc /home/usuario/`
+
+
+### Comando mover `mv`
+
+Mueve y renombra archivos
+
+`mv [fuente] [destino]`
+
+**Aplican los mismos argumento que `cp`**, no tiene la opcion `r` recursividad
+ 
+### Comando eliminar `rm`
+
+`rm [archivo]`
+
+argumentos
+
+- `-i` confirma eliminar el archivo
+- `-r` borra la carpeta
+
+### Compresion de archivos `gzip` y `gunzip`
+
+Para comprimir archivos 
+
+`gzip [archivo]`
+
+Argumentos:
+- `-l` conocer el porcentaje de compresion
+  - `gzip -l [archivo].gz`
+- `-d` descomprimir
+  - `gzip -l [archivo].gz`
+
+Descomprimir archivos
+
+```bash
+gzip -d [archivo].gz
+```
+
+```bash
+gunzip [archivo].gz
+```
+
+### Empaquetamiento `tar`
+
+`Tar` tiene 3 modos que deberás conocer:
+
+- **Crear**: hacer un archivo nuevo de una serie de archivos
+- **Extraer**: sacar uno o más archivos de un archivo
+- **Listar**: mostrar el contenido del archivo sin extraer
+
+Empaqueta, se la da un nombre y los archivos o carpeta
+
+`tar -cf [nombre_pkg].tar [files...]`
+
+Empaqueta y lo comprime con `gzip`
+
+`tar -czf [nombre_pkg].tar.gz  [files...]`
+
+Argumentos:
+
+- `-c` creacion
+- `-f` que se le pasara el nombre
+- `-z` que use gzip
+
 ### Trucos
 
 Para generar archivos y carpetas con un patron

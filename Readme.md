@@ -416,15 +416,39 @@ passwd (1)           - change user password
 passwd (1ssl)        - compute password hashes
 ```
 
-Encontrar por palabra clave
+Para entrar a ver el manual de `passwd` a nivel `file`, se usa el comando `man` con el `nivel` y el `command`:
+
+```bash
+man 5 passwd
+```
+
+### Encontrar por palabra clave
 
 ```bash
 man -k passwd
 ```
 
+#### `apropos`
+
+search the manual page names and descriptions
+
 ```bash
 apropos command
 ```
+
+Estos dos comandos hacen lo mismo
+
+```bash
+man -k passwd
+```
+
+o
+
+```bash
+apropops passwd
+```
+
+**salida:**
 
 ```bash
 chgpasswd (8)        - update group passwords in batch mode
@@ -437,13 +461,39 @@ passwd (5)           - the password file
 update-passwd (8)    - safely update /etc/passwd, /etc/shadow and /etc/group
 ```
 
+#### Comando `info`
+
+El comando `info` también proporciona documentación sobre funciones y comandos del sistema operativo. El objetivo de este comando es ligeramente diferente de las páginas `man`: *proporcionar un recurso de documentación que proporciona una estructura lógica*, facilitando la lectura de la documentación.
+
+```bash
+info passwd
+```
+
+```bash
+info apt
+```
+
+### Opcion `--help`
+
+Esto es útil para aprender el uso básico de un comando
+
 #### Encontrar archivos `whereis` `locate`
+
+```bash
+sysadmin@localhost:~$  ps --help
+```
+
+#### Readme del sistema
+
+Estos archivos de documentación se suelen llamar archivos "readme" , ya que los archivos tienen nombres como README o readme.txt. La ubicación de estos archivos puede variar según la distribución que estés utilizando. Ubicaciones típicas incluyen `/usr/share/doc` y `/usr/doc`.
+
+### Comando `whereis` o `Locate`
 
 `locate - find files by name`
 
-El comando whereis está diseñado para encontrar de manera específica las páginas man y los comandos. Si bien esto es útil, hay veces en las que quieras encontrar un archivo o directorio, no sólo archivos de comandos o páginas mas.
+El comando `whereis` está diseñado para encontrar de manera específica las páginas `man` y los comandos. Si bien esto es útil, hay veces en las que quieras encontrar un archivo o directorio, no sólo archivos de comandos o páginas mas.
 
-Para encontrar cualquier archivo o directorio, puede utilizar el comando locate. Este comando buscará en una base de datos de todos los archivos y directorios que estaban en el sistema cuando se creó la base de datos. Por lo general, el comando que genera tal base de datos se ejecuta por la noche.
+Para encontrar cualquier archivo o directorio, puede utilizar el comando `locate`. Este comando buscará en una base de datos de todos los archivos y directorios que estaban en el sistema cuando se creó la base de datos. Por lo general, el comando que genera tal base de datos se ejecuta por la noche.
 
 ```bash
 sysadmin@localhost:~$ whereis ls
@@ -492,7 +542,7 @@ updatedb
 
 Para generar archivos y carpetas con un patron
 
-```
+``` bash
 mkdir {2000..2020}-{1..9}
 ```
 

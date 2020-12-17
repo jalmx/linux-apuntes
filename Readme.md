@@ -944,7 +944,7 @@ La salida aparece en el archivo con todos los mensajes *STDERR* en la parte supe
 
 ```bash
  ls /fake /etc/ppp > example.txt 2> error.txt
- ```
+```
 
 **STDIN**
 
@@ -1247,6 +1247,16 @@ grep -E 'gray|grey' example
 ## Comando `xargs`
 
 El comando `xargs` se utiliza para construir y ejecutar líneas de comandos de una entrada estándar. Este comando es muy útil cuando se necesita ejecutar un comando con una lista de argumentos muy larga, que en algunos casos puede resultar en un error si la lista de argumentos es demasiado larga.
+
+Su objetivo es construir la línea de comandos para que un comando se ejecute las menos veces posibles con tantos argumentos como sea posible, en lugar de ejecutar el comando muchas veces con un argumento cada vez.
+
+Opciones
+
+- `-0`  desactiva la cadena de fin de archivo, permitiendo el uso de los argumentos que contengan espacios, comillas o barras diagonales inversas.
+
+```bash
+ls | xargs rm
+```
 
 ## Trucos
 

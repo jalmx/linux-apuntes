@@ -1257,6 +1257,204 @@ Opciones
 ```bash
 ls | xargs rm
 ```
+## Bash Scripting
+
+Comparaciones
+
+Comando	| Descripción
+-|-
+`test –f /dev/ttyS0	0`| si el archivo existe
+`test ! –f /dev/ttyS0`| 0 si el archivo no existe
+`test –d /tmp`| 0 si el directorio existe
+`test –x `which ls`\` | sustituir la ubicación de `ls` y luego (probar) `test`, si el usuario puede ejecutar
+`test 1 –eq 1`| 0 si tiene éxito la comparación numérica
+`test ! 1 –eq 1`| NO – 0 si la comparación falla
+`test 1 –ne 1`| Más fácil, ejecutar test (probar) si hay desigualdad numérica
+`test “a” = “a”`| 0  si tiene éxito la comparación de cadenas
+`test “a” != “a”`| 0  si las cadenas son diferentes
+`test 1 –eq 1 –o 2 –eq 2`| `-o` es OR: cualquiera de las opciones pueden ser igual
+`test 1 –eq 1 –a 2 –eq 2`| `-a` es AND: ambas comparaciones deben ser iguales
+
+### Condicionales 
+
+#### Condicional `if` `elif` `else`
+
+```bash
+#!/bin/bash
+# script.sh
+
+if [ "$1" = "hello" ]; then
+  echo "hello yourself"
+elif [ "$1" = "goodbye" ]; then
+  echo "nice to have met you"
+  echo "I hope to see you again"
+else
+  echo "I didn't understand that"
+fi
+```
+
+Ejecucion
+
+```bash
+./script.sh hello
+hello yourself
+
+./script.sh goodbye
+nice to have met you
+I hope to see you again
+
+./script.sh
+I didn't understand that
+```
+
+#### Condicional `case`
+
+```bash
+#!/bin/bash
+
+case "$1" in
+hello|hi)
+  echo "hello yourself"
+  ;;
+goodbye)
+  echo "nice to have met you"
+  echo "I hope to see you again"
+  ;;
+*)
+  echo "I didn't understand that"
+esac
+```
+
+### Loops 
+
+Hay dos loops principales en los scripts del shell: el loop `for` y el loop `while`.
+
+#### Ciclo `for`
+
+```bash
+#!/bin/bash
+
+SERVERS="servera serverb serverc"
+
+for S in $SERVERS; do
+  echo "Doing something to $S"
+done
+```
+Resultado
+
+```bash
+Doing something to servera
+Doing something to serverb
+Doing something to serverc
+```
+
+```bash
+#!/bin/bash
+
+for NAME in Sean Jon Isaac David; do
+  echo "Hello $NAME"
+done
+
+for S in *; do
+  echo "Doing something to $S"
+done
+```
+El segundo loop utiliza comodín `*` que es un file glob. El shell expande eso a todos los archivos en el directorio actual.
+
+Resultado:
+```bash
+Hello Sean
+Hello Jon
+Hello Isaac
+Hello David
+Doing something to Readme.md
+Doing something to sc.sh
+```
+
+*Cuenta la cantidad de palabras en cada archivo*
+
+```bash
+for name in /etc/passwd /etc/hosts /etc/group
+do
+  wc $name
+done
+```
+
+#### Ciclo `while`
+
+```bash
+#!/bin/bash
+
+i=0
+while [ $i -lt 10 ]; do
+  echo $i
+  i=$(( $i + 1))
+done
+echo "Done counting"
+```
+
+Resultado:
+
+```bash
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Done counting
+```
+
+## Hardware
+
+- `arch` Para conocer la arquitectura
+- `lscpu` información del CPU y arquitectura
+- `cat /proc/cpuinfo` La manera más detallada de obtener la información acerca de tu CPU es visualizando el archivo
+- `dmidecode` ver los dispositivos conectados directamente a la tarjeta madre
+- `free` ver la información de la RAM, tiene para ver en mega, giga `-m` `-g`
+- `lspci` ver todos los dispositivos conectados por un bus PCI
+  - `-nn`es para ver más detalles del vendor
+  - `-d vendor:device` para ver detalles del dispositivo `lspci -d 15ad:07b0 -vvv` 
+- `lsusb` el listado de dispositivos usb
+  - `-v` para ver más detalles
+- `lshal` te permite ver los dispositivos detectados por HAL.
+- `fdisk` manipulate disk partition table
+  - `fdisk -l` En lista los discos duros en cilindros
+  - `fdisk -cul` en lista los discos en sectores
+  - `fdisk -l /dev/sda` Muestra la información de la partición en el primer dispositivo de `sd`
+  - `df` manipulate disk partition table
+    - `df -l` lo muestra en forma de lista los espacios del disco duro
+  - `lsmod` program to show the status of modules in the Linux Kernel
+
+## Gestion de paquetes y procesos
+
+### Debian `.deb`
+
+- `sudo apt-get update` actualizo el sistema
+- `sudo apt-cache search keyword` busco paquetes
+- `sudo apt-get install package` installar paquetes
+- `sudo apt-get upgrade` actualiza a nuevas versiones los paquetes
+- `sudo apt-get remove package` Si quieres eliminar todos los archivos de un paquete de software, excepto los archivos de configuración
+- `sudo apt-get --purge remove package` Si quieres eliminar todos los archivos de un paquete de software, incluyendo los archivos de configuración
+- `dpkg -l` listar los paquetes instalados
+- `dpkg -L package`  listar los archivos que componen un paquete especial
+- `dpkg -s package` Para consultar un paquete y obtener información o su estado
+- `dpkg -S /path/to/file` Para determinar si un determinado archivo fue puesto en el sistema de archivos como el resultado de la instalación de un paquete
+
+### Red Hat `.rpm`
+
+- `yum install package` instala paquetes
+- `yum search keyword` busca paquetes
+- `yum update package` Si quieres actualizar un paquete de software individual
+- `yum remove package` remueve paquetes
+- `rpm -qa` Para obtener una lista de todos los paquetes que están instalados actualmente en el sistema ejecuta
+- `rpm -ql package` Para listar los archivos que componen un paquete especial
+- `rpm -qi package` Para consultar un paquete y obtener información o su estado
+- `rpm -qf /path/to/file` Para determinar si un archivo en particular fue puesto en el sistema de archivos como el resultado de la instalación de un paquete
 
 ## Trucos
 

@@ -1456,6 +1456,90 @@ Done counting
 - `rpm -qi package` Para consultar un paquete y obtener información o su estado
 - `rpm -qf /path/to/file` Para determinar si un archivo en particular fue puesto en el sistema de archivos como el resultado de la instalación de un paquete
 
+### Procesos
+
+Todo lo relacionado a los procesos se encuentra en el directorio `/proc/sys/`.
+
+El archivo `/proc/sys/kernel/pid_max` define el numero maximo de procesos, cuando llega al topo reinicia y toma los numeros disponibles
+
+- `pstree` display a tree of processes
+- `ps`  sólo mostrará los procesos actuales en el shell, snapshot
+  - `--forest` indica las ramificaciones de los procesos
+  - `aux` para ver todos los procesos del sistema; `ps aux`
+  - `-ef` para ver todos los procesos del sistema; `ps -ef`
+  - `top` display Linux processes
+    - con la tecla `k` activo para eliminar un proceso, con `9` se manda a cerrar de manera forzosa
+  - `uptime` o `cat /proc/loadavg` ver la carga promedio del sistema
+  - `free` sin opciones proporciona una foto de la memoria RAM utilizada en ese momento
+    - `free -s 10` actualizaría la salida cada 10 segundos.
+
+### Mandar procesos a segundo plano `&`
+
+Al añadir el signo `&` al final del comando, el proceso se inicia en el segundo plano y permite al usuario mantener el control de la terminal.
+
+```bash
+ping localhost > /dev/null &
+[1] 158
+```
+
+*Esto significa que este proceso tiene un número de trabajo 1 (como lo muestra la salida [1]) y un identificador de proceso (PID) de 158*
+
+Para ver los comandos en ejecucion en la terminal actual
+
+```bash
+jobs
+[1]+  Running                 ping localhost > /dev/null &
+```
+
+Para traerlos a primer plano, se usa el comando `fg` `%` y el numero de `job`
+
+```bash
+fg %1
+```
+
+Para `suspender` el proceso, no detener se ocupa `ctl+z`, se pausa pero continua como un `job` en la terminal
+
+Para que este proceso continúe ejecutándose en segundo plano, ejecuta el siguiente comando, se usa el comando `bg` `%` y el numero de `job`
+
+```bash
+bg %1
+```
+## Archivos de registros `logs`
+
+Los demonios que se ejecutan en segundo plano para realizar el registro se llaman `syslogd` y `klogd`. En otras distribuciones, un demonio como el `rsyslogd` en Red Hat y Centos o `systemd journald` en Fedora puede servir para esta función de registro.
+
+Independientemente del nombre del proceso de demonio, los archivos de registro se colocan casi siempre en la estructura del directorio `/var/log`.
+
+Archivo	|Contenido
+:-:|-
+**boot.log** | Mensajes generados cuando servicios se inician durante el arranque del sistema.
+**cron** | Mensajes generados por el demonio crond para las tareas que se deben ejecutar en forma recurrente.
+**dmesg**	| Mensajes generados por el kernel durante el arranque del sistema.
+**maillog**	| Mensajes producidos por el demonio de correo para mensajes de correo electrónico enviados o recibidos
+**messages** | Mensajes del kernel y otros procesos que no pertenecen a ninguna otra parte. A veces se denomina `dsyslog` en lugar de `messages` cuando el demonio haya grabado este archivo.
+**secure** | Mensajes de los procesos que requieren autorización o autenticación (por ejemplo, el proceso de inicio de sesión).
+**Xorg.0.log** | Mensajes del servidor de ventanas X (GUI).
+
+Los comandos lastb y last se pueden usar para ver los archivos /var/log/btmp y /var/log/wtmp respectivamente.
+
+## Command `dmesg`
+
+`print or control the kernel ring buffer`
+
+El archivo `/var/log/dmesg` contiene los mensajes del kernel que se produjeron durante el arranque del sistema. El archivo `/var/log/messages` contiene mensajes del kernel que se producen mientras el sistema está corriendo, pero los mensajes se mezclarán con otros mensajes de demonios o procesos.
+
+*Si estuvieras resolviendo problemas con tu dispositivo USB, entonces buscando el texto «USB» con el comando grep siendo sensible a mayúsculas y minúsculas.*
+
+```bash
+dmesg | grep -i usb
+```
+
+## Comandos de identificacion
+
+- `whoami` : display effective user id
+- `id` : return user identity
+- `w` sesiones en la maquina
+
 ## Trucos
 
 Para generar archivos y carpetas con un patron
@@ -1472,14 +1556,11 @@ Especificación de la estructura de archivos
 
 https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
 
-## Lista de comandos
+## Lista de comandos que aun no tienen seccion
 
-- `whoami` : display effective user id
-- `id` : return user identity
 - `dd` : copiar particiones, discos, etc a nivel de _bits_
   - `dd if=/dev/sda of=/dev/sdb` -- clonar un disco duro
-- `grep`
-- `echo`: se utiliza para mostrar la salida en la terminal
 - `which`
-- `type`
+- `type` para conocer el tipo de un comando
+  - `type ls`
 - `nl` : regresa numero de lineas que contiene un archivo

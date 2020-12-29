@@ -1504,6 +1504,7 @@ Para que este proceso continúe ejecutándose en segundo plano, ejecuta el sigui
 ```bash
 bg %1
 ```
+
 ## Archivos de registros `logs`
 
 Los demonios que se ejecutan en segundo plano para realizar el registro se llaman `syslogd` y `klogd`. En otras distribuciones, un demonio como el `rsyslogd` en Red Hat y Centos o `systemd journald` en Fedora puede servir para esta función de registro.

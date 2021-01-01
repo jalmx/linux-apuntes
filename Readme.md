@@ -1469,6 +1469,8 @@ El archivo `/proc/sys/kernel/pid_max` define el numero maximo de procesos, cuand
   - `-ef` para ver todos los procesos del sistema; `ps -ef`
   - `top` display Linux processes
     - con la tecla `k` activo para eliminar un proceso, con `9` se manda a cerrar de manera forzosa
+    - `ps -o pid,tty,time,%cpu,cmd` el argumento `-o` indica las columnas que se van a mostrar
+    - `ps -o pid,tty,time,%mem,cmd --sort %mem` la opcion `--sort` los esta enlistando en orden de consumo de memoria
   - `uptime` o `cat /proc/loadavg` ver la carga promedio del sistema
   - `free` sin opciones proporciona una foto de la memoria RAM utilizada en ese momento
     - `free -s 10` actualizaría la salida cada 10 segundos.
@@ -1505,6 +1507,31 @@ Para que este proceso continúe ejecutándose en segundo plano, ejecuta el sigui
 bg %1
 ```
 
+### Comando `kill` `pkill`
+
+Sirve para eliminar los procesos que estan corriendo
+
+```bash
+kill PID 
+```
+
+```bash
+pkill [opciones] [name_process] 
+```
+
+Elimina el proceso con ese ID
+
+```bash
+kill 182 
+```
+
+Elimina todos todos los procesos sleep
+
+```bash
+pkill -15 sleep 
+```
+
+
 ## Archivos de registros `logs`
 
 Los demonios que se ejecutan en segundo plano para realizar el registro se llaman `syslogd` y `klogd`. En otras distribuciones, un demonio como el `rsyslogd` en Red Hat y Centos o `systemd journald` en Fedora puede servir para esta función de registro.
@@ -1534,6 +1561,69 @@ El archivo `/var/log/dmesg` contiene los mensajes del kernel que se produjeron d
 ```bash
 dmesg | grep -i usb
 ```
+
+## Red
+
+Archivos para configuraciones de `red`
+
+Comando |	Explicación
+-|-
+`/etc/hosts` |	Este archivo contiene una tabla de nombres de host para las direcciones IP. Puede utilizarse para complementar un servidor DNS.
+`/etc/sysconfig/network`	| Este archivo tiene dos configuraciones. La configuración de NETWORK (o «red» en español) puede determinar si la red está activada (yes) o desactivada (no). La configuración de HOSTNAME (O «nombre de host» en español) define un nombre de host de la máquina local.
+`/etc/nsswitch.conf`	| Este archivo se puede utilizar para modificar dónde se producen las búsquedas de nombre de host. Por ejemplo, la configuración hosts : files dns buscaría los nombres de host primero en el archivo /etc/hosts y después en el servidor DNS. Si cambias a hosts: dns files, la búsqueda se lleva a cabo primero en el servidor DNS.
+
+### Comandos para red `ip` `ping` `ss` `dig` `host`
+
+Para ver las interfaces de red
+
+- `ip -a addr` muestras las interfaces
+- `ip addr show` muestras las interfaces
+- `routel` o `route` list routes with pretty output format
+- `ping` se puede utilizar para determinar si otra máquina es «accesible»
+  - `-c` comando para definir cuantos ping lanzara; `-c 4` lanzara 4 pings y termina
+- `netstat` Puede utilizarse para mostrar información acerca de conexiones de red, el nuevo comando es `ss`
+  - `-i` indica las conexiones de las interfaces de red
+  - `-r` muestra el enrutamiento
+  - `-tln` para ver los puertos abiertos
+    - `-t` indica tcp
+    - `-l` indica las que esta escuchando **LISTEN**
+    - `-n` indica el numero de puerto
+- `dig` DNS lookup utility
+  - `dig example.com`
+- `host` DNS lookup utility
+  - `host example.com`
+  - `host 192.168.0.1`
+  - `host -t CNAME example.com`
+  - `host -t SOA example.com` los registros `SOA` (Start of Authority) indican el servidor principal para el dominio
+  - `host -a example.com` da todos los registros del dominio
+
+## Usuarios y cuentas archivos `passwd` `shadow`
+
+```
+root:x:0:0:root:/root:/bin/bash                                               
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh                                         
+bin:x:2:2:bin:/bin:/bin/sh                                                    
+sys:x:3:3:sys:/dev:/bin/sh                                                    
+sync:x:4:65534:sync:/bin:/bin/sync 
+```
+
+Formato
+
+```
+name:password placeholder:user id:primary group id:comment:home directory:shell
+```
+
+La siguiente tabla describe cada uno de estos campos en detalle, usando la primera línea de la salida en el ejemplo anterior `(root:x:0:0:root:/root:/bin/bash)`:
+
+Campo	|Ejemplo|	Descripción
+-|:-:|-
+name	| root | Es el nombre de la cuenta. Este nombre lo utiliza una persona cuando inicia sesión en el sistema y cuando la propiedad del archivo viene proporcionada por el comando ls -l. Por lo general, el sistema utiliza el ID de usuario (véase abajo) internamente y se proporciona el nombre de cuenta para que a los usuarios regulares se les haga más fácil referirse a la cuenta. Normalmente, la cuenta root es una cuenta administrativa especial. Sin embargo, es importante tener en cuenta que no todos los sistemas tienen una cuenta root, y en realidad, el ID de usuario 0 (cero) proporciona los privilegios administrativos en el sistema.
+password placeholder | x |Antes, la contraseña se guardaba en esta ubicación, ahora se almacena en el archivo /etc/shadow. La x en el campo del marcador de posición de la contraseña indica al sistema que la contraseña no se almacena aquí, sino más bien en el archivo /etc/shadow.
+user id	|0	|Cada cuenta tiene asignado un Id. de usuario (UID «User ID» en inglés). El UID es lo que realmente define la cuenta, ya que el nombre de usuario normalmente no es utilizado directamente por el sistema. Por ejemplo, los archivos son propiedad de los UID, no de los nombres de usuario.Algunos UID son especiales. Por ejemplo, el UID 0 le da a la cuenta de usuario privilegios administrativos. Los UID por debajo de 500 (en algunas distribuciones de Linux 1.000) están reservados para las cuentas del sistema. Las cuentas del sistema se tratarán con más detalle más adelante en este capítulo.
+primary group id	|0 |Cada archivo y directorio es propiedad de una cuenta de usuario. Normalmente la persona que crea la cuenta posee el archivo. Además, cada archivo es propiedad de un grupo, normalmente del grupo primario del usuario. A los grupos se les asignan identificadores numéricos al igual que a los usuarios. Cuando un usuario crea un archivo, el archivo es propiedad del UID del usuario y también de un id de grupo (GID «Group ID» en inglés), el GID primario del usuario. Este campo define que GID es el GID primario del usuario. Además, al proporcionar la propiedad del grupo por defecto en un archivo, este campo también indica que el usuario es un miembro del grupo, lo que significa que el usuario tendrá permisos especiales en cualquier archivo que pertenece a este grupo. Los permisos se cubrirán en detalle en un capítulo posterior.
+comment	| root |Este campo puede contener cualquier información sobre el usuario, incluyendo su nombre real (completo) y otra información útil. Este campo también se llama el campo GECOS (General Electric Comprehensive Operating System). El GECOS es un formato predefinido usado raramente para este campo que define una lista de elementos separada por comas, incluyendo el nombre completo del usuario, ubicación de la oficina, número de teléfono e información adicional. El administrador puede modificar la información GECOS con el comando chfn y los usuarios pueden ver esta información con el comando finger.
+home directory	| /root	|Este campo define la ubicación del directorio home del usuario. Para los usuarios regulares, esto sería normalmente /home/username donde username se reemplaza con el nombre de usuario del usuario. Por ejemplo, un nombre de usuario bob tendría un directorio home /home/bob. El usuario root tiene normalmente una ubicación diferente para el directorio home: /root. Las cuentas del sistema raramente tienen directorios, ya que normalmente no se utilizan para crear o guardar los archivos.
+shell	| /bin/bash| Aquí está ubicado el shell del inicio de la sesión del usuario. De forma predeterminada, el usuario se "ubica en" este shell siempre que el usuario inicia la sesión en un entorno de línea de comandos o abre una ventana de terminal. El usuario luego puede pasar a un shell diferente escribiendo el nombre del shell, por ejemplo: /bin/tcsh. El shell bash (/bin/bash) es el más común para los usuarios de Linux.
 
 ## Comandos de identificacion
 

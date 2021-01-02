@@ -1597,7 +1597,9 @@ Para ver las interfaces de red
   - `host -t SOA example.com` los registros `SOA` (Start of Authority) indican el servidor principal para el dominio
   - `host -a example.com` da todos los registros del dominio
 
-## Usuarios y cuentas archivos `passwd` `shadow`
+## Usuarios y cuentas archivos `passwd` `shadow` `group`
+
+### passwd
 
 ```
 root:x:0:0:root:/root:/bin/bash                                               
@@ -1625,10 +1627,111 @@ comment	| root |Este campo puede contener cualquier información sobre el usuari
 home directory	| /root	|Este campo define la ubicación del directorio home del usuario. Para los usuarios regulares, esto sería normalmente /home/username donde username se reemplaza con el nombre de usuario del usuario. Por ejemplo, un nombre de usuario bob tendría un directorio home /home/bob. El usuario root tiene normalmente una ubicación diferente para el directorio home: /root. Las cuentas del sistema raramente tienen directorios, ya que normalmente no se utilizan para crear o guardar los archivos.
 shell	| /bin/bash| Aquí está ubicado el shell del inicio de la sesión del usuario. De forma predeterminada, el usuario se "ubica en" este shell siempre que el usuario inicia la sesión en un entorno de línea de comandos o abre una ventana de terminal. El usuario luego puede pasar a un shell diferente escribiendo el nombre del shell, por ejemplo: /bin/tcsh. El shell bash (/bin/bash) es el más común para los usuarios de Linux.
 
+### shadow
+
+```
+head /etc/shadow                                           
+root:$6$4Yga95H9$8HbxqsMEIBTZ0YomlMffYCV9VE1SQ4T2H3SHXw41M02SQtfAdDVE9mqGp2hr20q
+.ZuncJpLyWkYwQdKlSJyS8.:16464:0:99999:7:::                                    
+daemon:*:16463:0:99999:7:::                                                   
+bin:*:16463:0:99999:7:::                                                      
+sys:*:16463:0:99999:7:::                                                      
+sync:*:16463:0:99999:7:::                                                     
+games:*:16463:0:99999:7:::                                                    
+man:*:16463:0:99999:7:::                                                      
+lp:*:16463:0:99999:7:::                                                       
+mail:*:16463:0:99999:7:::                                                     
+news:*:16463:0:99999:7:::   
+```
+
+Los campos del archivo `/etc/shadow` son:
+
+```name:password:last change:min:max:warn:inactive:expire:reserved```
+
+Se describre el siguiente registro
+
+```sysadmin:$6$lS6WJ9O/fNmEzrIi$kO9NKRBjLJJTlZD.L1Dc2xwcuUYaYwCTS.gt4elijSQW8ZDp6GLYAx.TRNNpUdAgUXUrzDuAPsYs5YHZNAorI1:15020:5:30:7:60:15050:```
+
+Campo|	Ejemplo|	Descripción
+-|-|-
+name|	sysadmin|	Este es el nombre de la cuenta, que coincide con el nombre de cuenta en el archivo /etc/passwd.
+password|	\$6\$.........rI1	|El campo passwd contiene la contraseña cifrada de la cuenta. Esta cadena muy larga (que está truncada en el ejemplo a la izquierda de esta celda) es un cifrado unidireccional, lo que significa que no puede "revertirse" para determinar la contraseña original. Mientras que los usuarios habituales tienen contraseñas encriptadas en este campo, las cuentas del sistema tendrán un carácter de * en este campo. Verás más detalles sobre las cuentas de sistema más adelante en este capítulo.
+last change|	15020| Este campo contiene un número que representa la última vez que la contraseña fue cambiada. El número 15020 es el número de días desde el 01 de enero de 1970 (llamada la Época) y el último día en el que la contraseña de la cuenta fue cambiada. Este valor se genera automáticamente cuando se modifica la contraseña del usuario. Este valor es importante ya que se utiliza por característica de envejecimiento de la contraseña proporcionado por el resto de los campos de este archivo.
+min	|5|Este es uno de los campos del envejecimiento de la contraseña; un valor distinto de cero en este campo indica que después de que un usuario cambiara su contraseña, la contraseña no se puede cambiar otra vez por un número específico de días (5 en este ejemplo). Este campo es importante cuando se utiliza el campo max (véase abajo). Un valor de cero en este campo significa que el usuario siempre puede cambiar su contraseña.
+max	|5|	Este campo se utiliza para obligar a los usuarios a cambiar regularmente sus contraseñas. Un valor de 30 en este campo significa que el usuario debe cambiar su contraseña al menos cada 30 días para evitar que su cuenta quede «bloqueada» Ten en cuenta que si el campo min se establece en 0, el usuario puede restablecer inmediatamente su contraseña al valor original, anulando el propósito de obligar al usuario a cambiar su contraseña cada 30 días. Así que, si se establece el campo max, normalmente se establece también el campo min. Por ejemplo, un min:max de 5:60 se refiere a que el usuario debe cambiar su contraseña cada 60 días y, después de cambiarla, el usuario debe esperar 5 días antes de que pueda cambiar su contraseña otra vez. Si el campo max se establece a 99999, el valor máximo posible, entonces el usuario esencialmente nunca debe cambiar su contraseña (porque 99999 días son aproximadamente 274 años).
+warn	|7| Si se establece el campo max, el campo warn indica que al usuario se le «advertirá» cuando se acerca el plazo máximo max. Por ejemplo, si se establece warn a 7, entonces en cualquier momento durante los 7 días anteriores al plazo max se le advertirá al usuario que cambie su contraseña durante el proceso del inicio de sesión. El usuario sólo se advierte en el inicio de sesión, por lo que algunos administradores prefieren establecer el campo de advertencia a un valor alto para proporcionar una mayor probabilidad de tener una advertencia emitida.Si el plazo máximo max se establece al valor de 99999, entonces el campo warn es esencialmente inútil
+inactive	|60| Si el usuario hace caso omiso a las advertencias y se excede el plazo max para la contraseña, se bloqueará su cuenta. En tal caso, el campo inactive proporciona al usuario un período de «gracia» en el que puede cambiar su contraseña, pero sólo durante el proceso del inicio de sesión. Si el campo inactive viene establecido a un valor de 60, el usuario tiene 60 días de gracia para cambiar la contraseña a una nueva. Si no lo hace, entonces necesitará que el administrador restablezca la contraseña para el usuario.
+expire	|15050|	 Este campo representa el número de días a partir del 01 de enero del 1970 y el día en el que la cuenta «vencerá». Una cuenta vencida se bloqueará, no se borra, lo que significa que el administrador puede restablecer la contraseña para desbloquear la cuenta. Las cuentas con fechas de vencimiento normalmente se ofrecen a los empleados temporales o contratistas. La cuenta caducará automáticamente después del último día laboral del usuario. Cuando un administrador establece este campo, se utiliza una herramienta para convertir una fecha real en una fecha de «Época». En Internet hay varios convertidores disponibles.
+reserved | | Actualmente este campo no se utiliza y está reservado para su uso futuro.
+
+### `group`
+
+Ubicación `/etc/group`
+El archivo /etc/group es un archivo delimitado por dos puntos con los siguientes campos:
+
+```
+group_name:password_placeholder:GID:user_list
+```
+
+La siguiente tabla describe los campos del archivo /etc/group con más detalle, utilizando una línea que describe a una cuenta de grupo típica:
+
+```
+mail:x:12:mail,postfix
+```
+
+Campo	|Ejemplo|	Descripción
+-|:-:|-
+group_name	|mail|	Este campo contiene el nombre del grupo. Igual que en el caso de los nombres de usuario, para las personas es más fácil recordar los nombres de grupo. El sistema utiliza típicamente IDs de grupos (GID) en lugar de nombres de grupo.
+password_placeholder	|x|	Aunque hay contraseñas para grupos, raramente se utilizan en Linux. Si el administrador creará una contraseña de grupo, se almacenaría en un archivo diferente (/etc/gshadow) ya que la contraseña de grupo ya no se almacena en el archivo /etc/group. La x en este campo se utiliza para indicar que la contraseña no se almacena en este archivo. Las contraseñas de grupo están más allá del alcance de este curso.
+GID	|12|	Cada grupo está asociado con un ID de grupo único (GID) que se coloca en este campo. 
+user_list	|mail,postfix	|Este último campo se utiliza para indicar quién es un miembro del grupo. Mientras que la pertenencia a un grupo primario se define en el archivo /etc/passwd, los usuarios que se asignan a los grupos adicionales tendrían su nombre de usuario en este campo del archivo /etc/group. En este caso, los usuarios mail y postfix son miembros secundarios del grupo mail. Es muy común para un nombre de usuario aparecer también como un nombre del grupo. También es común que un usuario pertenezca a un grupo con el mismo nombre.
+
+### Comando `getent`
+
+Otra técnica para recuperar la información del usuario que se encuentra normalmente en los archivos `/etc/passwd` y `/etc/shadow` es utilizar el comando `getent`
+
+```bash
+getent [passwd | shadow] [user]
+```
+
+Ejemplo:
+
+```bash
+getent passwd sysadmin
+```
+
+```bash
+getent group mail
+```
+
+### Cambiando de grupo los archivos - Comando `chgrp`
+
+Para cambiar al grupo propietario de un archivo existente se puede utilizar el comando `chgrp group_name file`
+
+- `-R` La opcion de recursividad para cambiar todos los archivos de grupo
+
+Cambio al grupo `games` el archivo sample
+
+```bash
+chgrp games sample
+```
+
+
+### Comando `id`
+
+El comando `id` informará la identidad actual, tanto por nombre del usuario como por el identificador de usuario
+
+- `id` : return user identity
+
+- `id` muestra la identificacion del usuario actual
+- `id [user]` da los datos del *user*; `id root`
+- `id -g` da el grupo primario de usuario actual
+- `id -G` da todos los grupos del usuario actual
+- `cat /etc/group | grep sysadmin` filta para mostrar los grupos del usario que se le paso
+
 ## Comandos de identificacion
 
 - `whoami` : display effective user id
-- `id` : return user identity
 - `w` sesiones en la maquina
 
 ## Trucos

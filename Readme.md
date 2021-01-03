@@ -1740,6 +1740,18 @@ El comando `id` informará la identidad actual, tanto por nombre del usuario com
 - `sudo` permite a un usuario ejecutar comandos que necesite privilegios `root`
 - `visudo` entra a modificar y configurar los usuarios que pueden ejecutar acciones `sudo`
 
+### Archivo `visudo`
+
+Al activar este comando se abre un editor y se modica el archivo `/etc/sudoers`, lo cual define quien puede ejecutar comandos `sudo`
+
+``` bash
+sudo visudo
+
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+usuario ALL=(ALL:ALL) ALL
+```
+
 ## Comando `who` `w`
 
 ### Comnado `who`
@@ -1798,6 +1810,86 @@ IDLE	|43:44	|Cuánto tiempo el usuario ha estado inactivo desde la ejecución de
 JCPU|	0.01s|	El tiempo total de cpu (s=segundos) utilizado por todos los procesos (programas) ejecutados desde el inicio de sesión.
 PCPU	|0.01s|	El tiempo total de cpu para el proceso actual.
 WHAT|-bash|	El proceso actual que está ejecutando el usuario.
+
+## Creacion de usuarios y grupos
+
+### Grupos
+
+Ver los grupos a los que pertener un usuario
+
+```bash
+grep root /etc/group # despliega todos los grupos a los que pertence el usuario
+root:x:0:
+```
+
+o
+
+```bash
+getent group root #solo muestra el grupo principal
+root:x:0:
+```
+
+#### Comando `groupadd`
+
+El comando `groupadd` puede ser ejecutado por el usuario `root` para crear un nuevo grupo
+
+Opciones:
+
+- `-g` indica el id del grupo: si no se indica, el pone automaticamente uno GID
+- `-r` se forza a un GID para la zona de procesos internos
+
+``` bash
+groupadd -g [group_id] [name_group]
+```
+
+``` bash
+groupadd -g 506 research
+```
+
+**Modificar un grupo `groupmod`**
+
+Se puede utilizar para cambiar el nombre del grupo (con la opción `-n`) o cambiar el GID (con la opción `-g`) para el grupo.
+
+Si se modica el GID se pierde el acceso al aunque tenga el mismo nombre, porque todo esta refenciado hacia el GID, no al nombre del grupo
+
+Cambiar el nombre de `sales` a `marketing`
+
+```bash
+groupmod -n marketing sales
+```
+Encontrar archivos huerfanos; es decir, sin grupo
+
+```bash
+find / -nogroup 
+```
+
+**Eliminar grupos `groupdel`**
+
+ Eliminar un grupo con el comando groupdel, ten en cuenta que los archivos que pertenecen a ese grupo se convertirán en `huérfanos`.
+Sólo se puede eliminar a los grupos suplementarios, por lo que si un grupo es el grupo primario para cualquier usuario, no se puede eliminar. El administrador puede modificar qué grupo es el grupo primario del usuario, por lo que un grupo que estaba siendo utilizado como un grupo primario se puede transformar en un grupo suplementario y luego se puede eliminar.
+
+```bash
+groupdel [name_group]
+```
+
+```bash
+groupdel clerks
+```
+
+### Agregar usuarios - Comando `useradd`
+
+Se observan los paramentros establecidos para cuando se agregaran usuarios
+
+```bash
+useradd -D 
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+```
 
 ## Trucos
 

@@ -1261,19 +1261,19 @@ ls | xargs rm
 
 Comparaciones
 
-Comando	| Descripción
--|-
-`test –f /dev/ttyS0	0`| si el archivo existe
-`test ! –f /dev/ttyS0`| 0 si el archivo no existe
-`test –d /tmp`| 0 si el directorio existe
-`test –x `which ls`\` | sustituir la ubicación de `ls` y luego (probar) `test`, si el usuario puede ejecutar
-`test 1 –eq 1`| 0 si tiene éxito la comparación numérica
-`test ! 1 –eq 1`| NO – 0 si la comparación falla
-`test 1 –ne 1`| Más fácil, ejecutar test (probar) si hay desigualdad numérica
-`test “a” = “a”`| 0  si tiene éxito la comparación de cadenas
-`test “a” != “a”`| 0  si las cadenas son diferentes
-`test 1 –eq 1 –o 2 –eq 2`| `-o` es OR: cualquiera de las opciones pueden ser igual
-`test 1 –eq 1 –a 2 –eq 2`| `-a` es AND: ambas comparaciones deben ser iguales
+| Comando                   | Descripción                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------ |
+| `test –f /dev/ttyS0	0`    | si el archivo existe                                                                 |
+| `test ! –f /dev/ttyS0`    | 0 si el archivo no existe                                                            |
+| `test –d /tmp`            | 0 si el directorio existe                                                            |
+| `test –x `which ls`\`     | sustituir la ubicación de `ls` y luego (probar) `test`, si el usuario puede ejecutar |
+| `test 1 –eq 1`            | 0 si tiene éxito la comparación numérica                                             |
+| `test ! 1 –eq 1`          | NO – 0 si la comparación falla                                                       |
+| `test 1 –ne 1`            | Más fácil, ejecutar test (probar) si hay desigualdad numérica                        |
+| `test “a” = “a”`          | 0  si tiene éxito la comparación de cadenas                                          |
+| `test “a” != “a”`         | 0  si las cadenas son diferentes                                                     |
+| `test 1 –eq 1 –o 2 –eq 2` | `-o` es OR: cualquiera de las opciones pueden ser igual                              |
+| `test 1 –eq 1 –a 2 –eq 2` | `-a` es AND: ambas comparaciones deben ser iguales                                   |
 
 ### Condicionales 
 
@@ -1538,15 +1538,15 @@ Los demonios que se ejecutan en segundo plano para realizar el registro se llama
 
 Independientemente del nombre del proceso de demonio, los archivos de registro se colocan casi siempre en la estructura del directorio `/var/log`.
 
-Archivo	|Contenido
-:-:|-
-**boot.log** | Mensajes generados cuando servicios se inician durante el arranque del sistema.
-**cron** | Mensajes generados por el demonio crond para las tareas que se deben ejecutar en forma recurrente.
-**dmesg**	| Mensajes generados por el kernel durante el arranque del sistema.
-**maillog**	| Mensajes producidos por el demonio de correo para mensajes de correo electrónico enviados o recibidos
-**messages** | Mensajes del kernel y otros procesos que no pertenecen a ninguna otra parte. A veces se denomina `dsyslog` en lugar de `messages` cuando el demonio haya grabado este archivo.
-**secure** | Mensajes de los procesos que requieren autorización o autenticación (por ejemplo, el proceso de inicio de sesión).
-**Xorg.0.log** | Mensajes del servidor de ventanas X (GUI).
+|    Archivo     | Contenido                                                                                                                                                                      |
+| :------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  **boot.log**  | Mensajes generados cuando servicios se inician durante el arranque del sistema.                                                                                                |
+|    **cron**    | Mensajes generados por el demonio crond para las tareas que se deben ejecutar en forma recurrente.                                                                             |
+|   **dmesg**    | Mensajes generados por el kernel durante el arranque del sistema.                                                                                                              |
+|  **maillog**   | Mensajes producidos por el demonio de correo para mensajes de correo electrónico enviados o recibidos                                                                          |
+|  **messages**  | Mensajes del kernel y otros procesos que no pertenecen a ninguna otra parte. A veces se denomina `dsyslog` en lugar de `messages` cuando el demonio haya grabado este archivo. |
+|   **secure**   | Mensajes de los procesos que requieren autorización o autenticación (por ejemplo, el proceso de inicio de sesión).                                                             |
+| **Xorg.0.log** | Mensajes del servidor de ventanas X (GUI).                                                                                                                                     |
 
 Los comandos lastb y last se pueden usar para ver los archivos /var/log/btmp y /var/log/wtmp respectivamente.
 
@@ -1566,11 +1566,11 @@ dmesg | grep -i usb
 
 Archivos para configuraciones de `red`
 
-Comando |	Explicación
--|-
-`/etc/hosts` |	Este archivo contiene una tabla de nombres de host para las direcciones IP. Puede utilizarse para complementar un servidor DNS.
-`/etc/sysconfig/network`	| Este archivo tiene dos configuraciones. La configuración de NETWORK (o «red» en español) puede determinar si la red está activada (yes) o desactivada (no). La configuración de HOSTNAME (O «nombre de host» en español) define un nombre de host de la máquina local.
-`/etc/nsswitch.conf`	| Este archivo se puede utilizar para modificar dónde se producen las búsquedas de nombre de host. Por ejemplo, la configuración hosts : files dns buscaría los nombres de host primero en el archivo /etc/hosts y después en el servidor DNS. Si cambias a hosts: dns files, la búsqueda se lleva a cabo primero en el servidor DNS.
+| Comando                  | Explicación                                                                                                                                                                                                                                                                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/etc/hosts`             | Este archivo contiene una tabla de nombres de host para las direcciones IP. Puede utilizarse para complementar un servidor DNS.                                                                                                                                                                                                     |
+| `/etc/sysconfig/network` | Este archivo tiene dos configuraciones. La configuración de NETWORK (o «red» en español) puede determinar si la red está activada (yes) o desactivada (no). La configuración de HOSTNAME (O «nombre de host» en español) define un nombre de host de la máquina local.                                                              |
+| `/etc/nsswitch.conf`     | Este archivo se puede utilizar para modificar dónde se producen las búsquedas de nombre de host. Por ejemplo, la configuración hosts : files dns buscaría los nombres de host primero en el archivo /etc/hosts y después en el servidor DNS. Si cambias a hosts: dns files, la búsqueda se lleva a cabo primero en el servidor DNS. |
 
 ### Comandos para red `ip` `ping` `ss` `dig` `host`
 
@@ -1617,15 +1617,15 @@ name:password placeholder:user id:primary group id:comment:home directory:shell
 
 La siguiente tabla describe cada uno de estos campos en detalle, usando la primera línea de la salida en el ejemplo anterior `(root:x:0:0:root:/root:/bin/bash)`:
 
-Campo	|Ejemplo|	Descripción
--|:-:|-
-name	| root | Es el nombre de la cuenta. Este nombre lo utiliza una persona cuando inicia sesión en el sistema y cuando la propiedad del archivo viene proporcionada por el comando ls -l. Por lo general, el sistema utiliza el ID de usuario (véase abajo) internamente y se proporciona el nombre de cuenta para que a los usuarios regulares se les haga más fácil referirse a la cuenta. Normalmente, la cuenta root es una cuenta administrativa especial. Sin embargo, es importante tener en cuenta que no todos los sistemas tienen una cuenta root, y en realidad, el ID de usuario 0 (cero) proporciona los privilegios administrativos en el sistema.
-password placeholder | x |Antes, la contraseña se guardaba en esta ubicación, ahora se almacena en el archivo /etc/shadow. La x en el campo del marcador de posición de la contraseña indica al sistema que la contraseña no se almacena aquí, sino más bien en el archivo /etc/shadow.
-user id	|0	|Cada cuenta tiene asignado un Id. de usuario (UID «User ID» en inglés). El UID es lo que realmente define la cuenta, ya que el nombre de usuario normalmente no es utilizado directamente por el sistema. Por ejemplo, los archivos son propiedad de los UID, no de los nombres de usuario.Algunos UID son especiales. Por ejemplo, el UID 0 le da a la cuenta de usuario privilegios administrativos. Los UID por debajo de 500 (en algunas distribuciones de Linux 1.000) están reservados para las cuentas del sistema. Las cuentas del sistema se tratarán con más detalle más adelante en este capítulo.
-primary group id	|0 |Cada archivo y directorio es propiedad de una cuenta de usuario. Normalmente la persona que crea la cuenta posee el archivo. Además, cada archivo es propiedad de un grupo, normalmente del grupo primario del usuario. A los grupos se les asignan identificadores numéricos al igual que a los usuarios. Cuando un usuario crea un archivo, el archivo es propiedad del UID del usuario y también de un id de grupo (GID «Group ID» en inglés), el GID primario del usuario. Este campo define que GID es el GID primario del usuario. Además, al proporcionar la propiedad del grupo por defecto en un archivo, este campo también indica que el usuario es un miembro del grupo, lo que significa que el usuario tendrá permisos especiales en cualquier archivo que pertenece a este grupo. Los permisos se cubrirán en detalle en un capítulo posterior.
-comment	| root |Este campo puede contener cualquier información sobre el usuario, incluyendo su nombre real (completo) y otra información útil. Este campo también se llama el campo GECOS (General Electric Comprehensive Operating System). El GECOS es un formato predefinido usado raramente para este campo que define una lista de elementos separada por comas, incluyendo el nombre completo del usuario, ubicación de la oficina, número de teléfono e información adicional. El administrador puede modificar la información GECOS con el comando chfn y los usuarios pueden ver esta información con el comando finger.
-home directory	| /root	|Este campo define la ubicación del directorio home del usuario. Para los usuarios regulares, esto sería normalmente /home/username donde username se reemplaza con el nombre de usuario del usuario. Por ejemplo, un nombre de usuario bob tendría un directorio home /home/bob. El usuario root tiene normalmente una ubicación diferente para el directorio home: /root. Las cuentas del sistema raramente tienen directorios, ya que normalmente no se utilizan para crear o guardar los archivos.
-shell	| /bin/bash| Aquí está ubicado el shell del inicio de la sesión del usuario. De forma predeterminada, el usuario se "ubica en" este shell siempre que el usuario inicia la sesión en un entorno de línea de comandos o abre una ventana de terminal. El usuario luego puede pasar a un shell diferente escribiendo el nombre del shell, por ejemplo: /bin/tcsh. El shell bash (/bin/bash) es el más común para los usuarios de Linux.
+| Campo                |  Ejemplo  | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------- | :-------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name                 |   root    | Es el nombre de la cuenta. Este nombre lo utiliza una persona cuando inicia sesión en el sistema y cuando la propiedad del archivo viene proporcionada por el comando ls -l. Por lo general, el sistema utiliza el ID de usuario (véase abajo) internamente y se proporciona el nombre de cuenta para que a los usuarios regulares se les haga más fácil referirse a la cuenta. Normalmente, la cuenta root es una cuenta administrativa especial. Sin embargo, es importante tener en cuenta que no todos los sistemas tienen una cuenta root, y en realidad, el ID de usuario 0 (cero) proporciona los privilegios administrativos en el sistema.                                                                                                                                                                                                            |
+| password placeholder |     x     | Antes, la contraseña se guardaba en esta ubicación, ahora se almacena en el archivo /etc/shadow. La x en el campo del marcador de posición de la contraseña indica al sistema que la contraseña no se almacena aquí, sino más bien en el archivo /etc/shadow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| user id              |     0     | Cada cuenta tiene asignado un Id. de usuario (UID «User ID» en inglés). El UID es lo que realmente define la cuenta, ya que el nombre de usuario normalmente no es utilizado directamente por el sistema. Por ejemplo, los archivos son propiedad de los UID, no de los nombres de usuario.Algunos UID son especiales. Por ejemplo, el UID 0 le da a la cuenta de usuario privilegios administrativos. Los UID por debajo de 500 (en algunas distribuciones de Linux 1.000) están reservados para las cuentas del sistema. Las cuentas del sistema se tratarán con más detalle más adelante en este capítulo.                                                                                                                                                                                                                                                  |
+| primary group id     |     0     | Cada archivo y directorio es propiedad de una cuenta de usuario. Normalmente la persona que crea la cuenta posee el archivo. Además, cada archivo es propiedad de un grupo, normalmente del grupo primario del usuario. A los grupos se les asignan identificadores numéricos al igual que a los usuarios. Cuando un usuario crea un archivo, el archivo es propiedad del UID del usuario y también de un id de grupo (GID «Group ID» en inglés), el GID primario del usuario. Este campo define que GID es el GID primario del usuario. Además, al proporcionar la propiedad del grupo por defecto en un archivo, este campo también indica que el usuario es un miembro del grupo, lo que significa que el usuario tendrá permisos especiales en cualquier archivo que pertenece a este grupo. Los permisos se cubrirán en detalle en un capítulo posterior. |
+| comment              |   root    | Este campo puede contener cualquier información sobre el usuario, incluyendo su nombre real (completo) y otra información útil. Este campo también se llama el campo GECOS (General Electric Comprehensive Operating System). El GECOS es un formato predefinido usado raramente para este campo que define una lista de elementos separada por comas, incluyendo el nombre completo del usuario, ubicación de la oficina, número de teléfono e información adicional. El administrador puede modificar la información GECOS con el comando chfn y los usuarios pueden ver esta información con el comando finger.                                                                                                                                                                                                                                             |
+| home directory       |   /root   | Este campo define la ubicación del directorio home del usuario. Para los usuarios regulares, esto sería normalmente /home/username donde username se reemplaza con el nombre de usuario del usuario. Por ejemplo, un nombre de usuario bob tendría un directorio home /home/bob. El usuario root tiene normalmente una ubicación diferente para el directorio home: /root. Las cuentas del sistema raramente tienen directorios, ya que normalmente no se utilizan para crear o guardar los archivos.                                                                                                                                                                                                                                                                                                                                                          |
+| shell                | /bin/bash | Aquí está ubicado el shell del inicio de la sesión del usuario. De forma predeterminada, el usuario se "ubica en" este shell siempre que el usuario inicia la sesión en un entorno de línea de comandos o abre una ventana de terminal. El usuario luego puede pasar a un shell diferente escribiendo el nombre del shell, por ejemplo: /bin/tcsh. El shell bash (/bin/bash) es el más común para los usuarios de Linux.                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ### shadow
 
@@ -1652,22 +1652,24 @@ Se describre el siguiente registro
 
 ```sysadmin:$6$lS6WJ9O/fNmEzrIi$kO9NKRBjLJJTlZD.L1Dc2xwcuUYaYwCTS.gt4elijSQW8ZDp6GLYAx.TRNNpUdAgUXUrzDuAPsYs5YHZNAorI1:15020:5:30:7:60:15050:```
 
-Campo|	Ejemplo|	Descripción
--|-|-
-name|	sysadmin|	Este es el nombre de la cuenta, que coincide con el nombre de cuenta en el archivo /etc/passwd.
-password|	\$6\$.........rI1	|El campo passwd contiene la contraseña cifrada de la cuenta. Esta cadena muy larga (que está truncada en el ejemplo a la izquierda de esta celda) es un cifrado unidireccional, lo que significa que no puede "revertirse" para determinar la contraseña original. Mientras que los usuarios habituales tienen contraseñas encriptadas en este campo, las cuentas del sistema tendrán un carácter de * en este campo. Verás más detalles sobre las cuentas de sistema más adelante en este capítulo.
-last change|	15020| Este campo contiene un número que representa la última vez que la contraseña fue cambiada. El número 15020 es el número de días desde el 01 de enero de 1970 (llamada la Época) y el último día en el que la contraseña de la cuenta fue cambiada. Este valor se genera automáticamente cuando se modifica la contraseña del usuario. Este valor es importante ya que se utiliza por característica de envejecimiento de la contraseña proporcionado por el resto de los campos de este archivo.
-min	|5|Este es uno de los campos del envejecimiento de la contraseña; un valor distinto de cero en este campo indica que después de que un usuario cambiara su contraseña, la contraseña no se puede cambiar otra vez por un número específico de días (5 en este ejemplo). Este campo es importante cuando se utiliza el campo max (véase abajo). Un valor de cero en este campo significa que el usuario siempre puede cambiar su contraseña.
-max	|5|	Este campo se utiliza para obligar a los usuarios a cambiar regularmente sus contraseñas. Un valor de 30 en este campo significa que el usuario debe cambiar su contraseña al menos cada 30 días para evitar que su cuenta quede «bloqueada» Ten en cuenta que si el campo min se establece en 0, el usuario puede restablecer inmediatamente su contraseña al valor original, anulando el propósito de obligar al usuario a cambiar su contraseña cada 30 días. Así que, si se establece el campo max, normalmente se establece también el campo min. Por ejemplo, un min:max de 5:60 se refiere a que el usuario debe cambiar su contraseña cada 60 días y, después de cambiarla, el usuario debe esperar 5 días antes de que pueda cambiar su contraseña otra vez. Si el campo max se establece a 99999, el valor máximo posible, entonces el usuario esencialmente nunca debe cambiar su contraseña (porque 99999 días son aproximadamente 274 años).
-warn	|7| Si se establece el campo max, el campo warn indica que al usuario se le «advertirá» cuando se acerca el plazo máximo max. Por ejemplo, si se establece warn a 7, entonces en cualquier momento durante los 7 días anteriores al plazo max se le advertirá al usuario que cambie su contraseña durante el proceso del inicio de sesión. El usuario sólo se advierte en el inicio de sesión, por lo que algunos administradores prefieren establecer el campo de advertencia a un valor alto para proporcionar una mayor probabilidad de tener una advertencia emitida.Si el plazo máximo max se establece al valor de 99999, entonces el campo warn es esencialmente inútil
-inactive	|60| Si el usuario hace caso omiso a las advertencias y se excede el plazo max para la contraseña, se bloqueará su cuenta. En tal caso, el campo inactive proporciona al usuario un período de «gracia» en el que puede cambiar su contraseña, pero sólo durante el proceso del inicio de sesión. Si el campo inactive viene establecido a un valor de 60, el usuario tiene 60 días de gracia para cambiar la contraseña a una nueva. Si no lo hace, entonces necesitará que el administrador restablezca la contraseña para el usuario.
-expire	|15050|	 Este campo representa el número de días a partir del 01 de enero del 1970 y el día en el que la cuenta «vencerá». Una cuenta vencida se bloqueará, no se borra, lo que significa que el administrador puede restablecer la contraseña para desbloquear la cuenta. Las cuentas con fechas de vencimiento normalmente se ofrecen a los empleados temporales o contratistas. La cuenta caducará automáticamente después del último día laboral del usuario. Cuando un administrador establece este campo, se utiliza una herramienta para convertir una fecha real en una fecha de «Época». En Internet hay varios convertidores disponibles.
-reserved | | Actualmente este campo no se utiliza y está reservado para su uso futuro.
+| Campo       | Ejemplo           | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ----------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name        | sysadmin          | Este es el nombre de la cuenta, que coincide con el nombre de cuenta en el archivo /etc/passwd.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| password    | \$6\$.........rI1 | El campo passwd contiene la contraseña cifrada de la cuenta. Esta cadena muy larga (que está truncada en el ejemplo a la izquierda de esta celda) es un cifrado unidireccional, lo que significa que no puede "revertirse" para determinar la contraseña original. Mientras que los usuarios habituales tienen contraseñas encriptadas en este campo, las cuentas del sistema tendrán un carácter de * en este campo. Verás más detalles sobre las cuentas de sistema más adelante en este capítulo.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| last change | 15020             | Este campo contiene un número que representa la última vez que la contraseña fue cambiada. El número 15020 es el número de días desde el 01 de enero de 1970 (llamada la Época) y el último día en el que la contraseña de la cuenta fue cambiada. Este valor se genera automáticamente cuando se modifica la contraseña del usuario. Este valor es importante ya que se utiliza por característica de envejecimiento de la contraseña proporcionado por el resto de los campos de este archivo.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| min         | 5                 | Este es uno de los campos del envejecimiento de la contraseña; un valor distinto de cero en este campo indica que después de que un usuario cambiara su contraseña, la contraseña no se puede cambiar otra vez por un número específico de días (5 en este ejemplo). Este campo es importante cuando se utiliza el campo max (véase abajo). Un valor de cero en este campo significa que el usuario siempre puede cambiar su contraseña.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| max         | 5                 | Este campo se utiliza para obligar a los usuarios a cambiar regularmente sus contraseñas. Un valor de 30 en este campo significa que el usuario debe cambiar su contraseña al menos cada 30 días para evitar que su cuenta quede «bloqueada» Ten en cuenta que si el campo min se establece en 0, el usuario puede restablecer inmediatamente su contraseña al valor original, anulando el propósito de obligar al usuario a cambiar su contraseña cada 30 días. Así que, si se establece el campo max, normalmente se establece también el campo min. Por ejemplo, un min:max de 5:60 se refiere a que el usuario debe cambiar su contraseña cada 60 días y, después de cambiarla, el usuario debe esperar 5 días antes de que pueda cambiar su contraseña otra vez. Si el campo max se establece a 99999, el valor máximo posible, entonces el usuario esencialmente nunca debe cambiar su contraseña (porque 99999 días son aproximadamente 274 años). |
+| warn        | 7                 | Si se establece el campo max, el campo warn indica que al usuario se le «advertirá» cuando se acerca el plazo máximo max. Por ejemplo, si se establece warn a 7, entonces en cualquier momento durante los 7 días anteriores al plazo max se le advertirá al usuario que cambie su contraseña durante el proceso del inicio de sesión. El usuario sólo se advierte en el inicio de sesión, por lo que algunos administradores prefieren establecer el campo de advertencia a un valor alto para proporcionar una mayor probabilidad de tener una advertencia emitida.Si el plazo máximo max se establece al valor de 99999, entonces el campo warn es esencialmente inútil                                                                                                                                                                                                                                                                                |
+| inactive    | 60                | Si el usuario hace caso omiso a las advertencias y se excede el plazo max para la contraseña, se bloqueará su cuenta. En tal caso, el campo inactive proporciona al usuario un período de «gracia» en el que puede cambiar su contraseña, pero sólo durante el proceso del inicio de sesión. Si el campo inactive viene establecido a un valor de 60, el usuario tiene 60 días de gracia para cambiar la contraseña a una nueva. Si no lo hace, entonces necesitará que el administrador restablezca la contraseña para el usuario.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| expire      | 15050             | Este campo representa el número de días a partir del 01 de enero del 1970 y el día en el que la cuenta «vencerá». Una cuenta vencida se bloqueará, no se borra, lo que significa que el administrador puede restablecer la contraseña para desbloquear la cuenta. Las cuentas con fechas de vencimiento normalmente se ofrecen a los empleados temporales o contratistas. La cuenta caducará automáticamente después del último día laboral del usuario. Cuando un administrador establece este campo, se utiliza una herramienta para convertir una fecha real en una fecha de «Época». En Internet hay varios convertidores disponibles.                                                                                                                                                                                                                                                                                                                |
+| reserved    |                   | Actualmente este campo no se utiliza y está reservado para su uso futuro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
-### `group`
+### Archivo `group` Comando `groups`
 
 Ubicación `/etc/group`
 El archivo /etc/group es un archivo delimitado por dos puntos con los siguientes campos:
+
+- `groups` retorna los grupos del usuario actual
 
 ```
 group_name:password_placeholder:GID:user_list
@@ -1679,12 +1681,12 @@ La siguiente tabla describe los campos del archivo /etc/group con más detalle, 
 mail:x:12:mail,postfix
 ```
 
-Campo	|Ejemplo|	Descripción
--|:-:|-
-group_name	|mail|	Este campo contiene el nombre del grupo. Igual que en el caso de los nombres de usuario, para las personas es más fácil recordar los nombres de grupo. El sistema utiliza típicamente IDs de grupos (GID) en lugar de nombres de grupo.
-password_placeholder	|x|	Aunque hay contraseñas para grupos, raramente se utilizan en Linux. Si el administrador creará una contraseña de grupo, se almacenaría en un archivo diferente (/etc/gshadow) ya que la contraseña de grupo ya no se almacena en el archivo /etc/group. La x en este campo se utiliza para indicar que la contraseña no se almacena en este archivo. Las contraseñas de grupo están más allá del alcance de este curso.
-GID	|12|	Cada grupo está asociado con un ID de grupo único (GID) que se coloca en este campo. 
-user_list	|mail,postfix	|Este último campo se utiliza para indicar quién es un miembro del grupo. Mientras que la pertenencia a un grupo primario se define en el archivo /etc/passwd, los usuarios que se asignan a los grupos adicionales tendrían su nombre de usuario en este campo del archivo /etc/group. En este caso, los usuarios mail y postfix son miembros secundarios del grupo mail. Es muy común para un nombre de usuario aparecer también como un nombre del grupo. También es común que un usuario pertenezca a un grupo con el mismo nombre.
+| Campo                |   Ejemplo    | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------------- | :----------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| group_name           |     mail     | Este campo contiene el nombre del grupo. Igual que en el caso de los nombres de usuario, para las personas es más fácil recordar los nombres de grupo. El sistema utiliza típicamente IDs de grupos (GID) en lugar de nombres de grupo.                                                                                                                                                                                                                                                                                                |
+| password_placeholder |      x       | Aunque hay contraseñas para grupos, raramente se utilizan en Linux. Si el administrador creará una contraseña de grupo, se almacenaría en un archivo diferente (/etc/gshadow) ya que la contraseña de grupo ya no se almacena en el archivo /etc/group. La x en este campo se utiliza para indicar que la contraseña no se almacena en este archivo. Las contraseñas de grupo están más allá del alcance de este curso.                                                                                                                |
+| GID                  |      12      | Cada grupo está asociado con un ID de grupo único (GID) que se coloca en este campo.                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| user_list            | mail,postfix | Este último campo se utiliza para indicar quién es un miembro del grupo. Mientras que la pertenencia a un grupo primario se define en el archivo /etc/passwd, los usuarios que se asignan a los grupos adicionales tendrían su nombre de usuario en este campo del archivo /etc/group. En este caso, los usuarios mail y postfix son miembros secundarios del grupo mail. Es muy común para un nombre de usuario aparecer también como un nombre del grupo. También es común que un usuario pertenezca a un grupo con el mismo nombre. |
 
 ### Comando `getent`
 
@@ -1716,7 +1718,6 @@ Cambio al grupo `games` el archivo sample
 chgrp games sample
 ```
 
-
 ### Comando `id`
 
 El comando `id` informará la identidad actual, tanto por nombre del usuario como por el identificador de usuario
@@ -1729,10 +1730,74 @@ El comando `id` informará la identidad actual, tanto por nombre del usuario com
 - `id -G` da todos los grupos del usuario actual
 - `cat /etc/group | grep sysadmin` filta para mostrar los grupos del usario que se le paso
 
-## Comandos de identificacion
+### Comando `su` `sudo` `visudo`
 
-- `whoami` : display effective user id
+- su: `change user ID or become superuser`
+- sudo: `execute a command as another user`
+- visudo: `edit the sudoers file`
+
+- `su -` o `su -l [user]` o `su - root` inicias sesion con el usario en forma root
+- `sudo` permite a un usuario ejecutar comandos que necesite privilegios `root`
+- `visudo` entra a modificar y configurar los usuarios que pueden ejecutar acciones `sudo`
+
+## Comando `who` `w`
+
+### Comnado `who`
+
+Muestra una lista de usuarios que están conectados actualmente en el sistema, desde dónde están conectados y cuándo iniciaron sesión.
+
+Opciones;
+
+- `-b` mostrará la última vez que el sistema se inició (fue arrancado)
+- `-r` mostrará el tiempo en el cual el sistema haya alcanzado un cierto nivel ejecución
+
+Ejemplo: 
+
+```bash
+who -b -r
+system boot  	2013-10-11 09:54
+run-level 5    2013-10-11 09:54
+```
+
+```bash
+who
+root     	tty2        2013-10-11 10:00
+sysadmin	tty1        2013-10-11 09:58 (:0)
+sysadmin 	pts/0       2013-10-11 09:59 (:0.0)
+sysadmin 	pts/1       2013-10-11 10:00 (example.com)
+```
+
+| Columna  |            Ejemplo             | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------- | :----------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| username |              root              | Esta columna indica el nombre del usuario que inició la sesión. Ten en cuenta que por "sesión" nos referimos a «cualquier proceso de inicio de sesión y cualquier ventana de la terminal abierta».                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| terminal |              tty2              | Esta columna indica en qué ventana de terminal está trabajando el usuario. Si el nombre de la terminal inicia con tty , entonces esto es una indicación de un inicio de sesión local, está es una terminal de línea de comandos regular. Si el nombre de la terminal inicia con pts, entonces esto indica que el usuario está usando una pseudo terminal o corriendo un proceso que actúa como la terminal. Esto puede significar que el usuario tiene una aplicación de terminal corriendo en X Windows, como gnome-terminal o xterm o pueden haber usado un protocolo de red para conectarse al sistema, como ssh o telnet. |
+| date     | 2013-10-11 10:00 (example.com) | Esto indica cuándo inició sesión el usuario. Después de la fecha y la hora en que el usuario inició sesión en el sistema, puede aparecer alguna información de localización. Si la información de localización contiene un nombre de host, nombre de dominio o dirección IP, entonces el usuario inició sesión remotamente. Si hay dos puntos y un número, entonces esto indica que han hecho un inicio de sesión gráfico local. Si no se muestra información de localización en la última columna, entonces esto significa que el usuario inició sesión mediante un proceso de línea de comandos local.
+
+### Comandos `w` `whoami`
+
+Proporciona una lista más detallada sobre los usuarios que actualmente están en el sistema que el comando `who`. También proporciona un resumen del estado del sistema.
+
 - `w` sesiones en la maquina
+- `whoami` : display effective user id
+
+```bash
+w                                                       
+23:45:49 up 84 days,  7:34,  2 users,  load average: 0.07, 0.13, 0.12          
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT            
+sysadmin pts/0                     23:11    5.00s  0.14s  0.01s ssh localhost   
+sysadmin pts/1    localhost        23:39    5.00s  0.00s  0.00s w 
+```
+
+Column	|Ejemplo|	Descipción
+-|-|-
+USER	|root|	Esta columna indica el nombre del usuario que inició la sesión.
+TTY	|tty2|	Esta columna indica en qué ventana de terminal el usuario está trabajando.
+FROM	|example.com|	Desde dónde inició sesión el usuario.
+LOGIN@|	10:00|	Cuándo inició sesión el usuario.
+IDLE	|43:44	|Cuánto tiempo el usuario ha estado inactivo desde la ejecución del último comando.
+JCPU|	0.01s|	El tiempo total de cpu (s=segundos) utilizado por todos los procesos (programas) ejecutados desde el inicio de sesión.
+PCPU	|0.01s|	El tiempo total de cpu para el proceso actual.
+WHAT|-bash|	El proceso actual que está ejecutando el usuario.
 
 ## Trucos
 

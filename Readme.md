@@ -1891,6 +1891,72 @@ SKEL=/etc/skel
 CREATE_MAIL_SPOOL=yes
 ```
 
+Campo|	Ejamplo	|Descripción
+-|:-:|-
+GROUP|	100	|En las distribuciones que no usan UPG, este será el grupo principal de forma predeterminada para un usuario nuevo, si no se ha especificado uno con el comando useradd. Este normalmente es el grupo de «users» con un GID de 100. Esta configuración afecta a la configuración por defecto del archivo `/etc/passwd`  bob:<span>x</span>:600:<mark>600</mark>:bob:/home/bob:/bin/bash <br> La opción `-g` para el comando `useradd` permite utilizar un grupo principal diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+HOME	|/home| El directorio /home es el directorio base predeterminado, en el cuál se creará un nuevo directorio home del usuario. Esto significa que un usuario con un nombre de cuenta de bob tendría un directorio de /home/bob. Esta configuración afecta a la configuración por defecto del archivo /etc/passwd  <br> bob:<span>x</span>:600:600:bob:<mark>/home</mark>/bob:/bin/bash <br> La opción `-b` para el comando useradd permite utilizar un directorio base diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+INACTIVE	|-1	| Este valor representa el número de días después de que caduca la contraseña hasta que la cuenta será deshabilitada. Un valor de `-1` significa que esta función no está habilitada por defecto y no se proporciona ningún valor «inactivo» para las nuevas cuentas por defecto. Esta configuración afecta a la configuración por defecto del archivo `/etc/shadow`  <br>bob:pw:15020:5:30:7:<mark>60</mark>:15050: <br> La opción `-f` para el comando useradd permite utilizar un valor INACTIVE diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+EXPIRE| |Por defecto, no hay ningún valor para la fecha de caducidad. Generalmente, una fecha de vencimiento se configura para una cuenta individual, no a todas las cuentas. Por ejemplo, si tuvieras un contratista que fuese contratado para trabajar hasta el final del día 01 de noviembre de 2013, podrías asegurarte de que no pueda iniciar sesión después de esa fecha, utilizando el campo de EXPIRE. Esta configuración afecta a la configuración por defecto del archivo `/etc/shadow`  <br>bob:pw:15020:5:30:7:60:<mark>15050</mark>: <br>La opción `-e` para el comando useradd permite utilizar un valor EXPIRE diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+SHELL |	/bin/bash	|El valor de SHELL indica el shell por defecto para los usuarios cuando inician sesión en el sistema. Esta configuración afecta a la configuración por defecto del archivo `/etc/passwd`  <br> bob:<span>x<span>:600:600:bob:/home/bob:<mark>/bin/bash</mark> <br> La opción `-s` para el comando `useradd` permite utilizar un shell de inicio de sesión diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+SKEL	| /etc/skel	| El valor SKEL determina qué directorio «esqueleto» tendrá su contenido copiado en el directorio home de los usuarios nuevos. El contenido de este directorio se copia en el directorio `home` del usuario nuevo y el nuevo usuario recibe la propiedad de los nuevos archivos. Esto proporciona a los administradores una manera fácil de «rellenar» una nueva cuenta de usuario con los archivos de configuración clave. La opción `-k` para el comando useradd permite utilizar un directorio SKEL diferente al predeterminado, cuando se crea una nueva cuenta de usuario.
+CREATE_MAIL_SPOOL	|yes | El «mail spool» es un archivo donde se coloca el correo entrante. Actualmente el valor para crear un mail spool es `yes`, lo que significa que los usuarios por defecto están configurados con la capacidad de recibir y guardar correo local. Si no piensas usar el correo local, este valor puede cambiarse a no.
+
+Para modificar uno de los valores por defecto del `useradd`, el archivo `/etc/default/useradd` puede editarse con un editor de texto. Otra técnica (más segura) es usar el comando `useradd -D`.
+
+Aquí esta editando la opción `INACTIVE`
+
+```bash
+useradd -D -f 30
+GROUP=100
+HOME=/home
+INACTIVE=30
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+```
+
+**Archivo `/etc/login.defs`**
+
+El archivo `/etc/login.defs` también contiene valores que se aplicarán por defecto a los nuevos usuarios que vayas a crear con el comando `useradd`. A diferencia del `/etc/default/useradd`, que puede ser actualizado con el comando useradd `-D`, el archivo `/etc/login.defs` generalmente lo edita directamente el administrador para modificar sus valores.
+
+Con esta linea se extrae lo importante, evidiendo el relleno
+
+```bash
+grep -Ev '^#|^$' /etc/login.defs
+MAIL_DIR          /var/spool/mail
+PASS_MAX_DAYS     99999
+PASS_MIN_DAYS     0
+PASS_MIN_LEN      5
+PASS_WARN_AGE     7
+UID_MIN           500
+UID_MAX           60000
+GID_MIN           500
+GID_MAX           60000
+CREATE_HOME       yes
+UMASK             077
+USERGROUPS_ENAB   yes
+ENCRYPT_METHOD    SHA512
+MD5_CRYPT_ENAB    no
+```
+
+Campo	|Ejemplo	|Descripción
+-|-|-
+MAIL_DIR	| /var/mail/spool	|El directorio en el que se crea el archivo mail spool del usuario.
+PASS_MAX_DAYS	|99999	|Esta configuración determina el número máximo de días en los que un usuario podrá utilizar la misma contraseña. Puesto que por defecto viene configurado el valor de 99999 días o más de 200 años, significa que los usuarios nunca tienen que cambiar su contraseña. Las organizaciones con políticas eficaces para el mantenimiento de contraseñas seguras comúnmente cambian este valor a 60 o 30 días. Esta configuración afecta a la configuración por defecto del archivo `/etc/shadow`  bob:pw:15020:5:<mark>30</mark>:7:60:15050:
+PASS_MIN_DAYS	|0| Con esto configurado a un valor predeterminado de 0 (cero), el tiempo más corto que un usuario tiene que mantener una contraseña es de cero días, lo que significa que inmediatamente después de configurar la contraseña, se puede cambiar. Si el valor `PASS_MIN_DAYS` se estableció en 3 días, después de establecer una nueva contraseña, el usuario tendría que esperar tres días antes de que pueda cambiarla otra vez. Esta configuración afecta a la configuración por defecto del archivo `/etc/shadow`  bob:pw:15020:<mark>3</mark>:30:7:60:15050:
+PASS_MIN_LEN	|5|	Esto indica el número mínimo de caracteres que debe contener una contraseña.
+PASS_WARN_AGE	|7	|Este es el valor predeterminado para el campo de advertencia. Cuando un usuario se acerca al número máximo de días durante los que puede usar su contraseña, el sistema comprobará si es hora de empezar a avisar al usuario sobre cambiar su contraseña durante el inicio de sesión. Esta configuración afecta a la configuración por defecto del archivo `/etc/shadow` bob:pw:15020:3:30:<mark>7</mark>:60:15050:
+UID_MIN	|500|	El `UID_MIN` determina el primer UID que se asignará a un usuario ordinario. Cualquier usuario con un UID menor que este valor, ya sea para una cuenta del sistema o bien para la cuenta de root.
+UID_MAX	|60000|	Un `UID` técnicamente podría tener un valor de más de 4 billones. Para la máxima compatibilidad se recomienda dejarlo en su valor predeterminado de 60000.
+GID _MIN	|500|	El `GID_MIN` determina el primer `GID` que se asignará a un grupo ordinario. Cualquier grupo con un `GID` menor que este valor, ya sea para un grupo del sistema o bien para el grupo de root.
+GID _MAX	|60000|	Un `GID` igual que un `UID` técnicamente podría tener un valor de más de 4 billones. Cualquier valor que utilices para tu `UID_MAX` debes utilizar para `GID_MAX` para soportar UPG.
+CREATE_HOME	|yes|	Este valor determina si se crea o no un nuevo directorio para el usuario, al crear su cuenta.
+UMASK	|077|Este `UMASK` funciona en el momento que se crea el directorio `home` del usuario; determinará cuáles serán los permisos predeterminados de este directorio. Utilizando el valor predeterminado de `077` para `UMASK` significa que sólo el usuario propietario tendrá algún tipo de permiso para acceder a su directorio.
+USERGROUPS_ENAB	|yes	|En las distribuciones que cuentan con un grupo privado para cada usuario, como se muestra en este ejemplo CentOS, el `USERGROUPS_ENAB` tendrá un valor de `yes`. Si no se utiliza la UPG en la distribución, entonces esto tendrá un valor no.
+ENCRYPT_METHOD|	SHA512|	El método de cifrado que se utiliza para cifrar las contraseñas de los usuarios en el archivo `/etc/shadow`. El valor de `ENCRYPT_METHOD` anula la configuración de `MD5_CRYPT_ENAB`.
+MD5_CRYPT_ENAB	|no|	Este ajuste obsoleto originalmente permitía al administrador especificar el uso del cifrado de contraseñas `MD5` en lugar del cifrado original `DES`. Ahora es reemplazado por el valor de `ENCRYPT_METHOD`.
+
 ## Trucos
 
 Para generar archivos y carpetas con un patron

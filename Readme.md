@@ -47,11 +47,11 @@ Un archivo o directorio puede presentar tres permisos diferentes: leer, escribir
 | escribir (write) (w)   | Permite modificar o reescribir el contenido del archivo.                                                           | Permite añadir o eliminar archivos en un directorio. Para que este permiso funcione, el directorio debe tener permiso para ejecutar.                                                                  |
 | ejecutar (execute) (x) | Permite que un archivo funcione como un proceso, aunque archivos script también requerirán el permiso leer (read). | Permite que el usuario se traslade del directorio si en el directorio padre también posee permiso escribir (write).                                                                                   |
 
-### Comando `chmod` Cambio de acceso a archivos
+### Comando `chmod` - Cambio de acceso a archivos
 
 El método simbólico y el método octal. El método simbólico es útil para cambiar un conjunto de permisos a la misma vez. El método octal o numérico requiere conocer el valor octal de cada uno de los permisos y requiere que los tres conjuntos de permisos (usuario, grupo, otros) se especifiquen cada vez.
 
-```
+```bash
 chmod [<COJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO
 ```
 
@@ -82,13 +82,119 @@ chmod [<COJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO
 |    w    | escribir (write)   |
 |    x    | ejecutar (execute) |
 
-### Cambio de propietario chown
+### Más detalles de permisos de archivos y directorios
+
+- El primer carácter indica el `tipo de archivo`.
+- Los caracteres `2-4 indican los permisos para el usuario` al que pertenece el archivo.
+- Los caracteres `5-7 indican los permisos para el grupo` al que pertenece el archivo.
+- Los caracteres `8-10 indican los permisos para "otros"` o lo que se conoce a veces como los permisos del mundo. Esto incluiría todos los usuarios que no sean el propietario del archivo o un miembro del grupo del archivo.
+
+```bash
+ls -l /etc/passwd
+-rw-r--r--. 1 root root 4135 May 27 21:08 /etc/passwd
+```
+
+| Caracter | Tipo de Archivo                                                                                                                                                                                                                                     |
+| :------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  **-**   | Un archivo normal que puede estar vacío, contener texto o datos binarios.                                                                                                                                                                           |
+|  **d**   | Un archivo de directorio que contiene los nombres de otros archivos y enlaces a los mismos.                                                                                                                                                         |
+|  **l**   | Un enlace simbólico es un nombre de archivo que hace referencia (apunta) a otro archivo.                                                                                                                                                            |
+|  **b**   | Un archivo de bloque es el que se refiere a un dispositivo de hardware de bloque donde los datos se leen en bloques de datos.                                                                                                                       |
+|  **c**   | Un archivo de caracteres es aquel que se refiere a un dispositivo de hardware de caracteres, donde se leen los datos un byte a la vez.                                                                                                              |
+|  **p**   | Una archivo «pipe» funciona de forma similar al símbolo de barra vertical, lo que permite a la salida de un proceso comunicarse con otro proceso por el archivo «pipe», donde se utiliza la salida de un proceso como entrada para el otro proceso. |
+|  **s**   | Un archivo de socket permite que se comuniquen dos procesos, donde se permite a ambos procesos enviar o recibir datos.                                                                                                                              |
+
+Los permisos establecidos en estos archivos determinan el nivel de acceso que un usuario va a tener en el archivo.
+
+| Permiso | Significado relacionado a un archivo                                                                                                                                                                   | Significado relacionado a un directorio                                                                                                                                                                    |
+| :-----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  **r**  | El proceso puede leer el contenido del archivo, es decir, los contenidos se pueden ver y copiar.                                                                                                       | Los nombres de archivo en el directorio se pueden enumerar, pero otros detalles no están disponibles.                                                                                                      |
+|  **w**  | El proceso puede escribir en este archivo, por lo que los cambios se pueden guardar. Ten en cuenta que el permiso `w` realmente requiere el permiso `r` en un archivo para que funcione correctamente. | Los archivos se pueden agregar a un directorio o quitar del mismo. Ten en cuenta que el permiso `w` requiere el permiso `x` en el directorio para que funcione correctamente.                              |
+|  **x**  | El archivo se puede ejecutar o correr como un proceso.                                                                                                                                                 | El usuario puede utilizar el comando cd para «entrar» al directorio y utilizar el directorio en una ruta de acceso para acceder a los archivos y, potencialmente, a los subdirectorios de este directorio. |
+
+### Cambio de propietario - Comando `chown`
 
 Inicialmente, el propietario de un archivo es el usuario que lo crea. El comando `chown` se utiliza para cambiar el propietario de los archivos y directorios. Cambiar el usuario propietario requiere acceso administrativo. Un usuario ordinario no puede utilizar este comando para cambiar el usuario propietario de un archivo, ni tan solo para otorgar propiedad de uno de sus propios archivos a otro usuario. Sin embargo, el comando `chown` permite cambiar el grupo propietario, lo cual puede ser realizado por el usuario root o el propietario del archivo.
 
 `chown [OPCIONES] [PROPIETARIO] ARCHIVO`
 
+Se puede hacer el cambio del usuario, grupo o ambos
+
+Solo el cambio del propietario al archivo
+
+```bash
+chown ted abc.txt
+```
+
+Solo cambia tanto el usario como el grupo
+
+```bash
+chown user:group /path/to/file
+chown user.group /path/to/file
+```
+
+Cambia solo el grupo
+
+```bash
+chown :group /path/to/file
+chown .group /path/to/file
+```
+
+### Método simbolico `chmod`
+
+```chmod nuevo_permiso nombre_de_archivo```
+
+Cuando se especifica el `nuevo_permiso`, comienzas por utilizar uno de los caracteres siguientes para indicar qué conjunto de permisos quieres cambiar:
+
+- `u` = cambiar los permisos del usuario propietario
+- `g` = cambiar los permisos del grupo propietario
+- `o` = cambiar los permisos de «otros»
+- `a` = (*all*) aplicar los cambios a todos los conjuntos de permisos (usuario propietario, grupo propietario y «otros»)
+
+Debe especificar un `+` para agregar un permiso o un `-` para quitar un permiso. Por último, especifica `r` para la lectura `w` para escritura y `x` para ejecución.
+
+Podrías utilizar el carácter `=` en lugar de `-` o `+` para especificar exactamente los permisos que quieres para un conjunto de permisos
+
+**Ejemplos:**
+
+```bash
+chmod u+r abc.txt
+chmod ug+r,o-w abc.txt
+chmod u=r-x abc.txt # al usario se le agrega read se quita write y de agrega exec, es una forma representativa a como se enlistan los permisos
+```
+
+### Método númerico `chmod`
+
+Número|Significado
+:-:|-
+**4**	|read (leer)
+**2**	|write (escribir)
+**1**	|execute (ejecutar)
+
+Usando una combinación de números del 0 al 7, cualquier combinación de permisos posible para leer, escribir y ejecutar se pueden especificar por un conjunto de permisos individuales.
+
+Valor |Equivalencia
+:-:|:-:
+**7**	|rwx
+**6**	|rw-
+**5**	|r-x
+**4**	|r--
+**3**	|-wx
+**2**	|-w-
+**1**	|--x
+**0**	|---
+
+```bash
+chmod 754 abc.tx # rwxr-xr-
+```
+
+### Comando `umask`
+
+
+
 ## Creación de un _alias_
+
+Esto se aplica solo a la terminal actual, para que se quede permanente en el usario se debe agregar al archivo `.bashrc` o `.zshrc`, depende el `shell`.
 
 ```bash
 alias nombre_alias="comando combinado"
@@ -1716,12 +1822,30 @@ getent group mail
 
 Para cambiar al grupo propietario de un archivo existente se puede utilizar el comando `chgrp group_name file`
 
+Si quieres cambiar el grupo propietario de un archivo existente, puedes utilizar el comando chgrp. Como un usuario sin privilegios administrativos, el comando chgrp puede utilizarse solamente para cambiar el grupo propietario del archivo a un grupo del que el usuario ya sea miembro. Como usuario `root`, el comando chgrp puede utilizarse para cambiar el grupo propietario de cualquier archivo a cualquier grupo.
+
 - `-R` La opcion de recursividad para cambiar todos los archivos de grupo
 
 Cambio al grupo `games` el archivo sample
 
 ```bash
 chgrp games sample
+```
+
+### Comando `stat`
+
+ El comando stat muestra información más detallada acerca de un archivo.
+
+```bash
+stat Documents/                                           
+File: `Documents'
+Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: c7h/199d        Inode: 73669082    Links: 2                
+Access: (0755/drwxr-xr-x)  Uid: ( 1001/sysadmin)   Gid: ( 1001/sysadmin)
+Access: 2020-01-10 21:37:13.450191690 +0000
+Modify: 2016-03-14 17:34:24.000000000 +0000
+Change: 2020-01-10 21:37:13.414190649 +0000
+Birth: -
 ```
 
 ### Comando `id`
@@ -1983,21 +2107,21 @@ CREATE_MAIL_SPOOL=yes
 El comando `usermod` ofrece muchas opciones para modificar una cuenta de usuario existente. 
 Tiene casi las mismas opciones que `useradd`
 
-Opción corta	|Opción larga|	Descripción
--|-|-
-`-c`	|`COMMENT`|	Establecer el valor del campo GECOS o comentario a COMMENT.
-`-d`  `HOME_DIR` | `--home` `HOME_DIR` |	Establecer un nuevo directorio home para el usuario.
-`-e`  `EXPIRE_DATE`|	`--expiredate ` `EXPIRE_DATE`	|Configurar la fecha de caducidad de la cuenta a EXPIRE_DATE.
-`-f`  `INACTIVE`|	`--inactive ` `INACTIVE`	|Configurar la cuenta para permitir acceso INACTIVE días después de que la contraseña caduque.
-`-g`  `GROUP`|	`--gid ` `GROUP`	|Establecer GROUP como grupo primario.
-`-G`  `GROUPS`|	`--groups ` `GROUPS`	|Establecer grupos adicionales a una lista especificada en GROUPS.
-`-a`|	`--append`|	Añadir grupos adicionales del usuario especificados por -G.
-`-h`|	`--help`|	Mostrar la ayuda para usermod.
-`-l` `NEW_LOGIN` |	`--login` `NEW_LOGIN` |	Cambiar el nombre de inicio de sesión del usuario.
-`-L`|	`--lock` |	Bloquear la cuenta de usuario.
-`-s` `SHELL`	| `--shell` `SHELL` |	Especificar el shell de inicio de sesión para la cuenta.
-`-u` `NEW_UID`	| `--uid` `NEW_UID` |	Especificarque el UID del usuario sea NEW_UID.
-`-U`|	`--unlock` |	Desbloquear la cuenta de usuario.
+| Opción corta        | Opción larga                  | Descripción                                                                                   |
+| ------------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
+| `-c`                | `COMMENT`                     | Establecer el valor del campo GECOS o comentario a COMMENT.                                   |
+| `-d`  `HOME_DIR`    | `--home` `HOME_DIR`           | Establecer un nuevo directorio home para el usuario.                                          |
+| `-e`  `EXPIRE_DATE` | `--expiredate ` `EXPIRE_DATE` | Configurar la fecha de caducidad de la cuenta a EXPIRE_DATE.                                  |
+| `-f`  `INACTIVE`    | `--inactive ` `INACTIVE`      | Configurar la cuenta para permitir acceso INACTIVE días después de que la contraseña caduque. |
+| `-g`  `GROUP`       | `--gid ` `GROUP`              | Establecer GROUP como grupo primario.                                                         |
+| `-G`  `GROUPS`      | `--groups ` `GROUPS`          | Establecer grupos adicionales a una lista especificada en GROUPS.                             |
+| `-a`                | `--append`                    | Añadir grupos adicionales del usuario especificados por -G.                                   |
+| `-h`                | `--help`                      | Mostrar la ayuda para usermod.                                                                |
+| `-l` `NEW_LOGIN`    | `--login` `NEW_LOGIN`         | Cambiar el nombre de inicio de sesión del usuario.                                            |
+| `-L`                | `--lock`                      | Bloquear la cuenta de usuario.                                                                |
+| `-s` `SHELL`        | `--shell` `SHELL`             | Especificar el shell de inicio de sesión para la cuenta.                                      |
+| `-u` `NEW_UID`      | `--uid` `NEW_UID`             | Especificarque el UID del usuario sea NEW_UID.                                                |
+| `-U`                | `--unlock`                    | Desbloquear la cuenta de usuario.                                                             |
 
 *Agrego un usuario a otro grupo*; estoy agregando a `jane` al grupo `develomenent`
 
@@ -2010,6 +2134,7 @@ usermod -aG development jane
 Eliminar un usuario del sistema. Borrar un usuario sin borrar su directorio home significa que los archivos del directorio home del usuario son ahora huérfanos.
 
 Opciones:
+
   - `-r` elimina su directorio `home`
 
 Solo elimina el usuario sin eliminar ningun archivo

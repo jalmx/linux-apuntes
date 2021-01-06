@@ -1894,6 +1894,28 @@ groupdel [name_group]
 groupdel clerks
 ```
 
+### Comando `newgrp`
+
+- ```log in to a new group ```
+
+Es para cambiar al grupo primario del usario actual; una vez hecho el cambio verificar si cambio el grupo primario con el comando `id`. Ahora al crear documentos y arhivos, el grupo primario sera el nuevo asignado. El cambio del grupo es temporal hasta cerrar la sesión.
+
+```bash
+newgrp [name_group]
+```
+
+```bash
+newgrp research
+```
+
+*Se requieren privilegios administrativos para cambiar permanentemente el grupo primario del usuario. El usuario root ejecutaría el comando `usermod -g groupname username`.*
+
+### Comando `chgrp` `stat`
+
+Si quieres cambiar el grupo propietario de un archivo existente, puedes utilizar el comando `chgrp`
+
+
+
 ### Agregar usuarios - Comando `useradd`
 
 Opciones
@@ -1907,7 +1929,6 @@ Opciones
 - Al final el nombre del usuario
 
 Creando un usuario con `useradd`
-
 
 ```bash
  useradd -m xizuth #crea el usuario con todo por defecto y crea el directorio del home
@@ -2057,6 +2078,10 @@ mkdir {2000..2020}-{1..9}
 ```
 
 Creara carpertas con la nomeclatura 2000-1 hasta 2020-9, todas las combinaciones posibles
+
+## Propiedades de archivos
+
+Los usuarios poseen los archivos que crean. Mientras que esta propiedad puede cambiarse, esta función requiere privilegios administrativos. Aunque la mayoría de los comandos generalmente muestran al usuario propietario como un nombre, el sistema operativo en realidad asociará la propiedad del usuario con el UID para ese nombre de usuario. Cada archivo también tiene un grupo propietario.
 
 ## Extras
 

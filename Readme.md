@@ -190,7 +190,123 @@ chmod 754 abc.tx # rwxr-xr-
 
 ### Comando `umask`
 
+El comando umask es una característica que se utiliza para determinar los permisos predeterminados establecidos al crear un archivo o directorio. Los permisos predeterminados se determinan cuando el valor de umask se resta de los permisos máximos predeterminados permisibles. Los permisos máximos por defecto son diferentes para los archivos y para los directorios:
 
+Tipo|Permisos
+:-:|-
+archivo |	rw-rw-rw-
+directorios |	rwxrwxrwx
+
+Al ejercutar el comando 
+
+Usuarios normales
+
+```bash
+umask
+0002
+```
+
+Como `root`
+
+```bash
+umask
+0022
+```
+
+- El primer `0` indica que umask se da como un número octal.
+- El segundo `0` indica qué permisos hay que restar de los permisos por defecto de usuario propietario.
+- El tercer `0` indica qué permisos hay que restar de los permisos por defecto del grupo propietario.
+- El último número `2` indica qué permisos hay que restar de los permisos por defecto de otros.
+
+Para entender cómo funciona `umask`, supongamos que umask se establece en `027` y consideremos lo siguiente:
+
+ Significado |Valor 
+-|:-:
+File Default (valor predeterminado) |667
+Umask	|-027
+**Resultado**	|**640**
+
+La umask `027` significa que, por defecto los archivos nuevos recibirían los permisos `640` o `rw-r-----` tal como se demuestra a continuación:
+
+```bash
+umask 027
+touch sample
+ls -l sample
+-rw-r-----. 1 sysadmin sysadmin 0 Oct 28 20:14 sample
+```
+
+Debido a que los permisos predeterminados para los directorios son diferentes que para los archivos, una `umask 027` daría lugar a diferentes permisos iniciales sobre los nuevos directorios:
+
+Significado| Valor
+-|:-:
+Directory Default (valor predeterminado) |777
+Umask	|-027
+**Resultado**	|**750**
+
+La `umask 027` significa que, por defecto los directorios nuevos recibirían los permisos `750` o `rwxr-x-----` tal como se demuestra a continuación:
+
+```bash
+umask 027
+mkdir test-dir
+ls -ld test-dir
+drwxr-x---. 1 sysadmin sysadmin 4096 Oct 28 20:25 test-dir
+```
+
+*Cambiar permanentemente la `umask` requiere la modificación del archivo `.bashrc` que se encuentra en el directorio `home` del usuario.*
+
+### Permisos especiales `setuid`
+
+#### El Permiso `setuid`
+
+Cuando el `permiso setuid` se encuentra en un archivo binario ejecutable (un programa), el archivo binario se «ejecuta como» el propietario del archivo, no como el usuario que lo ejecuta. Este permiso se establece en una cierta cantidad de utilidades del sistema para que puedan ser manejados por los usuarios normales, pero ejecutados con los permisos root, proporcionando acceso a los archivos del sistema a los que el usuario normal normalmente no tiene acceso.
+
+Ejecutar el permiso setuid
+
+```bash
+chmod u+s file
+```
+
+```bash
+ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 31768 Jan 28 2010 /usr/bin/passwd
+```
+
+Para agregar el permiso setuid numéricamente, agrega 4000
+
+```bash
+chmod 4775 file
+```
+
+Retirar el permiso de `sertuid`
+
+```bash
+chmod u-s file
+```
+
+o
+
+```bash
+chmod 0775 file
+```
+
+#### El Permiso `setgid` en un Archivo
+
+El permiso `setgid` es similar a `setuid`, pero hace uso de los permisos del grupo propietario. En realidad, hay dos formas de permisos setgid: *`setgid` en un archivo y `setgid` en un directorio*. Cómo funciona el setgid depende de si se establece en un archivo o un directorio.
+
+Permite que un usuario ejecute un archivo binario ejecutable proporcionando un *acceso adicional (temporal) de grupo*.
+
+El comando `wall` puede ejecutar y mandar datos al grupo `tty` gracias a que tiene setgid. Esto no sería posible dado que las terminales `tty?` no permite que `otros` accedan a escribir.
+
+```bash
+ls -l /usr/bin/wall
+-rwxr-sr-x. 1 root tty 10996 Jul 19  2011 /usr/bin/wall
+```
+
+```bash
+ls -l /dev/tty?
+crw-------. 1 root tty  4, 0 Mar 29  2013 /dev/tty0
+crw--w----. 1 root tty  4, 1 Oct 21 19:57 /dev/tty1 #solo a lo que pertenencen al mismo grupo pueden escribir
+```
 
 ## Creación de un _alias_
 

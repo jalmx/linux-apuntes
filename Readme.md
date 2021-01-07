@@ -142,7 +142,7 @@ chown .group /path/to/file
 
 ### Método simbolico `chmod`
 
-```chmod nuevo_permiso nombre_de_archivo```
+`chmod nuevo_permiso nombre_de_archivo`
 
 Cuando se especifica el `nuevo_permiso`, comienzas por utilizar uno de los caracteres siguientes para indicar qué conjunto de permisos quieres cambiar:
 
@@ -165,24 +165,24 @@ chmod u=r-x abc.txt # al usario se le agrega read se quita write y de agrega exe
 
 ### Método númerico `chmod`
 
-Número|Significado
-:-:|-
-**4**	|read (leer)
-**2**	|write (escribir)
-**1**	|execute (ejecutar)
+| Número | Significado        |
+| :----: | ------------------ |
+| **4**  | read (leer)        |
+| **2**  | write (escribir)   |
+| **1**  | execute (ejecutar) |
 
 Usando una combinación de números del 0 al 7, cualquier combinación de permisos posible para leer, escribir y ejecutar se pueden especificar por un conjunto de permisos individuales.
 
-Valor |Equivalencia
-:-:|:-:
-**7**	|rwx
-**6**	|rw-
-**5**	|r-x
-**4**	|r--
-**3**	|-wx
-**2**	|-w-
-**1**	|--x
-**0**	|---
+| Valor | Equivalencia |
+| :---: | :----------: |
+| **7** |     rwx      |
+| **6** |     rw-      |
+| **5** |     r-x      |
+| **4** |     r--      |
+| **3** |     -wx      |
+| **2** |     -w-      |
+| **1** |     --x      |
+| **0** |     ---      |
 
 ```bash
 chmod 754 abc.tx # rwxr-xr-
@@ -192,10 +192,10 @@ chmod 754 abc.tx # rwxr-xr-
 
 El comando umask es una característica que se utiliza para determinar los permisos predeterminados establecidos al crear un archivo o directorio. Los permisos predeterminados se determinan cuando el valor de umask se resta de los permisos máximos predeterminados permisibles. Los permisos máximos por defecto son diferentes para los archivos y para los directorios:
 
-Tipo|Permisos
-:-:|-
-archivo |	rw-rw-rw-
-directorios |	rwxrwxrwx
+|    Tipo     | Permisos  |
+| :---------: | --------- |
+|   archivo   | rw-rw-rw- |
+| directorios | rwxrwxrwx |
 
 Al ejercutar el comando 
 
@@ -220,11 +220,11 @@ umask
 
 Para entender cómo funciona `umask`, supongamos que umask se establece en `027` y consideremos lo siguiente:
 
- Significado |Valor 
--|:-:
-File Default (valor predeterminado) |667
-Umask	|-027
-**Resultado**	|**640**
+ | Significado                         |  Valor  |
+ | ----------------------------------- | :-----: |
+ | File Default (valor predeterminado) |   667   |
+ | Umask                               |  -027   |
+ | **Resultado**                       | **640** |
 
 La umask `027` significa que, por defecto los archivos nuevos recibirían los permisos `640` o `rw-r-----` tal como se demuestra a continuación:
 
@@ -237,11 +237,11 @@ ls -l sample
 
 Debido a que los permisos predeterminados para los directorios son diferentes que para los archivos, una `umask 027` daría lugar a diferentes permisos iniciales sobre los nuevos directorios:
 
-Significado| Valor
--|:-:
-Directory Default (valor predeterminado) |777
-Umask	|-027
-**Resultado**	|**750**
+| Significado                              |  Valor  |
+| ---------------------------------------- | :-----: |
+| Directory Default (valor predeterminado) |   777   |
+| Umask                                    |  -027   |
+| **Resultado**                            | **750** |
 
 La `umask 027` significa que, por defecto los directorios nuevos recibirían los permisos `750` o `rwxr-x-----` tal como se demuestra a continuación:
 
@@ -597,7 +597,7 @@ drwxr-xr-x 1 root root 10 Jan 29  2015 ip-up.d
 
 ### Las Comillas
 
-Hay tres tipos de comillas que tienen significado especial para el shell Bash: comillas dobles `"`, comillas simples `'` y comilla invertida ` ` `. Cada conjunto de comillas indica al shell que debe tratar el texto dentro de las comillas de una manera distinta a la normal.
+Hay tres tipos de comillas que tienen significado especial para el shell Bash: comillas dobles `"`, comillas simples `'` y comilla invertida ` `` `. Cada conjunto de comillas indica al shell que debe tratar el texto dentro de las comillas de una manera distinta a la normal.
 
 #### Comillas Dobles
 
@@ -2058,7 +2058,7 @@ sysadmin pts/1    localhost        23:39    5.00s  0.00s  0.00s w
 | WHAT   | -bash       | El proceso actual que está ejecutando el usuario.                                                                      |
 ### Comando `last` `lastb`
 
-- ```show listing of last logged in users ```
+- `show listing of last logged in users`
 
 - `last` muestra cuando ingreso un usuario con exito
 - `lastb` muestra cuantas veces fallaron al ingresar
@@ -2136,7 +2136,7 @@ groupdel clerks
 
 ### Comando `newgrp`
 
-- ```log in to a new group ```
+- `log in to a new group`
 
 Es para cambiar al grupo primario del usario actual; una vez hecho el cambio verificar si cambio el grupo primario con el comando `id`. Ahora al crear documentos y arhivos, el grupo primario sera el nuevo asignado. El cambio del grupo es temporal hasta cerrar la sesión.
 

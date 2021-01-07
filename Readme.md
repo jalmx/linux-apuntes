@@ -1,6 +1,10 @@
 # NDG Linux Unhatched - NDG Linux Unhatched - Español (Notes)
 
-## Primer valor para un archivo
+## Propiedades de archivos
+
+Los usuarios poseen los archivos que crean. Mientras que esta propiedad puede cambiarse, esta función requiere privilegios administrativos. Aunque la mayoría de los comandos generalmente muestran al usuario propietario como un nombre, el sistema operativo en realidad asociará la propiedad del usuario con el UID para ese nombre de usuario. Cada archivo también tiene un grupo propietario.
+
+### Primer valor para un archivo
 
 | Símbolo | Tipo de archivo    | Descripción                                                                    |
 | ------- | ------------------ | ------------------------------------------------------------------------------ |
@@ -12,9 +16,9 @@
 | b       | archivo bloque     | Usado para comunicaciones con el equipo (hardware).                            |
 | c       | archivo carácter   | Usado para comunicaciones con el equipo (hardware)                             |
 
-## Permisos
+### Permisos
 
-```
+```bash
 - rw-r--r-- 1 sysadmin sysadmin 647 Dec 20  2017 hello.sh
 ```
 
@@ -60,11 +64,11 @@ chmod [<COJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO
 **Conjunto de permisos**
 
 | Símbolo | Significado                                                                                 |
-| ------- | ------------------------------------------------------------------------------------------- |
-| u       | Usuario: El usuario propietario del archivo.                                                |
-| g       | Grupo: El grupo propietario del archivo.                                                    |
-| o       | Otros: Cualquier otro que no sea el usuario propietario o un miembro del grupo propietario. |
-| a       | Todos: Se refiere al usuario, grupo, y todos los demás.                                     |
+| :-----: | ------------------------------------------------------------------------------------------- |
+|    u    | Usuario: El usuario propietario del archivo.                                                |
+|    g    | Grupo: El grupo propietario del archivo.                                                    |
+|    o    | Otros: Cualquier otro que no sea el usuario propietario o un miembro del grupo propietario. |
+|    a    | Todos: Se refiere al usuario, grupo, y todos los demás.                                     |
 
 **Acción**
 
@@ -73,14 +77,6 @@ chmod [<COJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO
 |    +    | Añadir permiso, si es necesario      |
 |    =    | Especificar el permiso exacto        |
 |    -    | Eliminar el permiso, si es necesario |
-
-**Permiso**
-
-| Símbolo | Significado        |
-| :-----: | ------------------ |
-|    r    | leer (read)        |
-|    w    | escribir (write)   |
-|    x    | ejecutar (execute) |
 
 ### Más detalles de permisos de archivos y directorios
 
@@ -254,7 +250,7 @@ drwxr-x---. 1 sysadmin sysadmin 4096 Oct 28 20:25 test-dir
 
 *Cambiar permanentemente la `umask` requiere la modificación del archivo `.bashrc` que se encuentra en el directorio `home` del usuario.*
 
-### Permisos especiales `setuid`
+### Permisos especiales `setuid` `setgid` `Sticky Bit`
 
 #### El Permiso `setuid`
 
@@ -308,18 +304,158 @@ crw-------. 1 root tty  4, 0 Mar 29  2013 /dev/tty0
 crw--w----. 1 root tty  4, 1 Oct 21 19:57 /dev/tty1 #solo a lo que pertenencen al mismo grupo pueden escribir
 ```
 
-## Creación de un _alias_
+#### El Permiso `setgid` en un Directorio
 
-Esto se aplica solo a la terminal actual, para que se quede permanente en el usario se debe agregar al archivo `.bashrc` o `.zshrc`, depende el `shell`.
+Cuando se establece en un directorio, `setgid` hace que los archivos creados en el directorio automáticamente sean propiedad del grupo que posee el directorio. *Esto es contrario a cómo funcionaría normalmente la propiedad de grupo de un archivo nuevo, ya que por defecto los archivos nuevos son propiedad del grupo primario del usuario que creó el archivo*
+
+Configurar el permiso `setgid`, agregar y quitar
 
 ```bash
-alias nombre_alias="comando combinado"
+chmod g+s <archivo|directorio> 
+chmod g-s <archivo|directorio>
 ```
 
-**Ejemplo:**
+Para retirar el permiso setgid numéricamente, resta 2000 de los permisos existentes del archivo:
 
 ```bash
-alias mycal="cal 2014"
+chmod 2775 <archivo|directorio>
+chmod 0775 <archivo|directorio>
+```
+
+*Entonces, ¿Por qué el administrador configuraría un directorio setgid?* En primer lugar, ten en cuenta las siguientes cuentas de usuario:
+
+- bob es miembro de payroll group
+- sue es miembro de staff group
+- tim es miembro de acct group
+
+Estos tres usuarios necesitan trabajar en un proyecto conjunto. Se acercan al administrador para solicitar un directorio compartido en el que puedan trabajar juntos, pero que nadie más pueda acceder a sus archivos. El administrador hace lo siguiente:
+
+- Crea un nuevo grupo llamado team.
+- Añade bob, sue y tim al grupo team.
+- Hace un nuevo directorio llamado `/home/team`.
+- Hace que el grupo propietario del directorio `/home/team` sea el grupo team.
+
+Otorga al directorio `/home/team` los siguientes permisos: `rwxrwx---`
+Como resultado, bob, sue y tim pueden acceder al directorio `/home/team` y agregar archivos. Sin embargo, hay un problema potencial: cuando bob crea un archivo en el directorio `/home/team`, los detalles del nuevo archivo se ven así:
+
+```bash
+-rw-r-----. 1 bob payroll 100 Oct 30 23:21 /home/team/file.txt
+```
+
+Desafortunadamente, mientras sue y tim pueden acceder al directorio `/home/team`, no pueden hacer nada con el archivo de bob. Sus permisos para ese archivo son los permisos de «otros» (`---`).
+
+Si el administrador estableciera el permiso setgid al directorio `/home/team`, entonces, cuando bob crea el archivo, se vería de la siguiente manera:
+
+```bash
+-rw-r-----. 1 bob team 100 Oct 30 23:21 /home/team/file.txt
+```
+
+Y como resultado, sue y tim tendrían acceso de grupo al archivo (`r--`).
+
+Ciertamente, bob podría cambiar la propiedad de grupo después de crear el archivo (o cambiar los permisos de «otros»), pero esto sería tedioso si se crearan muchos archivos nuevos. El permiso setgid hace que sea más fácil esta situación.
+
+Una `s` minúscula significa tanto los permisos de ejecución de setgid como los de grupo están establecidos. Una `S`mayúscula significa que sólo el permiso `setgid` está establecido y no el permiso de ejecución del grupo: `drwxrwSr-x`.
+
+Si ves una `S` mayúscula en la posición de ejecución del grupo, esto indica que, aunque se haya establecido el permiso `setgid`, en realidad no está realmente en efecto debido a que el grupo carece de los permisos de ejecución para utilizarlo.
+
+#### El Permiso Sticky Bit
+
+El permiso sticky bit se utiliza para evitar que otros usuarios eliminen los archivos de los que no son dueños en un directorio compartido.
+
+El permiso sticky bit permite que los archivos se puedan compartir con otros usuarios, cambiando el permiso de escritura en el directorio para que los usuarios aún puedan añadir y eliminar los archivos del directorio, pero los archivos sólo pueden ser borrados por el propietario del archivo o el usuario root.
+
+Agregar y quitar el permiso Sticky Bit
+
+```bash
+chmod o+t <directorio>
+chmod o-t <directorio>
+```
+
+Para retirar el permiso sticky bit numéricamente, resta 1000 de los permisos existentes del directorio:
+
+```bash
+chmod 1775 <archivo|directorio>
+chmod 0775 <directorio>
+```
+
+Una `t` minúscula significa que tanto el permiso `sticky bit` como los permisos de ejecución están establecidos para «otros». Una `T` mayúscula significa que sólo el permiso `sticky bit` está establecido: `drwxrwxrwT`.
+
+Mientras la `S` mayúscula indica un problema con los permisos `setuid` o `setgid`, una `T` mayúscula no indica necesariamente un problema, siempre y cuando el grupo propietario aún tenga permiso de ejecución.
+
+## Enlaces Físicos (duros) y los Enlaces Simbólicos (blandos)
+
+Cada método de enlace, físico o simbólico, resulta en el mismo acceso global, pero utilizan diferentes técnicas. Existen ventajas y desventajas de cada método, por lo que conocer ambas técnicas y cuando se usan es importante.
+
+### Vínculos Físicos
+
+Por cada archivo creado, hay un bloque de datos en el sistema de archivos que almacena la información meta del archivo. La información meta incluye información sobre el archivo, tal como los permisos, propiedades y marcas de tiempo. Información meta no incluye el nombre del archivo o el contenido del archivo, pero sí incluye casi toda la demás información sobre el archivo.
+
+A esta información meta se le llama la tabla de inodos del archivo. La tabla de inodos también incluye punteros a otros bloques en el sistema de archivos llamados bloques de datos donde se almacenan los datos.
+
+Cada archivo en una partición tiene un número de identificación único llamado número de inodo. La tabla de inodos no incluye el nombre del archivo.
+
+`Los enlaces físicos es que no se pueden crear en directorios.`
+
+| Archivo  | inode |
+| -------- | :---: |
+| *passwd* | *123* |
+| shadow   |  175  |
+| group    |  144  |
+
+Los enlaces físicos son dos nombres de archivo que apuntan al mismo inodo. Por ejemplo, considera las siguientes entradas de directorio:
+| Archivo    | inode |
+| ---------- | :---: |
+| *passwd*   | *123* |
+| *mypasswd* | *123* |
+| shadow     |  175  |
+| group      |  144  |
+
+Creacion de un enlace fisico
+
+```bash
+ln [path/file_original] [path/name_link]
+```
+
+Tienen el mismo `inode` -> `278772`, el `2` indica el numero de enlaces que tienen los archivos
+
+```bash
+ln file.original file.hard.1
+ls -li file.*
+278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1
+278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original
+```
+
+#### Enlaces Simbólicos (blandos)
+
+Un enlace simbólico es simplemente un archivo que apunta a otro archivo.
+
+```bash
+ls -l /etc/grub.conf
+lrwxrwxrwx. 1 root root 22 Feb 15  2011 /etc/grub.conf -> ../boot/grub/grub.conf
+```
+
+Creando enlace simbolico, se agrega la opcion `-s`
+
+```bash
+ln -s [path/file] [path/new_link]
+```
+
+Si intentaras ver el contenido del archivo (enlace simbolico), éste seguiría el puntero y mostraría el contenido del archivo original
+
+```bash
+ln -s /etc/passwd mypasswd
+sysadmin@localhost:~$  ls -l mypasswd
+lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd
+```
+
+**Encontrar los arhivos que tienen enlances duros**
+
+```bash
+ls -i file.original 
+278772 file.original
+sysadmin@localhost:~$ find / -inum 278772 2> /dev/null
+/home/sysadmin/file.hard.1
+/home/sysadmin/file.original
 ```
 
 ## Comando `w`
@@ -459,7 +595,7 @@ Su Mo Tu We Th Fr Sa
 29 30
 ```
 
-### Comando (history)
+### Comando `history`
 
 Historial de comandos
 
@@ -558,7 +694,19 @@ el shell primero busca el comando en el directorio `/home/sysadmin/bin`. Si el c
 
 Un alias puede utilizarse para asignar comandos más largos a secuencias más cortas. Cuando el shell ve un alias ejecutado, sustituye la secuencia más larga antes de proceder a interpretar los comandos.
 
+Esto se aplica solo a la terminal actual, para que se quede permanente en el usario se debe agregar al archivo `.bashrc` o `.zshrc`, depende el `shell`.
+
+```bash
+alias nombre_alias="comando combinado"
+```
+
 Los nuevos alias se pueden crear introduciendo alias `name=command` (o «alias nombre=comando» en español), donde nombre es el nombre que quieres dar a el alias y comando es el comando que quieres que se ejecute cuando se ejecuta el alias.
+
+**Ejemplo:**
+
+```bash
+alias mycal="cal 2014"
+```
 
 ```bash
 sysadmin@localhost:~$ alias lh='ls -Shl'
@@ -2306,9 +2454,128 @@ MD5_CRYPT_ENAB    no
 | ENCRYPT_METHOD  | SHA512          | El método de cifrado que se utiliza para cifrar las contraseñas de los usuarios en el archivo `/etc/shadow`. El valor de `ENCRYPT_METHOD` anula la configuración de `MD5_CRYPT_ENAB`.                                                                                                                                                                                                                                                                                                                                                                        |
 | MD5_CRYPT_ENAB  | no              | Este ajuste obsoleto originalmente permitía al administrador especificar el uso del cifrado de contraseñas `MD5` en lugar del cifrado original `DES`. Ahora es reemplazado por el valor de `ENCRYPT_METHOD`.                                                                                                                                                                                                                                                                                                                                                 |
 
-### Cambiando la contraseña de un usuario
+### Cambiando la contraseña de un usuario - Comando `passwd`
 
 Ejecutando el comando `passwd [name_user]`, si todo sale bien, se actualiza el archivo `etc/shadow`
+
+## Estándar de Jerarquía del Sistema de Archivos
+
+Entre los estándares soportados por la Fundación Linux está el Estándar de Jerarquía del Sistema de Archivos (FHS), que está alojado en la URL http://www.pathname.com/fhs.
+
+Un estándar es un conjunto de reglas o directrices que se recomiendan a seguir. Sin embargo, estas directrices sin duda pueden romperse, ya sea por las distribuciones enteras o por los administradores en las máquinas individuales.
+
+El estándar FHS categoriza cada directorio del sistema de dos maneras:
+
+Un directorio puede ser categorizado como compartible o no, es decir, si el directorio puede ser compartido en una red y utilizado por varios equipos.
+El directorio se pone en una categoría de tener archivos estáticos (el contenido del archivo no cambiará) o archivos variables (el contenido del archivo puede cambiar).
+Con el fin de poder hacer estas clasificaciones, a menudo es necesario hacer referencia a los subdirectorios debajo del nivel superior de los directorios. Por ejemplo, el directorio /var en sí no puede ser clasificado como compartible o no compartible, pero uno de sus subdirectorios, el directorio /var/mail, es compartible. Por el contrario, el directorio /var/lock no debe ser compartible.
+
+No compartible	Compartible
+Variable	/var/lock	/var/mail
+Estático	/etc	/opt
+
+El estándar FHS define cuatro jerarquías de directorios utilizados en la organización de los archivos del sistema de archivos. El nivel superior o jerarquía root viene seguido por:
+
+Directorio	Propósito del Directorio
+/	La base de la estructura, o el root del sistema de archivos, este directorio unifica todos los directorios independientemente si son particiones locales, dispositivos extraíbles o recursos compartidos de red
+/bin	Para mantener binarios esenciales como los comandos ls, cp, y rm, y ser parte del sistema de archivos root.
+/boot	Contiene los archivos necesarios para arrancar el sistema, como el kernel de Linux y los archivos de configuración asociados
+/dev	Viene rellenado de archivos que representan los dispositivos de hardware y otros archivos especiales, tales como los archivos /dev/null y /dev/zero
+/etc	Contiene los archivos de configuración de host esenciales, como los archivos /etc/hosts o /etc/passwd
+/home	La ubicación de los directorios home de los usuarios
+/lib	Las librerías esenciales de soporte para los archivos ejecutables en los directorios /bin y /sbin
+/lib<qual>	Las librerías esenciales creadas para una arquitectura específica. Por ejemplo, el directorio /lib64 para los procesadores de 64 bit AMD/Intel x86 compatibles
+/media	El punto de montaje para los medios extraíbles que se montan automáticamente
+/mnt	Un punto de montaje para montar temporalmente sistemas de archivos de manera manual
+/opt	Ubicación opcional de la instalación de software de terceros
+/proc	Un sistema de archivos virtual para que el kernel reporte procesos y otra información
+/root	El directorio inicial del usuario root
+/sbin	Los binarios esenciales del sistema utilizados principalmente por el usuario root
+/sys	Un sistema de archivos virtual que contiene información acerca de los dispositivos de hardware conectados al sistema
+/srv	Ubicación donde los servicios específicos del sitio pueden estar alojados
+/tmp	Directorio en el que todos los usuarios tienen permiso para crear archivos temporales que deberían ser borrados durante el arranque (pero a menudo no es así)
+/usr	La segunda jerarquía de archivos que no son esenciales para el uso de múltiples usuarios
+/usr/local	La tercera jerarquía de archivos para software que no sea originario de la distribución
+/var	La jerarquía /var contiene archivos que cambian durante el tiempo
+/var/cache	Archivos utilizados para almacenar en caché, los datos de la aplicación
+/var/log	El directorio donde se ubica la mayoría de los archivos de registro
+/var/lock	Ubicación para guardar los archivos de bloqueo de los recursos compartidos
+/var/spool	Ubicación para almacenar los archivos spool de impresión y correo
+/var/tmp	Los archivos temporales que se deben conservar entre los reinicios
+La segunda y la tercera jerarquía, que se encuentra bajo los directorios /usr y /usr/local, repiten el patrón de muchos de los directorios clave que se encuentran debajo de la primera jerarquía o el sistema de archivos root. La cuarta jerarquía, el directorio /var, también repite algunos de los directorios de primer nivel, como lib, opt y tmp.
+
+Cuando el sistema de archivos root y su contenido se consideran esenciales o necesarios para arrancar el sistema, los directorios /var, /usr y /usr/local no se consideran esenciales para el proceso de arranque. Como resultado, el sistema de archivos root y sus directorios pueden ser los únicos disponibles en ciertas situaciones, tales como arrancar en modo de usuario único, un entorno diseñado para la solución de problemas del sistema.
+
+El directorio /usr sirve para contener software para su uso por varios usuarios. El directorio /usr a veces se comparte a través de la red y se monta como de sólo lectura. Los directorios comunes de segundo nivel se describen en la siguiente tabla:
+
+Directorio	Propósito del Directorio
+/usr/bin	Los binarios para el usuario común, usados cuando el sistema está en modo multiusuario
+/usr/include	Los archivos que se incluyen para compilar el software de distribución
+/usr/lib	Las librerías de soporte para los archivos ejecutables en los directorios /usr/bin y /usr/sbin
+/usr/lib<qual>	Las librerías no esenciales creadas para una arquitectura específica
+/usr/libexec	Los programas ejecutables utilizados por otros programas y no directamente por los usuarios
+/usr/sbin	Los binarios del sistema para su uso por el administrador en modo multiusuario
+/usr/share	Ubicación para almacenar documentación de software y otros datos de aplicación
+/usr/src	El código fuente para compilar el kernel
+La jerarquía /usr/local sirve para la instalación del software que no se origina con la distribución. A menudo, este directorio se utiliza para software que se complia a partir del código fuente. Los directorios de tercer nivel comunes que se encuentran bajo el directorio /usr/local se describen en la siguiente tabla:
+
+Directorio	Propósito del Directorio
+/usr/local/bin	Los binarios de software locales para el uso de un usuario ordinario
+/usr/local/etc	Los archivos de configuración de software locales
+/usr/local/include	Los archivos que necesitan ser incluidos con el fin de compilar el código fuente local
+/usr/local/lib	Los archivos de la librería de soporte para los archivos ejecutables en los directorios /usr/local/bin y /usr/local/sbin
+/usr/local/libexec	Los programas ejecutables utilizados por otros programas y no directamente por los usuarios
+/usr/local/sbin	Los binarios locales para uso del administrador del sistema
+/usr/local/share	Ubicación para almacenar las páginas man, páginas de información, y otra información de aplicaciones locales
+/usr/local/src	La ubicación en la que menudo se coloca el código fuente de software para ser compilado localmente
+
+### La Organización Dentro de la Jerarquía del Sistema de Archivos
+
+Aunque el estándar FHS es útil para una comprensión detallada de la disposición de los directorios utilizados por la mayoría de las distribuciones de Linux, a continuación se ofrece una descripción más generalizada de la estructura de los directorios como realmente existen en una distribución típica de Linux.
+
+Los Directorios Home
+
+El directorio /home tendrá típicamente un directorio inferior para cada cuenta de usuario. Por ejemplo, el usuario bob normalmente tendrá su directorio home de /home/bob. Normalmente, sólo el usuario bob tendrá acceso a este directorio. Sin ser asignados permisos especiales en otros directorios, un usuario normalmente sólo puede crear archivos en su directorio home, en el directorio /tmp y el directorio /var/tmp.
+
+Los Directorios Binarios
+
+Los directorios binarios contienen programas que los usuarios y los administradores ejecutarán para iniciar los procesos o las aplicaciones del sistema. Los directorios binarios, que están destinados a ser utilizados por los usuarios sin privilegios, incluyen los directorios /bin, /usr/bin y /usr/local/bin. A veces el software de terceros también almacenará sus archivos ejecutables en los directorios, tales como /usr/local/application/bin y /opt/application/bin. Además, no es inusual que cada usuario tenga su propio directorio bin ubicado en su directorio home, tal como /home/bob/bin.
+
+Por otra parte, los directorios sbin están destinados principalmente a ser utilizados por el administrador del sistema (usuario root). Estos por lo general incluyen los directorios /sbin, /usr/sbin y /usr/local/sbin, aunque las aplicaciones administrativas de terceros también podrían utilizar directorios como /usr/local/application/sbin o /opt/application/sbin.
+
+Dependiendo de la distribución, la variable PATH puede no contener todos los directorios bin y sbin. Con el fin de poder ejecutar un comando en uno de estos directorios, el directorio debe ser incluido en la lista de las variables PATH o el usuario tiene que especificar la ruta al comando, por ejemplo: /sbin/ifconfig.
+
+Los Directorios de las Aplicaciones de Software
+
+A diferencia del sistema operativo Windows, donde las aplicaciones pueden tener todos sus archivos instalados en un único subdirectorio bajo el directorio C:\Program Files, las aplicaciones de Linux pueden tener sus archivos en varios directorios repartidos a lo largo del sistema de archivos de Linux. Para las distribuciones Debian, puedes ejecutar la aplicación dpkg -L para obtener la lista de ubicación de los archivos. En las distribuciones de Red Hat, puedes ejecutar la aplicación rpm -ql para listar la de ubicación de los archivos que pertenecen a esa aplicación.
+
+Los archivos binarios de los programas ejecutables pueden ir en el directorio /usr/bin, si vienen incluidos en el sistema operativo, o de lo contrario pueden ir a los directorios /usr/local/bin o /opt/application/bin en caso de que procedan de un tercero.
+
+Los datos para la aplicación pueden ser almacenados en uno de los siguientes subdirectorios: /usr/share, /usr/lib, /opt/application o /var/lib.
+
+El archivo relacionado con la documentación se puede almacenar en uno de los siguientes subdirectorios: /usr/share/doc, /usr/share/man o /usr/share/info.
+
+El archivo(s) de configuración global para una aplicación muy probablemente se almacene en un subdirectorio bajo el directorio /etc, mientras que los archivos de configuración personalizados (específicos para un usuario) para la aplicación están, probablemente, en un subdirectorio oculto del directorio home del usuario.
+
+Los Directorios de Librerías
+
+Las librerías son archivos que contienen código que se comparte entre varios programas. La mayoría de los nombres de archivo de la librería terminan con una extensión de archivo .so, lo que significa objeto compartido (shared object).
+
+Puede haber varias versiones de una librería debido a que el código puede ser diferente dentro de cada archivo a pesar de que puede llevar a cabo funciones similares a las otras versiones de la librerías. Una de las razones por las que el código puede ser diferente, a pesar de que puede hacer lo mismo que otro archivo de la biblioteca, es que está compilado para ejecutarse en un tipo diferente de procesador. Por ejemplo, es habitual que los sistemas que utilizan un código diseñado para los procesadores de tipo Intel/AMD de 64 bits, tengan las dos bibliotecas, la de 32 bits y de 64 bits.
+
+Las librerías que dan soporte a los programas binarios esenciales que se encuentran en los directorios /bin y /sbin típicamente se encuentran en /lib o /lib64.
+
+Para dar soporte a los ejecutables /usr/bin y /usr/sbin, normalmente se usan los directorios librerías /usr/lib y /usr/lib64.
+
+Para dar soporte a las aplicaciones que no se distribuyen con el sistema operativo, a menudo se utilizan los directorios librería /usr/local/lib y /opt/application/lib.
+
+Los Directorios de Datos Variables
+
+Los directorios /var y muchos de sus subdirectorios pueden contener datos que vayan a cambiar con frecuencia. Si el sistema se utiliza para correo electrónico, normalmente se utilizará /var/mail o /var/spool/mail para almacenar los datos de correo electrónico del usuario. Si vas a imprimir desde tu sistema, entonces el directorio /var/spool/cups se utilizará para almacenar temporalmente los trabajos de impresión.
+
+Dependiendo de los eventos que el sistema está registrando y la cantidad de actividad que hay en el sistema, se determinará el tamaño de tu archivo de registro. En un sistema ocupado, puede haber una considerable cantidad de datos en los archivos de registro. Estos archivos se almacenan en el directorio /var/log.
+
+Mientras que los archivos de registro pueden ser extremadamente útiles para solucionar los problemas, también pueden causar problemas. Una de las principales preocupaciones de todos estos directorios es que pueden llenar rápidamente el espacio del disco en un sistema activo. Si el directorio /var no es una partición separada, entonces el sistema de archivos root se podría llenar por completo y bloquear el sistema.
 
 ## Trucos
 
@@ -2319,10 +2586,6 @@ mkdir {2000..2020}-{1..9}
 ```
 
 Creara carpertas con la nomeclatura 2000-1 hasta 2020-9, todas las combinaciones posibles
-
-## Propiedades de archivos
-
-Los usuarios poseen los archivos que crean. Mientras que esta propiedad puede cambiarse, esta función requiere privilegios administrativos. Aunque la mayoría de los comandos generalmente muestran al usuario propietario como un nombre, el sistema operativo en realidad asociará la propiedad del usuario con el UID para ese nombre de usuario. Cada archivo también tiene un grupo propietario.
 
 ## Extras
 

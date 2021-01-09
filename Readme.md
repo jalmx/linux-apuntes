@@ -947,7 +947,7 @@ updatedb
 - `-r` los ordena de forma inversa
 
 
-### Comando copiar `cp`
+### Comando `cp`
 
 `cp` - copy files and directories
 
@@ -964,6 +964,40 @@ Argumentos
 - `-r` copia el directorio completo
   - `cp -r /usr/share/doc /home/usuario/`
 
+### Comando `dd`
+
+- `El comando dd se utiliza para copiar archivos o particiones enteras al nivel de bits.`
+
+- Se puede usar para clonar o eliminar (wipe) discos o particiones enteras.
+- Se puede usar para copiar datos no procesados (raw) a dispositivos extraíbles como dispositivos USB o CD ROMS.
+- Se puede usar para realizar una copia de reserva (backup) y restituir el MBR (Master Boot Record).
+- Se puede usar para crear un archivo de un tamaño específico lleno de ceros binarios, el cual puede utilizarse como archivo de intercambio (swap file) (memoria virtual).
+
+```bash
+dd [OPCIONES] OPERANDO
+```
+
+Creará un archivo denominado /tmp/swapex con 50 bloques de ceros de un megabyte de tamaño
+
+```bash
+dd if=/dev/zero of=/tmp/swapex bs=1M count=50 
+50+0 records in
+50+0 records out
+52428800 bytes (52 MB) copied, 0.825745 s, 635 MB/s
+```
+
+Clonar de un disco duro `/dev/sda` a otro `/dev/sdb` ejecute el siguiente comando:
+
+```bash
+dd if=/dev/sda of=/dev/sdb
+```
+
+Argumento	|Descripción
+-|-
+if |Archivo de entrada (*Input File*): El archivo de entrada que se va a leer. `if=/dev/zero` <br> El ejemplo lee el archivo `/dev/zero`, un archivo especial que contiene un número ilimitado de ceros.
+of|Archivo de salida (*Output File*): El archivo de salida que se va a escribir. `of=/tmp/swapex`
+bs|Tamaño de bloque (Block Size): El tamaño de bloque que se va a utilizar. De forma predeterminada, el valor se presenta en bytes. Utilice los sufijos siguientes para especificar otras unidades: `K`, `M`, `G` y `T` para kilobytes, megabytes, gigabytes y terabytes respectivamente. <br> `bs=1M` <br> En el ejemplo se utiliza un tamaño de bloque de un megabyte.
+count	| Recuento: El número de bloques que se van a leer desde el archivo de entrada. <br> `count=50` <br>  En este ejemplo se leen 50 bloques.
 
 ### Comando mover `mv`
 
@@ -1585,6 +1619,27 @@ Si queremos seleccionar con el `*` en la busqueda, se debe escapar el caracter
 ```bash
 grep "cd\*" example
 ab`cd*`
+```
+
+ El patrón r..f encontrará cualquier línea que contenga la letra r seguida de exactamente dos caracteres (que pueden ser cualquier carácter excepto el de nueva línea) y luego la letra f:
+
+```bash
+grep 'r..f' red.txt
+reef
+roof
+```
+
+Este carácter se puede utilizar tantas veces como se desee. Para encontrar todas las palabras de al menos cuatro caracteres se puede utilizar el siguiente patrón:
+
+```bash
+sysadmin@localhost:~/Documents$ grep '....' red.txt
+reef
+reeed
+roof
+reed
+root
+reel
+read
 ```
 
 ### Expresiones regulares Extendidas

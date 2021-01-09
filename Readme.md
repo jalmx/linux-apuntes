@@ -2460,122 +2460,142 @@ Ejecutando el comando `passwd [name_user]`, si todo sale bien, se actualiza el a
 
 ## Estándar de Jerarquía del Sistema de Archivos
 
-Entre los estándares soportados por la Fundación Linux está el Estándar de Jerarquía del Sistema de Archivos (FHS), que está alojado en la URL http://www.pathname.com/fhs.
-
-Un estándar es un conjunto de reglas o directrices que se recomiendan a seguir. Sin embargo, estas directrices sin duda pueden romperse, ya sea por las distribuciones enteras o por los administradores en las máquinas individuales.
+Entre los estándares soportados por la Fundación Linux está el **[Estándar de Jerarquía del Sistema de Archivos (FHS)](http://www.pathname.com/fhs)**.
 
 El estándar FHS categoriza cada directorio del sistema de dos maneras:
 
-Un directorio puede ser categorizado como compartible o no, es decir, si el directorio puede ser compartido en una red y utilizado por varios equipos.
-El directorio se pone en una categoría de tener archivos estáticos (el contenido del archivo no cambiará) o archivos variables (el contenido del archivo puede cambiar).
-Con el fin de poder hacer estas clasificaciones, a menudo es necesario hacer referencia a los subdirectorios debajo del nivel superior de los directorios. Por ejemplo, el directorio /var en sí no puede ser clasificado como compartible o no compartible, pero uno de sus subdirectorios, el directorio /var/mail, es compartible. Por el contrario, el directorio /var/lock no debe ser compartible.
+1. Un directorio puede ser categorizado como compartible o no, es decir, si el directorio puede ser compartido en una red y utilizado por varios equipos.
+2. El directorio se pone en una categoría de tener archivos estáticos (el contenido del archivo no cambiará) o archivos variables (el contenido del archivo puede cambiar).
 
-No compartible	Compartible
-Variable	/var/lock	/var/mail
-Estático	/etc	/opt
+Con el fin de poder hacer estas clasificaciones, a menudo es necesario hacer referencia a los subdirectorios debajo del nivel superior de los directorios. Por ejemplo, el directorio `/var` en sí no puede ser clasificado como compartible o no compartible, pero:
 
-El estándar FHS define cuatro jerarquías de directorios utilizados en la organización de los archivos del sistema de archivos. El nivel superior o jerarquía root viene seguido por:
+| Tipo     | No compartible | Compartible |
+| -------- | :------------: | :---------: |
+| Variable |   /var/lock    |  /var/mail  |
+| Estático |      /etc      |    /opt     |
 
-Directorio	Propósito del Directorio
-/	La base de la estructura, o el root del sistema de archivos, este directorio unifica todos los directorios independientemente si son particiones locales, dispositivos extraíbles o recursos compartidos de red
-/bin	Para mantener binarios esenciales como los comandos ls, cp, y rm, y ser parte del sistema de archivos root.
-/boot	Contiene los archivos necesarios para arrancar el sistema, como el kernel de Linux y los archivos de configuración asociados
-/dev	Viene rellenado de archivos que representan los dispositivos de hardware y otros archivos especiales, tales como los archivos /dev/null y /dev/zero
-/etc	Contiene los archivos de configuración de host esenciales, como los archivos /etc/hosts o /etc/passwd
-/home	La ubicación de los directorios home de los usuarios
-/lib	Las librerías esenciales de soporte para los archivos ejecutables en los directorios /bin y /sbin
-/lib<qual>	Las librerías esenciales creadas para una arquitectura específica. Por ejemplo, el directorio /lib64 para los procesadores de 64 bit AMD/Intel x86 compatibles
-/media	El punto de montaje para los medios extraíbles que se montan automáticamente
-/mnt	Un punto de montaje para montar temporalmente sistemas de archivos de manera manual
-/opt	Ubicación opcional de la instalación de software de terceros
-/proc	Un sistema de archivos virtual para que el kernel reporte procesos y otra información
-/root	El directorio inicial del usuario root
-/sbin	Los binarios esenciales del sistema utilizados principalmente por el usuario root
-/sys	Un sistema de archivos virtual que contiene información acerca de los dispositivos de hardware conectados al sistema
-/srv	Ubicación donde los servicios específicos del sitio pueden estar alojados
-/tmp	Directorio en el que todos los usuarios tienen permiso para crear archivos temporales que deberían ser borrados durante el arranque (pero a menudo no es así)
-/usr	La segunda jerarquía de archivos que no son esenciales para el uso de múltiples usuarios
-/usr/local	La tercera jerarquía de archivos para software que no sea originario de la distribución
-/var	La jerarquía /var contiene archivos que cambian durante el tiempo
-/var/cache	Archivos utilizados para almacenar en caché, los datos de la aplicación
-/var/log	El directorio donde se ubica la mayoría de los archivos de registro
-/var/lock	Ubicación para guardar los archivos de bloqueo de los recursos compartidos
-/var/spool	Ubicación para almacenar los archivos spool de impresión y correo
-/var/tmp	Los archivos temporales que se deben conservar entre los reinicios
-La segunda y la tercera jerarquía, que se encuentra bajo los directorios /usr y /usr/local, repiten el patrón de muchos de los directorios clave que se encuentran debajo de la primera jerarquía o el sistema de archivos root. La cuarta jerarquía, el directorio /var, también repite algunos de los directorios de primer nivel, como lib, opt y tmp.
+### `/` root
 
-Cuando el sistema de archivos root y su contenido se consideran esenciales o necesarios para arrancar el sistema, los directorios /var, /usr y /usr/local no se consideran esenciales para el proceso de arranque. Como resultado, el sistema de archivos root y sus directorios pueden ser los únicos disponibles en ciertas situaciones, tales como arrancar en modo de usuario único, un entorno diseñado para la solución de problemas del sistema.
+El estándar **FHS** define cuatro jerarquías de directorios utilizados en la organización de los archivos del sistema de archivos. El nivel superior o jerarquía `root` viene seguido por:
 
-El directorio /usr sirve para contener software para su uso por varios usuarios. El directorio /usr a veces se comparte a través de la red y se monta como de sólo lectura. Los directorios comunes de segundo nivel se describen en la siguiente tabla:
+| Directorio | Propósito del Directorio                                                                                                                                                                                        |
+| :--------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     /      | La base de la estructura, o el root del sistema de archivos, este directorio unifica todos los directorios independientemente si son particiones locales, dispositivos extraíbles o recursos compartidos de red |
+|    /bin    | Para mantener binarios esenciales como los comandos `ls`, `cp`, y `rm`, y ser parte del sistema de archivos root.                                                                                               |
+|   /boot    | Contiene los archivos necesarios para arrancar el sistema, como el kernel de Linux y los archivos de configuración asociados                                                                                    |
+|    /dev    | Viene rellenado de archivos que representan los dispositivos de hardware y otros archivos especiales, tales como los archivos `/dev/null` y `/dev/zero`                                                         |
+|    /etc    | Contiene los archivos de configuración de host esenciales, como los archivos `/etc/hosts` o `/etc/passwd`                                                                                                       |
+|   /home    | La ubicación de los directorios home de los usuarios                                                                                                                                                            |
+|    /lib    | Las librerías esenciales de soporte para los archivos ejecutables en los directorios `/bin` y `/sbin`                                                                                                           |
+| /lib<qual> | Las librerías esenciales creadas para una arquitectura específica. Por ejemplo, el directorio `/lib64` para los procesadores de 64 bit AMD/Intel x86 compatibles                                                |
+|   /media   | El punto de montaje para los medios extraíbles que se montan automáticamente                                                                                                                                    |
+|    /mnt    | Un punto de montaje para montar temporalmente sistemas de archivos de manera manual                                                                                                                             |
+|    /opt    | Ubicación opcional de la instalación de software de terceros                                                                                                                                                    |
+|   /proc    | Un sistema de archivos virtual para que el kernel reporte procesos y otra información                                                                                                                           |
+|   /root    | El directorio inicial del `usuario root`                                                                                                                                                                        |
+|   /sbin    | Los binarios esenciales del sistema utilizados principalmente por el usuario root                                                                                                                               |
+|    /sys    | Un sistema de archivos virtual que contiene información acerca de los dispositivos de hardware conectados al sistema                                                                                            |
+|    /srv    | Ubicación donde los servicios específicos del sitio pueden estar alojados                                                                                                                                       |
+|    /tmp    | Directorio en el que todos los usuarios tienen permiso para crear archivos temporales que deberían ser borrados durante el arranque (pero a menudo no es así)                                                   |
+|    /usr    | La segunda jerarquía de archivos que no son esenciales para el uso de múltiples usuarios                                                                                                                        |
+| /usr/local | La tercera jerarquía de archivos para software que no sea originario de la distribución                                                                                                                         |
+|    /var    | La jerarquía `/var` contiene archivos que cambian durante el tiempo                                                                                                                                             |
+| /var/cache | Archivos utilizados para almacenar en caché, los datos de la aplicación                                                                                                                                         |
+|  /var/log  | El directorio donde se ubica la mayoría de los archivos de registro                                                                                                                                             |
+| /var/lock  | Ubicación para guardar los archivos de bloqueo de los recursos compartidos                                                                                                                                      |
+| /var/spool | Ubicación para almacenar los archivos spool de impresión y correo                                                                                                                                               |
+|  /var/tmp  | Los archivos temporales que se deben conservar entre los reinicios                                                                                                                                              |
 
-Directorio	Propósito del Directorio
-/usr/bin	Los binarios para el usuario común, usados cuando el sistema está en modo multiusuario
-/usr/include	Los archivos que se incluyen para compilar el software de distribución
-/usr/lib	Las librerías de soporte para los archivos ejecutables en los directorios /usr/bin y /usr/sbin
-/usr/lib<qual>	Las librerías no esenciales creadas para una arquitectura específica
-/usr/libexec	Los programas ejecutables utilizados por otros programas y no directamente por los usuarios
-/usr/sbin	Los binarios del sistema para su uso por el administrador en modo multiusuario
-/usr/share	Ubicación para almacenar documentación de software y otros datos de aplicación
-/usr/src	El código fuente para compilar el kernel
-La jerarquía /usr/local sirve para la instalación del software que no se origina con la distribución. A menudo, este directorio se utiliza para software que se complia a partir del código fuente. Los directorios de tercer nivel comunes que se encuentran bajo el directorio /usr/local se describen en la siguiente tabla:
+*La segunda y la tercera jerarquía, que se encuentra bajo los directorios* `/usr` y `/usr/local`, *repiten el patrón de muchos de los directorios clave que se encuentran debajo de la primera jerarquía o el sistema de archivos root*. *La cuarta jerarquía*, el directorio `/var`, *también repite algunos de los directorios de primer nivel*, como `lib`, `opt` y `tmp`.
 
-Directorio	Propósito del Directorio
-/usr/local/bin	Los binarios de software locales para el uso de un usuario ordinario
-/usr/local/etc	Los archivos de configuración de software locales
-/usr/local/include	Los archivos que necesitan ser incluidos con el fin de compilar el código fuente local
-/usr/local/lib	Los archivos de la librería de soporte para los archivos ejecutables en los directorios /usr/local/bin y /usr/local/sbin
-/usr/local/libexec	Los programas ejecutables utilizados por otros programas y no directamente por los usuarios
-/usr/local/sbin	Los binarios locales para uso del administrador del sistema
-/usr/local/share	Ubicación para almacenar las páginas man, páginas de información, y otra información de aplicaciones locales
-/usr/local/src	La ubicación en la que menudo se coloca el código fuente de software para ser compilado localmente
+*Cuando el sistema de archivos root y su contenido se consideran esenciales o necesarios para arrancar el sistema*, los directorios `/var`, `/usr` y `/usr/local` no se consideran esenciales para el proceso de arranque. Como resultado, el sistema de archivos root y sus directorios pueden ser los únicos disponibles en ciertas situaciones, tales como arrancar en modo de usuario único, un entorno diseñado para la solución de problemas del sistema.
+
+### /usr
+
+El directorio `/usr` sirve para *contener software para su uso por varios usuarios*. El directorio `/usr` a veces se comparte a través de la red y se monta como de sólo lectura.
+
+| Directorio     | Propósito del Directorio                                                                       |
+| -------------- | ---------------------------------------------------------------------------------------------- |
+| /usr/bin       | Los binarios para el usuario común, usados cuando el sistema está en modo multiusuario         |
+| /usr/include   | Los archivos que se incluyen para compilar el software de distribución                         |
+| /usr/lib       | Las librerías de soporte para los archivos ejecutables en los directorios /usr/bin y /usr/sbin |
+| /usr/lib<qual> | Las librerías no esenciales creadas para una arquitectura específica                           |
+| /usr/libexec   | Los programas ejecutables utilizados por otros programas y no directamente por los usuarios    |
+| /usr/sbin      | Los binarios del sistema para su uso por el administrador en modo multiusuario                 |
+| /usr/share     | Ubicación para almacenar documentación de software y otros datos de aplicación                 |
+| /usr/src       | El código fuente para compilar el kernel                                                       |
+
+### /usr/local
+
+La jerarquía `/usr/local` sirve para la instalación del software que no se origina con la distribución. A menudo, este *directorio se utiliza para software que se complia a partir del código fuente*. 
+
+| Directorio         | Propósito del Directorio                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| /usr/local/bin     | Los binarios de software locales para el uso de un usuario ordinario                                                     |
+| /usr/local/etc     | Los archivos de configuración de software locales                                                                        |
+| /usr/local/include | Los archivos que necesitan ser incluidos con el fin de compilar el código fuente local                                   |
+| /usr/local/lib     | Los archivos de la librería de soporte para los archivos ejecutables en los directorios /usr/local/bin y /usr/local/sbin |
+| /usr/local/libexec | Los programas ejecutables utilizados por otros programas y no directamente por los usuarios                              |
+| /usr/local/sbin    | Los binarios locales para uso del administrador del sistema                                                              |
+| /usr/local/share   | Ubicación para almacenar las páginas man, páginas de información, y otra información de aplicaciones locales             |
+| /usr/local/src     | La ubicación en la que menudo se coloca el código fuente de software para ser compilado localmente                       |
 
 ### La Organización Dentro de la Jerarquía del Sistema de Archivos
 
 Aunque el estándar FHS es útil para una comprensión detallada de la disposición de los directorios utilizados por la mayoría de las distribuciones de Linux, a continuación se ofrece una descripción más generalizada de la estructura de los directorios como realmente existen en una distribución típica de Linux.
 
-Los Directorios Home
+#### Los Directorios Home
 
-El directorio /home tendrá típicamente un directorio inferior para cada cuenta de usuario. Por ejemplo, el usuario bob normalmente tendrá su directorio home de /home/bob. Normalmente, sólo el usuario bob tendrá acceso a este directorio. Sin ser asignados permisos especiales en otros directorios, un usuario normalmente sólo puede crear archivos en su directorio home, en el directorio /tmp y el directorio /var/tmp.
+El directorio `/home` tendrá típicamente un directorio inferior para cada cuenta de usuario. Por ejemplo, el usuario bob normalmente tendrá su directorio home de `/home/bob`. Normalmente, sólo el usuario bob tendrá acceso a este directorio. Sin ser asignados permisos especiales en otros directorios, un usuario normalmente sólo puede crear archivos en su directorio `home`, en el directorio `/tmp` y el directorio `/var/tmp`.
 
-Los Directorios Binarios
+#### Los Directorios Binarios
 
-Los directorios binarios contienen programas que los usuarios y los administradores ejecutarán para iniciar los procesos o las aplicaciones del sistema. Los directorios binarios, que están destinados a ser utilizados por los usuarios sin privilegios, incluyen los directorios /bin, /usr/bin y /usr/local/bin. A veces el software de terceros también almacenará sus archivos ejecutables en los directorios, tales como /usr/local/application/bin y /opt/application/bin. Además, no es inusual que cada usuario tenga su propio directorio bin ubicado en su directorio home, tal como /home/bob/bin.
+Los directorios binarios contienen programas que los usuarios y los administradores ejecutarán para iniciar los procesos o las aplicaciones del sistema. Los directorios binarios, que están destinados a ser utilizados por los usuarios *sin privilegios*, incluyen los directorios `/bin`, `/usr/bin` y `/usr/local/bin`. A veces el software de terceros también almacenará sus archivos ejecutables en los directorios, tales como `/usr/local/application/bin` y `/opt/application/bin`. Además, no es inusual que cada usuario tenga su propio directorio bin ubicado en su directorio home, tal como `/home/bob/bin`.
 
-Por otra parte, los directorios sbin están destinados principalmente a ser utilizados por el administrador del sistema (usuario root). Estos por lo general incluyen los directorios /sbin, /usr/sbin y /usr/local/sbin, aunque las aplicaciones administrativas de terceros también podrían utilizar directorios como /usr/local/application/sbin o /opt/application/sbin.
+Por otra parte, los directorios `sbin` están destinados principalmente a ser utilizados por el administrador del sistema (usuario root). Estos por lo general incluyen los directorios `/sbin`, `/usr/sbin` y `/usr/local/sbin`, aunque las aplicaciones administrativas de terceros también podrían utilizar directorios como `/usr/local/application/sbin` o `/opt/application/sbin`.
 
-Dependiendo de la distribución, la variable PATH puede no contener todos los directorios bin y sbin. Con el fin de poder ejecutar un comando en uno de estos directorios, el directorio debe ser incluido en la lista de las variables PATH o el usuario tiene que especificar la ruta al comando, por ejemplo: /sbin/ifconfig.
+*Dependiendo de la distribución, la variable `PATH` puede no contener todos los directorios bin y sbin.* Con el fin de poder ejecutar un comando en uno de estos directorios, el directorio debe ser incluido en la lista de las variables PATH o el usuario tiene que especificar la ruta al comando, por ejemplo:`/sbin/ifconfig`.
 
-Los Directorios de las Aplicaciones de Software
+#### Los Directorios de las Aplicaciones de Software
 
-A diferencia del sistema operativo Windows, donde las aplicaciones pueden tener todos sus archivos instalados en un único subdirectorio bajo el directorio C:\Program Files, las aplicaciones de Linux pueden tener sus archivos en varios directorios repartidos a lo largo del sistema de archivos de Linux. Para las distribuciones Debian, puedes ejecutar la aplicación dpkg -L para obtener la lista de ubicación de los archivos. En las distribuciones de Red Hat, puedes ejecutar la aplicación rpm -ql para listar la de ubicación de los archivos que pertenecen a esa aplicación.
+Las aplicaciones de Linux pueden tener sus archivos en varios directorios repartidos a lo largo del sistema de archivos de Linux. Para las distribuciones *Debian*, puedes ejecutar la aplicación `dpkg -l` para obtener la lista de ubicación de los archivos. En las distribuciones de *Red Hat*, puedes ejecutar la aplicación `rpm -ql` para listar la de ubicación de los archivos que pertenecen a esa aplicación.
 
-Los archivos binarios de los programas ejecutables pueden ir en el directorio /usr/bin, si vienen incluidos en el sistema operativo, o de lo contrario pueden ir a los directorios /usr/local/bin o /opt/application/bin en caso de que procedan de un tercero.
+Los archivos binarios de los programas ejecutables pueden ir en el directorio `/usr/bin`, si vienen incluidos en el sistema operativo, o de lo contrario pueden ir a los directorios `/usr/local/bin` o `/opt/application/bin` en caso de que procedan de un tercero.
 
-Los datos para la aplicación pueden ser almacenados en uno de los siguientes subdirectorios: /usr/share, /usr/lib, /opt/application o /var/lib.
+Los **datos para la aplicación** pueden ser almacenados en uno de los siguientes subdirectorios: 
 
-El archivo relacionado con la documentación se puede almacenar en uno de los siguientes subdirectorios: /usr/share/doc, /usr/share/man o /usr/share/info.
+- `/usr/share`
+- `/usr/lib`
+- `/opt/application`
+- `/var/lib`
 
-El archivo(s) de configuración global para una aplicación muy probablemente se almacene en un subdirectorio bajo el directorio /etc, mientras que los archivos de configuración personalizados (específicos para un usuario) para la aplicación están, probablemente, en un subdirectorio oculto del directorio home del usuario.
+El **archivo relacionado con la documentación** se puede almacenar en uno de los siguientes subdirectorios: 
 
-Los Directorios de Librerías
+- `/usr/share/doc`
+- `/usr/share/man`
+- `/usr/share/info`
 
-Las librerías son archivos que contienen código que se comparte entre varios programas. La mayoría de los nombres de archivo de la librería terminan con una extensión de archivo .so, lo que significa objeto compartido (shared object).
+El **archivo(s) de configuración global** para una aplicación muy probablemente se almacene en un subdirectorio bajo el directorio `/etc`, mientras que los **archivos de configuración personalizados** (específicos para un usuario) para la aplicación están, probablemente, *en un subdirectorio oculto del directorio home del usuario*.
+
+#### Los Directorios de Librerías
+
+Las librerías son archivos que contienen código que se comparte entre varios programas. La mayoría de *los nombres de archivo de la librería terminan con una extensión de archivo `.so`*, lo que significa objeto compartido (shared object).
 
 Puede haber varias versiones de una librería debido a que el código puede ser diferente dentro de cada archivo a pesar de que puede llevar a cabo funciones similares a las otras versiones de la librerías. Una de las razones por las que el código puede ser diferente, a pesar de que puede hacer lo mismo que otro archivo de la biblioteca, es que está compilado para ejecutarse en un tipo diferente de procesador. Por ejemplo, es habitual que los sistemas que utilizan un código diseñado para los procesadores de tipo Intel/AMD de 64 bits, tengan las dos bibliotecas, la de 32 bits y de 64 bits.
 
-Las librerías que dan soporte a los programas binarios esenciales que se encuentran en los directorios /bin y /sbin típicamente se encuentran en /lib o /lib64.
+**Las librerías que dan soporte a los programas binarios esenciales** que se encuentran en los directorios `/bin` y `/sbin` típicamente se encuentran en `/lib` o `/lib64`.
 
-Para dar soporte a los ejecutables /usr/bin y /usr/sbin, normalmente se usan los directorios librerías /usr/lib y /usr/lib64.
+Para dar soporte a los ejecutables `/usr/bin` y `/usr/sbin`, normalmente se usan los directorios librerías `/usr/lib` y `/usr/lib64`.
 
-Para dar soporte a las aplicaciones que no se distribuyen con el sistema operativo, a menudo se utilizan los directorios librería /usr/local/lib y /opt/application/lib.
+Para dar *soporte a las aplicaciones que no se distribuyen con el sistema operativo*, a menudo se utilizan los directorios librería `/usr/local/lib` y `/opt/application/lib`.
 
-Los Directorios de Datos Variables
+#### Los Directorios de Datos Variables
 
-Los directorios /var y muchos de sus subdirectorios pueden contener datos que vayan a cambiar con frecuencia. Si el sistema se utiliza para correo electrónico, normalmente se utilizará /var/mail o /var/spool/mail para almacenar los datos de correo electrónico del usuario. Si vas a imprimir desde tu sistema, entonces el directorio /var/spool/cups se utilizará para almacenar temporalmente los trabajos de impresión.
+Los directorios `/var` y muchos de sus subdirectorios pueden contener datos que vayan a cambiar con frecuencia. Si el sistema se utiliza para correo electrónico, normalmente se utilizará `/var/mail` o `/var/spool/mail` para almacenar los datos de correo electrónico del usuario. Si vas a imprimir desde tu sistema, entonces el directorio `/var/spool/cups` se utilizará para almacenar temporalmente los trabajos de impresión.
 
-Dependiendo de los eventos que el sistema está registrando y la cantidad de actividad que hay en el sistema, se determinará el tamaño de tu archivo de registro. En un sistema ocupado, puede haber una considerable cantidad de datos en los archivos de registro. Estos archivos se almacenan en el directorio /var/log.
+Dependiendo de los eventos que el sistema está registrando y la cantidad de actividad que hay en el sistema, se determinará el tamaño de tu archivo de registro. En un sistema ocupado, puede haber una considerable cantidad de datos en los archivos de registro. Estos archivos se almacenan en el directorio `/var/log`.
 
-Mientras que los archivos de registro pueden ser extremadamente útiles para solucionar los problemas, también pueden causar problemas. Una de las principales preocupaciones de todos estos directorios es que pueden llenar rápidamente el espacio del disco en un sistema activo. Si el directorio /var no es una partición separada, entonces el sistema de archivos root se podría llenar por completo y bloquear el sistema.
+*Mientras que los archivos de registro pueden ser extremadamente útiles para solucionar los problemas, también pueden causar problemas. Una de las principales preocupaciones de todos estos directorios es que pueden llenar rápidamente el espacio del disco en un sistema activo. Si el directorio /var no es una partición separada, entonces el sistema de archivos root se podría llenar por completo y bloquear el sistema.*
 
 ## Trucos
 

@@ -1,0 +1,3181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Readme.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ndg-linux-unhatched---ndg-linux-unhatched---espa%C3%B1ol-notes">NDG Linux Unhatched - NDG Linux Unhatched - Español (Notes)</h1>
+<h2 id="propiedades-de-archivos">Propiedades de archivos</h2>
+<p>Los usuarios poseen los archivos que crean. Mientras que esta propiedad puede cambiarse, esta función requiere privilegios administrativos. Aunque la mayoría de los comandos generalmente muestran al usuario propietario como un nombre, el sistema operativo en realidad asociará la propiedad del usuario con el UID para ese nombre de usuario. Cada archivo también tiene un grupo propietario.</p>
+<h3 id="primer-valor-para-un-archivo">Primer valor para un archivo</h3>
+<table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Tipo de archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d</td>
+<td>directorio</td>
+<td>Un archivo usado para contener otros archivos.</td>
+</tr>
+<tr>
+<td>-</td>
+<td>archivo ordinario</td>
+<td>Incluye archivos leíbles, imágenes, archivos binarios, y archivos comprimidos.</td>
+</tr>
+<tr>
+<td>l</td>
+<td>enlaces simbólicos</td>
+<td>Apunta a otro archivo.</td>
+</tr>
+<tr>
+<td>s</td>
+<td>socket</td>
+<td>Permite la comunicación entre procesos.</td>
+</tr>
+<tr>
+<td>p</td>
+<td>tubería (pipe)</td>
+<td>Permite la comunicación entre procesos.</td>
+</tr>
+<tr>
+<td>b</td>
+<td>archivo bloque</td>
+<td>Usado para comunicaciones con el equipo (hardware).</td>
+</tr>
+<tr>
+<td>c</td>
+<td>archivo carácter</td>
+<td>Usado para comunicaciones con el equipo (hardware)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="permisos">Permisos</h3>
+<pre class="hljs"><code><div>- rw-r--r-- 1 sysadmin sysadmin 647 Dec 20  2017 hello.sh
+</div></code></pre>
+<h3 id="propietatio">Propietatio</h3>
+<p>-<code>rw-</code> r--r-- 1 <code>sysadmin</code> sysadmin 647 Dec 20 2017 hello.sh</p>
+<p>El primer grupo se refiere al usuario que posee el archivo. Si su cuenta actual es la propietaria del archivo, se usará el primer grupo de permisos y los demás permisos no tendrán efecto.</p>
+<h3 id="grupo">Grupo</h3>
+<p>-rw- <code>r--</code>r-- 1 sysadmin <code>sysadmin</code> 647 Dec 20 2017 hello.sh</p>
+<p>El segundo conjunto se refiere al grupo que posee el archivo. Si su cuenta actual no es la del propietario del archivo pero es miembro del grupo que posee el archivo, se aplicarán los permisos del grupo y los demás permisos no tendrán efecto.</p>
+<h3 id="otros">Otros</h3>
+<p>-rw- r--<code>r--</code> 1 sysadmin sysadmin 647 Dec 20 2017 hello.sh</p>
+<p>El último grupo es para todos los demás, cualquiera a quien los dos primeros conjuntos de permisos no sean aplicables. Si no es el usuario que posee el archivo o un miembro del grupo que posee el archivo, se le aplicará el tercer conjunto de permisos.</p>
+<h2 id="tipos-de-permisos">Tipos de permisos</h2>
+<p>Tipos de permisos
+Un archivo o directorio puede presentar tres permisos diferentes: leer, escribir y ejecutar. La forma en que se aplican estos permisos difiere entre archivos y directorios, como se muestra en la tabla siguiente:</p>
+<table>
+<thead>
+<tr>
+<th>Permiso</th>
+<th>Efectos sobre los Archivos</th>
+<th>Efectos sobre los Directorios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>leer (read) (r)</td>
+<td>Permite que el contenido del archivo sea leído o copiado.</td>
+<td>Sin el permiso para ejecutar, permite obtener un listado poco detallado de los archivos que contiene el directorio. Con el permiso para ejecutar, ls -l proporciona un listado detallado de archivos.</td>
+</tr>
+<tr>
+<td>escribir (write) (w)</td>
+<td>Permite modificar o reescribir el contenido del archivo.</td>
+<td>Permite añadir o eliminar archivos en un directorio. Para que este permiso funcione, el directorio debe tener permiso para ejecutar.</td>
+</tr>
+<tr>
+<td>ejecutar (execute) (x)</td>
+<td>Permite que un archivo funcione como un proceso, aunque archivos script también requerirán el permiso leer (read).</td>
+<td>Permite que el usuario se traslade del directorio si en el directorio padre también posee permiso escribir (write).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comando-chmod---cambio-de-acceso-a-archivos">Comando <code>chmod</code> - Cambio de acceso a archivos</h3>
+<p>El método simbólico y el método octal. El método simbólico es útil para cambiar un conjunto de permisos a la misma vez. El método octal o numérico requiere conocer el valor octal de cada uno de los permisos y requiere que los tres conjuntos de permisos (usuario, grupo, otros) se especifiquen cada vez.</p>
+<pre class="hljs"><code><div>chmod [&lt;COJUNTO DE PERMISOS&gt;&lt;ACCIÓN&gt;&lt;PERMISOS&gt;]... ARCHIVO
+</div></code></pre>
+<h4 id="el-m%C3%A9todo-simb%C3%B3lico">El método simbólico</h4>
+<p><strong>Conjunto de permisos</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">u</td>
+<td>Usuario: El usuario propietario del archivo.</td>
+</tr>
+<tr>
+<td style="text-align:center">g</td>
+<td>Grupo: El grupo propietario del archivo.</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td>Otros: Cualquier otro que no sea el usuario propietario o un miembro del grupo propietario.</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td>Todos: Se refiere al usuario, grupo, y todos los demás.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Acción</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+</td>
+<td>Añadir permiso, si es necesario</td>
+</tr>
+<tr>
+<td style="text-align:center">=</td>
+<td>Especificar el permiso exacto</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td>Eliminar el permiso, si es necesario</td>
+</tr>
+</tbody>
+</table>
+<h3 id="m%C3%A1s-detalles-de-permisos-de-archivos-y-directorios">Más detalles de permisos de archivos y directorios</h3>
+<ul>
+<li>El primer carácter indica el <code>tipo de archivo</code>.</li>
+<li>Los caracteres <code>2-4 indican los permisos para el usuario</code> al que pertenece el archivo.</li>
+<li>Los caracteres <code>5-7 indican los permisos para el grupo</code> al que pertenece el archivo.</li>
+<li>Los caracteres <code>8-10 indican los permisos para &quot;otros&quot;</code> o lo que se conoce a veces como los permisos del mundo. Esto incluiría todos los usuarios que no sean el propietario del archivo o un miembro del grupo del archivo.</li>
+</ul>
+<pre class="hljs"><code><div>ls -l /etc/passwd
+-rw-r--r--. 1 root root 4135 May 27 21:08 /etc/passwd
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Caracter</th>
+<th>Tipo de Archivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>-</strong></td>
+<td>Un archivo normal que puede estar vacío, contener texto o datos binarios.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>d</strong></td>
+<td>Un archivo de directorio que contiene los nombres de otros archivos y enlaces a los mismos.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>l</strong></td>
+<td>Un enlace simbólico es un nombre de archivo que hace referencia (apunta) a otro archivo.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>b</strong></td>
+<td>Un archivo de bloque es el que se refiere a un dispositivo de hardware de bloque donde los datos se leen en bloques de datos.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>c</strong></td>
+<td>Un archivo de caracteres es aquel que se refiere a un dispositivo de hardware de caracteres, donde se leen los datos un byte a la vez.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>p</strong></td>
+<td>Una archivo «pipe» funciona de forma similar al símbolo de barra vertical, lo que permite a la salida de un proceso comunicarse con otro proceso por el archivo «pipe», donde se utiliza la salida de un proceso como entrada para el otro proceso.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>s</strong></td>
+<td>Un archivo de socket permite que se comuniquen dos procesos, donde se permite a ambos procesos enviar o recibir datos.</td>
+</tr>
+</tbody>
+</table>
+<p>Los permisos establecidos en estos archivos determinan el nivel de acceso que un usuario va a tener en el archivo.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Permiso</th>
+<th>Significado relacionado a un archivo</th>
+<th>Significado relacionado a un directorio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>r</strong></td>
+<td>El proceso puede leer el contenido del archivo, es decir, los contenidos se pueden ver y copiar.</td>
+<td>Los nombres de archivo en el directorio se pueden enumerar, pero otros detalles no están disponibles.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>w</strong></td>
+<td>El proceso puede escribir en este archivo, por lo que los cambios se pueden guardar. Ten en cuenta que el permiso <code>w</code> realmente requiere el permiso <code>r</code> en un archivo para que funcione correctamente.</td>
+<td>Los archivos se pueden agregar a un directorio o quitar del mismo. Ten en cuenta que el permiso <code>w</code> requiere el permiso <code>x</code> en el directorio para que funcione correctamente.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>x</strong></td>
+<td>El archivo se puede ejecutar o correr como un proceso.</td>
+<td>El usuario puede utilizar el comando cd para «entrar» al directorio y utilizar el directorio en una ruta de acceso para acceder a los archivos y, potencialmente, a los subdirectorios de este directorio.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cambio-de-propietario---comando-chown">Cambio de propietario - Comando <code>chown</code></h3>
+<p>Inicialmente, el propietario de un archivo es el usuario que lo crea. El comando <code>chown</code> se utiliza para cambiar el propietario de los archivos y directorios. Cambiar el usuario propietario requiere acceso administrativo. Un usuario ordinario no puede utilizar este comando para cambiar el usuario propietario de un archivo, ni tan solo para otorgar propiedad de uno de sus propios archivos a otro usuario. Sin embargo, el comando <code>chown</code> permite cambiar el grupo propietario, lo cual puede ser realizado por el usuario root o el propietario del archivo.</p>
+<p><code>chown [OPCIONES] [PROPIETARIO] ARCHIVO</code></p>
+<p>Se puede hacer el cambio del usuario, grupo o ambos</p>
+<p>Solo el cambio del propietario al archivo</p>
+<pre class="hljs"><code><div>chown ted abc.txt
+</div></code></pre>
+<p>Solo cambia tanto el usario como el grupo</p>
+<pre class="hljs"><code><div>chown user:group /path/to/file
+chown user.group /path/to/file
+</div></code></pre>
+<p>Cambia solo el grupo</p>
+<pre class="hljs"><code><div>chown :group /path/to/file
+chown .group /path/to/file
+</div></code></pre>
+<h3 id="m%C3%A9todo-simbolico-chmod">Método simbolico <code>chmod</code></h3>
+<p><code>chmod nuevo_permiso nombre_de_archivo</code></p>
+<p>Cuando se especifica el <code>nuevo_permiso</code>, comienzas por utilizar uno de los caracteres siguientes para indicar qué conjunto de permisos quieres cambiar:</p>
+<ul>
+<li><code>u</code> = cambiar los permisos del usuario propietario</li>
+<li><code>g</code> = cambiar los permisos del grupo propietario</li>
+<li><code>o</code> = cambiar los permisos de «otros»</li>
+<li><code>a</code> = (<em>all</em>) aplicar los cambios a todos los conjuntos de permisos (usuario propietario, grupo propietario y «otros»)</li>
+</ul>
+<p>Debe especificar un <code>+</code> para agregar un permiso o un <code>-</code> para quitar un permiso. Por último, especifica <code>r</code> para la lectura <code>w</code> para escritura y <code>x</code> para ejecución.</p>
+<p>Podrías utilizar el carácter <code>=</code> en lugar de <code>-</code> o <code>+</code> para especificar exactamente los permisos que quieres para un conjunto de permisos</p>
+<p><strong>Ejemplos:</strong></p>
+<pre class="hljs"><code><div>chmod u+r abc.txt
+chmod ug+r,o-w abc.txt
+chmod u=r-x abc.txt <span class="hljs-comment"># al usario se le agrega read se quita write y de agrega exec, es una forma representativa a como se enlistan los permisos</span>
+</div></code></pre>
+<h3 id="m%C3%A9todo-n%C3%BAmerico-chmod">Método númerico <code>chmod</code></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Número</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>4</strong></td>
+<td>read (leer)</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2</strong></td>
+<td>write (escribir)</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>1</strong></td>
+<td>execute (ejecutar)</td>
+</tr>
+</tbody>
+</table>
+<p>Usando una combinación de números del 0 al 7, cualquier combinación de permisos posible para leer, escribir y ejecutar se pueden especificar por un conjunto de permisos individuales.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Valor</th>
+<th style="text-align:center">Equivalencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>7</strong></td>
+<td style="text-align:center">rwx</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>6</strong></td>
+<td style="text-align:center">rw-</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>5</strong></td>
+<td style="text-align:center">r-x</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>4</strong></td>
+<td style="text-align:center">r--</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>3</strong></td>
+<td style="text-align:center">-wx</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2</strong></td>
+<td style="text-align:center">-w-</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>1</strong></td>
+<td style="text-align:center">--x</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>0</strong></td>
+<td style="text-align:center">---</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>chmod 754 abc.tx <span class="hljs-comment"># rwxr-xr-</span>
+</div></code></pre>
+<h3 id="comando-umask">Comando <code>umask</code></h3>
+<p>El comando umask es una característica que se utiliza para determinar los permisos predeterminados establecidos al crear un archivo o directorio. Los permisos predeterminados se determinan cuando el valor de umask se resta de los permisos máximos predeterminados permisibles. Los permisos máximos por defecto son diferentes para los archivos y para los directorios:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Tipo</th>
+<th>Permisos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">archivo</td>
+<td>rw-rw-rw-</td>
+</tr>
+<tr>
+<td style="text-align:center">directorios</td>
+<td>rwxrwxrwx</td>
+</tr>
+</tbody>
+</table>
+<p>Al ejercutar el comando</p>
+<p>Usuarios normales</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">umask</span>
+0002
+</div></code></pre>
+<p>Como <code>root</code></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">umask</span>
+0022
+</div></code></pre>
+<ul>
+<li>El primer <code>0</code> indica que umask se da como un número octal.</li>
+<li>El segundo <code>0</code> indica qué permisos hay que restar de los permisos por defecto de usuario propietario.</li>
+<li>El tercer <code>0</code> indica qué permisos hay que restar de los permisos por defecto del grupo propietario.</li>
+<li>El último número <code>2</code> indica qué permisos hay que restar de los permisos por defecto de otros.</li>
+</ul>
+<p>Para entender cómo funciona <code>umask</code>, supongamos que umask se establece en <code>027</code> y consideremos lo siguiente:</p>
+<table>
+<thead>
+<tr>
+<th>Significado</th>
+<th style="text-align:center">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File Default (valor predeterminado)</td>
+<td style="text-align:center">667</td>
+</tr>
+<tr>
+<td>Umask</td>
+<td style="text-align:center">-027</td>
+</tr>
+<tr>
+<td><strong>Resultado</strong></td>
+<td style="text-align:center"><strong>640</strong></td>
+</tr>
+</tbody>
+</table>
+<p>La umask <code>027</code> significa que, por defecto los archivos nuevos recibirían los permisos <code>640</code> o <code>rw-r-----</code> tal como se demuestra a continuación:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">umask</span> 027
+touch sample
+ls -l sample
+-rw-r-----. 1 sysadmin sysadmin 0 Oct 28 20:14 sample
+</div></code></pre>
+<p>Debido a que los permisos predeterminados para los directorios son diferentes que para los archivos, una <code>umask 027</code> daría lugar a diferentes permisos iniciales sobre los nuevos directorios:</p>
+<table>
+<thead>
+<tr>
+<th>Significado</th>
+<th style="text-align:center">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Directory Default (valor predeterminado)</td>
+<td style="text-align:center">777</td>
+</tr>
+<tr>
+<td>Umask</td>
+<td style="text-align:center">-027</td>
+</tr>
+<tr>
+<td><strong>Resultado</strong></td>
+<td style="text-align:center"><strong>750</strong></td>
+</tr>
+</tbody>
+</table>
+<p>La <code>umask 027</code> significa que, por defecto los directorios nuevos recibirían los permisos <code>750</code> o <code>rwxr-x-----</code> tal como se demuestra a continuación:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">umask</span> 027
+mkdir <span class="hljs-built_in">test</span>-dir
+ls -ld <span class="hljs-built_in">test</span>-dir
+drwxr-x---. 1 sysadmin sysadmin 4096 Oct 28 20:25 <span class="hljs-built_in">test</span>-dir
+</div></code></pre>
+<p><em>Cambiar permanentemente la <code>umask</code> requiere la modificación del archivo <code>.bashrc</code> que se encuentra en el directorio <code>home</code> del usuario.</em></p>
+<h3 id="permisos-especiales-setuid-setgid-sticky-bit">Permisos especiales <code>setuid</code> <code>setgid</code> <code>Sticky Bit</code></h3>
+<h4 id="el-permiso-setuid">El Permiso <code>setuid</code></h4>
+<p>Cuando el <code>permiso setuid</code> se encuentra en un archivo binario ejecutable (un programa), el archivo binario se «ejecuta como» el propietario del archivo, no como el usuario que lo ejecuta. Este permiso se establece en una cierta cantidad de utilidades del sistema para que puedan ser manejados por los usuarios normales, pero ejecutados con los permisos root, proporcionando acceso a los archivos del sistema a los que el usuario normal normalmente no tiene acceso.</p>
+<p>Ejecutar el permiso setuid</p>
+<pre class="hljs"><code><div>chmod u+s file
+</div></code></pre>
+<pre class="hljs"><code><div>ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 31768 Jan 28 2010 /usr/bin/passwd
+</div></code></pre>
+<p>Para agregar el permiso setuid numéricamente, agrega 4000</p>
+<pre class="hljs"><code><div>chmod 4775 file
+</div></code></pre>
+<p>Retirar el permiso de <code>sertuid</code></p>
+<pre class="hljs"><code><div>chmod u<span class="hljs-_">-s</span> file
+</div></code></pre>
+<p>o</p>
+<pre class="hljs"><code><div>chmod 0775 file
+</div></code></pre>
+<h4 id="el-permiso-setgid-en-un-archivo">El Permiso <code>setgid</code> en un Archivo</h4>
+<p>El permiso <code>setgid</code> es similar a <code>setuid</code>, pero hace uso de los permisos del grupo propietario. En realidad, hay dos formas de permisos setgid: <em><code>setgid</code> en un archivo y <code>setgid</code> en un directorio</em>. Cómo funciona el setgid depende de si se establece en un archivo o un directorio.</p>
+<p>Permite que un usuario ejecute un archivo binario ejecutable proporcionando un <em>acceso adicional (temporal) de grupo</em>.</p>
+<p>El comando <code>wall</code> puede ejecutar y mandar datos al grupo <code>tty</code> gracias a que tiene setgid. Esto no sería posible dado que las terminales <code>tty?</code> no permite que <code>otros</code> accedan a escribir.</p>
+<pre class="hljs"><code><div>ls -l /usr/bin/wall
+-rwxr-sr-x. 1 root tty 10996 Jul 19  2011 /usr/bin/wall
+</div></code></pre>
+<pre class="hljs"><code><div>ls -l /dev/tty?
+crw-------. 1 root tty  4, 0 Mar 29  2013 /dev/tty0
+crw--w----. 1 root tty  4, 1 Oct 21 19:57 /dev/tty1 <span class="hljs-comment">#solo a lo que pertenencen al mismo grupo pueden escribir</span>
+</div></code></pre>
+<h4 id="el-permiso-setgid-en-un-directorio">El Permiso <code>setgid</code> en un Directorio</h4>
+<p>Cuando se establece en un directorio, <code>setgid</code> hace que los archivos creados en el directorio automáticamente sean propiedad del grupo que posee el directorio. <em>Esto es contrario a cómo funcionaría normalmente la propiedad de grupo de un archivo nuevo, ya que por defecto los archivos nuevos son propiedad del grupo primario del usuario que creó el archivo</em></p>
+<p>Configurar el permiso <code>setgid</code>, agregar y quitar</p>
+<pre class="hljs"><code><div>chmod g+s &lt;archivo|directorio&gt; 
+chmod g<span class="hljs-_">-s</span> &lt;archivo|directorio&gt;
+</div></code></pre>
+<p>Para retirar el permiso setgid numéricamente, resta 2000 de los permisos existentes del archivo:</p>
+<pre class="hljs"><code><div>chmod 2775 &lt;archivo|directorio&gt;
+chmod 0775 &lt;archivo|directorio&gt;
+</div></code></pre>
+<p><em>Entonces, ¿Por qué el administrador configuraría un directorio setgid?</em> En primer lugar, ten en cuenta las siguientes cuentas de usuario:</p>
+<ul>
+<li>bob es miembro de payroll group</li>
+<li>sue es miembro de staff group</li>
+<li>tim es miembro de acct group</li>
+</ul>
+<p>Estos tres usuarios necesitan trabajar en un proyecto conjunto. Se acercan al administrador para solicitar un directorio compartido en el que puedan trabajar juntos, pero que nadie más pueda acceder a sus archivos. El administrador hace lo siguiente:</p>
+<ul>
+<li>Crea un nuevo grupo llamado team.</li>
+<li>Añade bob, sue y tim al grupo team.</li>
+<li>Hace un nuevo directorio llamado <code>/home/team</code>.</li>
+<li>Hace que el grupo propietario del directorio <code>/home/team</code> sea el grupo team.</li>
+</ul>
+<p>Otorga al directorio <code>/home/team</code> los siguientes permisos: <code>rwxrwx---</code>
+Como resultado, bob, sue y tim pueden acceder al directorio <code>/home/team</code> y agregar archivos. Sin embargo, hay un problema potencial: cuando bob crea un archivo en el directorio <code>/home/team</code>, los detalles del nuevo archivo se ven así:</p>
+<pre class="hljs"><code><div>-rw-r-----. 1 bob payroll 100 Oct 30 23:21 /home/team/file.txt
+</div></code></pre>
+<p>Desafortunadamente, mientras sue y tim pueden acceder al directorio <code>/home/team</code>, no pueden hacer nada con el archivo de bob. Sus permisos para ese archivo son los permisos de «otros» (<code>---</code>).</p>
+<p>Si el administrador estableciera el permiso setgid al directorio <code>/home/team</code>, entonces, cuando bob crea el archivo, se vería de la siguiente manera:</p>
+<pre class="hljs"><code><div>-rw-r-----. 1 bob team 100 Oct 30 23:21 /home/team/file.txt
+</div></code></pre>
+<p>Y como resultado, sue y tim tendrían acceso de grupo al archivo (<code>r--</code>).</p>
+<p>Ciertamente, bob podría cambiar la propiedad de grupo después de crear el archivo (o cambiar los permisos de «otros»), pero esto sería tedioso si se crearan muchos archivos nuevos. El permiso setgid hace que sea más fácil esta situación.</p>
+<p>Una <code>s</code> minúscula significa tanto los permisos de ejecución de setgid como los de grupo están establecidos. Una <code>S</code>mayúscula significa que sólo el permiso <code>setgid</code> está establecido y no el permiso de ejecución del grupo: <code>drwxrwSr-x</code>.</p>
+<p>Si ves una <code>S</code> mayúscula en la posición de ejecución del grupo, esto indica que, aunque se haya establecido el permiso <code>setgid</code>, en realidad no está realmente en efecto debido a que el grupo carece de los permisos de ejecución para utilizarlo.</p>
+<h4 id="el-permiso-sticky-bit">El Permiso Sticky Bit</h4>
+<p>El permiso sticky bit se utiliza para evitar que otros usuarios eliminen los archivos de los que no son dueños en un directorio compartido.</p>
+<p>El permiso sticky bit permite que los archivos se puedan compartir con otros usuarios, cambiando el permiso de escritura en el directorio para que los usuarios aún puedan añadir y eliminar los archivos del directorio, pero los archivos sólo pueden ser borrados por el propietario del archivo o el usuario root.</p>
+<p>Agregar y quitar el permiso Sticky Bit</p>
+<pre class="hljs"><code><div>chmod o+t &lt;directorio&gt;
+chmod o-t &lt;directorio&gt;
+</div></code></pre>
+<p>Para retirar el permiso sticky bit numéricamente, resta 1000 de los permisos existentes del directorio:</p>
+<pre class="hljs"><code><div>chmod 1775 &lt;archivo|directorio&gt;
+chmod 0775 &lt;directorio&gt;
+</div></code></pre>
+<p>Una <code>t</code> minúscula significa que tanto el permiso <code>sticky bit</code> como los permisos de ejecución están establecidos para «otros». Una <code>T</code> mayúscula significa que sólo el permiso <code>sticky bit</code> está establecido: <code>drwxrwxrwT</code>.</p>
+<p>Mientras la <code>S</code> mayúscula indica un problema con los permisos <code>setuid</code> o <code>setgid</code>, una <code>T</code> mayúscula no indica necesariamente un problema, siempre y cuando el grupo propietario aún tenga permiso de ejecución.</p>
+<h2 id="enlaces-f%C3%ADsicos-duros-y-los-enlaces-simb%C3%B3licos-blandos">Enlaces Físicos (duros) y los Enlaces Simbólicos (blandos)</h2>
+<p>Cada método de enlace, físico o simbólico, resulta en el mismo acceso global, pero utilizan diferentes técnicas. Existen ventajas y desventajas de cada método, por lo que conocer ambas técnicas y cuando se usan es importante.</p>
+<h3 id="v%C3%ADnculos-f%C3%ADsicos">Vínculos Físicos</h3>
+<p>Por cada archivo creado, hay un bloque de datos en el sistema de archivos que almacena la información meta del archivo. La información meta incluye información sobre el archivo, tal como los permisos, propiedades y marcas de tiempo. Información meta no incluye el nombre del archivo o el contenido del archivo, pero sí incluye casi toda la demás información sobre el archivo.</p>
+<p>A esta información meta se le llama la tabla de inodos del archivo. La tabla de inodos también incluye punteros a otros bloques en el sistema de archivos llamados bloques de datos donde se almacenan los datos.</p>
+<p>Cada archivo en una partición tiene un número de identificación único llamado número de inodo. La tabla de inodos no incluye el nombre del archivo.</p>
+<p><code>Los enlaces físicos es que no se pueden crear en directorios.</code></p>
+<table>
+<thead>
+<tr>
+<th>Archivo</th>
+<th style="text-align:center">inode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>passwd</em></td>
+<td style="text-align:center"><em>123</em></td>
+</tr>
+<tr>
+<td>shadow</td>
+<td style="text-align:center">175</td>
+</tr>
+<tr>
+<td>group</td>
+<td style="text-align:center">144</td>
+</tr>
+</tbody>
+</table>
+<p>Los enlaces físicos son dos nombres de archivo que apuntan al mismo inodo. Por ejemplo, considera las siguientes entradas de directorio:</p>
+<table>
+<thead>
+<tr>
+<th>Archivo</th>
+<th style="text-align:center">inode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>passwd</em></td>
+<td style="text-align:center"><em>123</em></td>
+</tr>
+<tr>
+<td><em>mypasswd</em></td>
+<td style="text-align:center"><em>123</em></td>
+</tr>
+<tr>
+<td>shadow</td>
+<td style="text-align:center">175</td>
+</tr>
+<tr>
+<td>group</td>
+<td style="text-align:center">144</td>
+</tr>
+</tbody>
+</table>
+<p>Creacion de un enlace fisico</p>
+<pre class="hljs"><code><div>ln [path/file_original] [path/name_link]
+</div></code></pre>
+<p>Tienen el mismo <code>inode</code> -&gt; <code>278772</code>, el <code>2</code> indica el numero de enlaces que tienen los archivos</p>
+<pre class="hljs"><code><div>ln file.original file.hard.1
+ls -li file.*
+278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1
+278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original
+</div></code></pre>
+<h4 id="enlaces-simb%C3%B3licos-blandos">Enlaces Simbólicos (blandos)</h4>
+<p>Un enlace simbólico es simplemente un archivo que apunta a otro archivo.</p>
+<pre class="hljs"><code><div>ls -l /etc/grub.conf
+lrwxrwxrwx. 1 root root 22 Feb 15  2011 /etc/grub.conf -&gt; ../boot/grub/grub.conf
+</div></code></pre>
+<p>Creando enlace simbolico, se agrega la opcion <code>-s</code></p>
+<pre class="hljs"><code><div>ln -s [path/file] [path/new_link]
+</div></code></pre>
+<p>Si intentaras ver el contenido del archivo (enlace simbolico), éste seguiría el puntero y mostraría el contenido del archivo original</p>
+<pre class="hljs"><code><div>ln -s /etc/passwd mypasswd
+sysadmin@localhost:~$  ls -l mypasswd
+lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -&gt; /etc/passwd
+</div></code></pre>
+<p><strong>Encontrar los arhivos que tienen enlances duros</strong></p>
+<pre class="hljs"><code><div>ls -i file.original 
+278772 file.original
+sysadmin@localhost:~$ find / -inum 278772 2&gt; /dev/null
+/home/sysadmin/file.hard.1
+/home/sysadmin/file.original
+</div></code></pre>
+<h2 id="comando-w">Comando <code>w</code></h2>
+<ul>
+<li><code>w</code> : display who is logged in and what they are doing</li>
+</ul>
+<p><code>user@domain:~$ w</code></p>
+<p>Resultado</p>
+<pre class="hljs"><code><div>17:15  up 1 day,  7:27, 2 users, load averages: 2.34 2.31 2.31
+USER     TTY      FROM              LOGIN@  IDLE WHAT
+Xizuth   console  -                Sat09   31:26 -
+Xizuth   s000     -                17:15       - w
+</div></code></pre>
+<h2 id="comando-grep">Comando <code>grep</code></h2>
+<p>El comando <code>grep</code> es un filtro de texto que busca líneas en una entrada y devolverá aquellas que coincidan con un patrón determinado</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-c</code> Imprime cuantas coincidencia en la busqueda</li>
+<li><code>-n</code> muestra los números de la línea originales</li>
+<li><code>-l</code> en lista los archivos que en su contenido contiene el patron</li>
+<li><code>-v</code> Todas las líneas que no contengan el patron</li>
+<li><code>-i</code> ignora mayusculas y minusculas del patron en la busqueda, mostrando en donde se encuentra</li>
+<li><code>-w</code> la busqueda debe coincidir exacto con el patron</li>
+</ul>
+<pre class="hljs"><code><div>grep [OPCIONES] PATRÓN [ARCHIVO]
+</div></code></pre>
+<p>Ejemplo:</p>
+<pre class="hljs"><code><div>grep sysadmin passwd
+</div></code></pre>
+<p>salida:</p>
+<pre class="hljs"><code><div>sysadmin:x:1001:1001:System Administrator,,,,:/home/sysadmin:/bin/bash
+</div></code></pre>
+<p>Obtiene las coincidencias de la busqueda</p>
+<pre class="hljs"><code><div>grep -c bash /etc/passwd
+</div></code></pre>
+<p>Imprimer las lineas con el numero de linea en donde esta el archivo</p>
+<pre class="hljs"><code><div>grep -n bash /etc/passwd
+</div></code></pre>
+<p>Imprimer los directorios que coinciden</p>
+<pre class="hljs"><code><div>grep -l linux /etc/*
+</div></code></pre>
+<p>Todas las líneas que no contengan <em>nologin</em> en el archivo <code>/etc/passwd</code></p>
+<pre class="hljs"><code><div>grep -v nologin /etc/passwd
+</div></code></pre>
+<p>Listado de las líneas de los archivos en el directorio <code>/etc</code> que contengan cualquier tipo de letra (mayúscula o minúscula) del patrón de caracteres <code>linux</code></p>
+<pre class="hljs"><code><div>grep -i linux /etc/*
+</div></code></pre>
+<p>Listado de las líneas de los archivos en el directorio <code>/etc</code> que contengan el patrón de la palabra <code>linux</code></p>
+<pre class="hljs"><code><div>grep -w linux /etc/*
+</div></code></pre>
+<h2 id="comando-ls">Comando <code>ls</code></h2>
+<p>En lista los archivos y carpetas de uno o más directorios</p>
+<p>En lista dentro de la carpeta donde se ubica:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~/Documents$ ls
+</div></code></pre>
+<p>En lista dentro de la carpeta que se pasa como argumento:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ ls Documents
+</div></code></pre>
+<p>En lista dentro de las carpetas que se pasa como argumento:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ ls /etc/ppp /etc/ssh
+</div></code></pre>
+<p><strong>Flags</strong></p>
+<pre class="hljs"><code><div>ls -l <span class="hljs-comment">#lista</span>
+ls -a <span class="hljs-comment"># muestra ocultos</span>
+ls -r <span class="hljs-comment">#invierte el orden</span>
+</div></code></pre>
+<h2 id="comandos-de-historiales">Comandos de historiales</h2>
+<h3 id="comando-date">Comando <code>date</code></h3>
+<p>Fecha</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ date
+Sun Nov  1 00:40:28 UTC 2015
+</div></code></pre>
+<h3 id="comando-cal">Comando <code>cal</code></h3>
+<p>Calendario</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ cal
+   November 2020
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30
+</div></code></pre>
+<h3 id="comando-history">Comando <code>history</code></h3>
+<p>Historial de comandos</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">history</span>
+    1  date
+    2  ls
+    3  cal 5 2015
+    4  <span class="hljs-built_in">history</span>
+</div></code></pre>
+<h2 id="instrucciones-de-control">Instrucciones de control</h2>
+<p>Las instrucciones de control te permiten utilizar varios comandos a la vez o ejecutar comandos adicionales, dependiendo del éxito de un comando anterior. Normalmente estas instrucciones de control se utilizan en scripts o secuencias de comandos, pero también pueden ser utilizadas en la línea de comandos.</p>
+<h3 id="punto-y-coma">Punto y coma <code>;</code></h3>
+<p>El punto y coma puede utilizarse para ejecutar varios comandos, uno tras otro. Cada comando se ejecuta de forma independiente y consecutiva; no importa el resultado del primer comando, el segundo comando se ejecutará una vez que el primero haya terminado, luego el tercero y así sucesivamente.</p>
+<pre class="hljs"><code><div>cal ; <span class="hljs-built_in">echo</span> <span class="hljs-string">"hola"</span> ; ls -l ssh*
+ November 2020
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30
+
+hola
+total 160
+-rw-r--r-- 1 root root 125749 Jan 13  2016 moduli
+-rw-r--r-- 1 root root   1669 Jan 13  2016 ssh_config
+-rw------- 1 root root    668 Mar 14  2016 ssh_host_dsa_key
+-rw-r--r-- 1 root root    607 Mar 14  2016 ssh_host_dsa_key.pub
+-rw------- 1 root root    227 Mar 14  2016 ssh_host_ecdsa_key
+-rw-r--r-- 1 root root    179 Mar 14  2016 ssh_host_ecdsa_key.pub
+-rw------- 1 root root   1675 Mar 14  2016 ssh_host_rsa_key
+-rw-r--r-- 1 root root    399 Mar 14  2016 ssh_host_rsa_key.pub
+-rw-r--r-- 1 root root    302 Jan 10  2011 ssh_import_id
+-rw-r--r-- 1 root root   2489 Mar 14  2016 sshd_config
+</div></code></pre>
+<h3 id="doble-amperson--and">Doble amperson <code>&amp;&amp;</code> [<code>AND</code>]</h3>
+<p>El símbolo de ampersand doble <code>&amp;&amp;</code> actúa como un operador &quot;y&quot; lógico. Si el primer comando tiene éxito, entonces el segundo comando (a la derecha de la <code>&amp;&amp;</code>) también se ejecutará. Si el primer comando falla, entonces el segundo comando no se ejecutará.</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ ls /etc/xml &amp;&amp; <span class="hljs-built_in">echo</span> success
+catalog  catalog.old  xml-core.xml  xml-core.xml.old
+success
+sysadmin@localhost:~$ ls /etc/junk &amp;&amp; <span class="hljs-built_in">echo</span> success
+ls: cannot access /etc/junk: No such file or directory
+</div></code></pre>
+<h3 id="doble-pipe--or">Doble pipe <code>||</code> [<code>OR</code>]</h3>
+<p>La línea vertical doble <code>||</code> es un operador lógico &quot;o&quot;.
+Con la línea vertical doble, si el primer comando se ejecuta con éxito, el segundo comando es omitido. Si el primer comando falla, entonces se ejecutará el segundo comando. En otras palabras, esencialmente estás diciendo al shell, &quot;O bien ejecuta este primer comando o bien el segundo&quot;.</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ ls /etc/xml || <span class="hljs-built_in">echo</span> failed
+catalog  catalog.old  xml-core.xml  xml-core.xml.old
+sysadmin@localhost:~$ ls /etc/junk || <span class="hljs-built_in">echo</span> failed
+ls: cannot access /etc/junk: No such file or directory
+failed
+</div></code></pre>
+<h2 id="variables-de-entorno">Variables de entorno</h2>
+<ul>
+<li><code>env</code> : muestra todas las variables de entorno</li>
+<li><code>export</code>: agrega la variable como variable de entorno
+<ul>
+<li><code>export mivariable</code></li>
+<li><code>export mivariable2=&quot;contenido de la variable&quot;</code></li>
+</ul>
+</li>
+<li><code>unset</code>: elimina la variable de entorno
+<ul>
+<li><code>unset mivariable</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>HISTSIZE</strong></p>
+<pre class="hljs"><code><div>HISTSIZE=5000 <span class="hljs-comment">#estoy cambiando cuantos comandos guarda el historial de comandos</span>
+</div></code></pre>
+<p><strong>PATH</strong></p>
+<p>Define en qué directorios el shell buscará los comandos.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span>
+/Users/Xizuth/.nvm/versions/node/v12.14.0/bin:/opt/<span class="hljs-built_in">local</span>/bin:/opt/<span class="hljs-built_in">local</span>/sbin:/usr/<span class="hljs-built_in">local</span>/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/Xizuth/.nvm/versions/node/v12.14.0/bin:/opt/<span class="hljs-built_in">local</span>/bin:/opt/<span class="hljs-built_in">local</span>/sbin
+</div></code></pre>
+<p>el shell primero busca el comando en el directorio <code>/home/sysadmin/bin</code>. Si el comando se encuentra en ese directorio, entonces se ejecuta. Si no es encontrado, el shell buscará en el directorio <code>/usr/local/sbin</code>.</p>
+<h2 id="alias">Alias</h2>
+<p>Un alias puede utilizarse para asignar comandos más largos a secuencias más cortas. Cuando el shell ve un alias ejecutado, sustituye la secuencia más larga antes de proceder a interpretar los comandos.</p>
+<p>Esto se aplica solo a la terminal actual, para que se quede permanente en el usario se debe agregar al archivo <code>.bashrc</code> o <code>.zshrc</code>, depende el <code>shell</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">alias</span> nombre_alias=<span class="hljs-string">"comando combinado"</span>
+</div></code></pre>
+<p>Los nuevos alias se pueden crear introduciendo alias <code>name=command</code> (o «alias nombre=comando» en español), donde nombre es el nombre que quieres dar a el alias y comando es el comando que quieres que se ejecute cuando se ejecuta el alias.</p>
+<p><strong>Ejemplo:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">alias</span> mycal=<span class="hljs-string">"cal 2014"</span>
+</div></code></pre>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">alias</span> lh=<span class="hljs-string">'ls -Shl'</span>
+sysadmin@localhost:~$ lh /etc/ppp
+total 0
+drwxr-xr-x 1 root root 10 Jan 29  2015 ip-down.d
+drwxr-xr-x 1 root root 10 Jan 29  2015 ip-up.d
+</div></code></pre>
+<h2 id="globbing">Globbing</h2>
+<table>
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Simbolo</th>
+<th>Aplicación</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asterisco</td>
+<td>*</td>
+<td><code>echo /etc/t*</code></td>
+<td>El asterisco se utiliza para representar cero o más de cualquier carácter en un nombre de archivo.</td>
+</tr>
+<tr>
+<td>Interrogación</td>
+<td>?</td>
+<td><code>echo /etc/t???????</code></td>
+<td>El signo de interrogación representa cualquier carácter único.</td>
+</tr>
+<tr>
+<td>Corchetes</td>
+<td>[ ]</td>
+<td><code>echo /etc/[gu]*</code> <code>echo /etc/[a-d]*</code></td>
+<td>Los corchetes se utilizan para coincidir con un carácter único representando un intervalo de caracteres que pueden coincidir con los caracteres. mostrará todos los archivos que comiencen con cualquier letra entre e incluyendo <code>a</code> y <code>d</code></td>
+</tr>
+<tr>
+<td>Exclamación</td>
+<td>!</td>
+<td><code>echo [!DP]*</code></td>
+<td>El signo de exclamación se utiliza en conjunto con los corchetes para negar un intervalo. Por ejemplo, el comando echo [!DP]* mostrará cualquier archivo que no comienza con <code>D</code> o <code>P</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>sysadmin@localhost:~$ echo /etc/*???????????????????? /etc/bindresvport.blacklist /etc/ca-certificates.conf </code></p>
+<ul>
+<li><strong>*</strong> : 0 o más carácteres</li>
+<li><strong>?</strong> : 1 coincidencia</li>
+<li><strong>[ ]</strong> : coincide con el contenido
+<ul>
+<li>[gu] : coinciede con las letras <em>gu</em></li>
+<li>[a-d] : invertvalos
+<ul>
+<li><code>sysadmin@localhost:~$ echo /etc/[gu]* /etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>!</strong> : negación
+<ul>
+<li><code>echo [!DP]*</code>: que no comience con DP</li>
+</ul>
+</li>
+<li><strong>&quot; &quot;</strong> : texto dentro de la comillas
+<ul>
+<li><code>echo &quot;hola&quot;</code></li>
+<li><code>sysadmin@localhost:~$ echo &quot;The path is $PATH&quot; The path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</code></li>
+</ul>
+</li>
+<li><strong>\</strong> : escapa carácteres
+<ul>
+<li><code>sysadmin@localhost:~$ echo The service costs \$100 and the path is $PATH The service costs $100 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</code></li>
+</ul>
+</li>
+<li><strong>` `</strong> : Las comillas invertidas se utilizan para especificar un comando dentro de un comando, un proceso de sustitución del comando. Esto permite un uso muy potente y sofisticado de los comandos.
+<ul>
+<li>sysadmin@localhost:~$ echo Today is `date`
+Today is Mon Nov 2 03:40:04 UTC 2015`</li>
+</ul>
+</li>
+</ul>
+<h3 id="las-comillas">Las Comillas</h3>
+<p>Hay tres tipos de comillas que tienen significado especial para el shell Bash: comillas dobles <code>&quot;</code>, comillas simples <code>'</code> y comilla invertida <code>``</code>. Cada conjunto de comillas indica al shell que debe tratar el texto dentro de las comillas de una manera distinta a la normal.</p>
+<h4 id="comillas-dobles">Comillas Dobles</h4>
+<p>Las comillas dobles detendrán al shell de la interpretación de algunos metacaracteres, incluyendo los comodines. Dentro de las comillas dobles, el asterisco es sólo un asterisco, un signo de interrogación es sólo un signo de interrogación y así sucesivamente. Esto significa que cuando se utiliza el segundo comando <code>echo</code> más abajo, el shell BASH no convierte el patrón de globbing en nombres de archivos que coinciden con el patrón:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> /etc/[dp]*
+/etc/DIR_COLORS /etc/DIR_COLORS.256color /etc/DIR_COLORS.lightbgcolor /etc/PackageKit
+sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"/etc/[DP]*"</span>
+/etc/[DP]*
+</div></code></pre>
+<h4 id="comillas-simples">Comillas Simples</h4>
+<p>Las comillas simples evitan que el shell interprete algunos caracteres especiales. Esto incluye comodines, variables, sustitución de comando y otro metacarácter que aún no hemos visto.</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> The car costs <span class="hljs-variable">$100</span>
+The car costs 00
+sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'The car costs $100'</span>
+The car costs <span class="hljs-variable">$100</span>
+</div></code></pre>
+<h4 id="barra-diagonal-inversa">Barra Diagonal Inversa (\)</h4>
+<p>Si colocas una barra diagonal invertida \ antes del otro carácter, tratará al otro carácter como un carácter de &quot;comillas simples&quot;. El tercer comando más abajo muestra cómo utilizar el carácter , mientras que los otros dos muestran cómo las variables serían tratadas si las pones entre las comillas dobles y simples:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"The service costs <span class="hljs-variable">$100</span> and the path is <span class="hljs-variable">$PATH</span>"</span>
+The service costs 00 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/<span class="hljs-built_in">local</span>/sbin:/usr/<span class="hljs-built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+
+sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'The service costs $100 and the path is $PATH'</span>
+The service costs <span class="hljs-variable">$100</span> and the path is <span class="hljs-variable">$PATH</span>
+
+sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> The service costs \<span class="hljs-variable">$100</span> and the path is <span class="hljs-variable">$PATH</span>
+The service costs <span class="hljs-variable">$100</span> and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/<span class="hljs-built_in">local</span>/sbin:/usr/<span class="hljs-built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+</div></code></pre>
+<h4 id="comilla-invertida">Comilla Invertida `</h4>
+<p>Las comillas invertidas se utilizan para especificar un comando dentro de un comando, un proceso de sustitución del comando. Esto permite un uso muy potente y sofisticado de los comandos.</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ date
+Mon Nov  2 03:35:50 UTC 2015
+</div></code></pre>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ <span class="hljs-built_in">echo</span> Today is `date`
+Today is Mon Nov 2 03:40:04 UTC 2015
+</div></code></pre>
+<h3 id="manual-o-informaci%C3%B3n-de-comandos-man">Manual o información de comandos <code>Man</code></h3>
+<p>Para buscar todos los tipos de archivo</p>
+<pre class="hljs"><code><div>man -f passwd
+</div></code></pre>
+<pre class="hljs"><code><div>whatis passwd
+</div></code></pre>
+<pre class="hljs"><code><div>passwd (5)           - the password file
+passwd (1)           - change user password
+passwd (1ssl)        - compute password hashes
+</div></code></pre>
+<p>Para entrar a ver el manual de <code>passwd</code> a nivel <code>file</code>, se usa el comando <code>man</code> con el <code>nivel</code> y el <code>command</code>:</p>
+<pre class="hljs"><code><div>man 5 passwd
+</div></code></pre>
+<h3 id="encontrar-por-palabra-clave">Encontrar por palabra clave</h3>
+<pre class="hljs"><code><div>man -k passwd
+</div></code></pre>
+<h4 id="apropos"><code>apropos</code></h4>
+<p>search the manual page names and descriptions</p>
+<pre class="hljs"><code><div>apropos <span class="hljs-built_in">command</span>
+</div></code></pre>
+<p>Estos dos comandos hacen lo mismo</p>
+<pre class="hljs"><code><div>man -k passwd
+</div></code></pre>
+<p>o</p>
+<pre class="hljs"><code><div>apropops passwd
+</div></code></pre>
+<p><strong>salida:</strong></p>
+<pre class="hljs"><code><div>chgpasswd (8)        - update group passwords <span class="hljs-keyword">in</span> batch mode
+chpasswd (8)         - update passwords <span class="hljs-keyword">in</span> batch mode
+gpasswd (1)          - administer /etc/group and /etc/gshadow
+pam_localuser (8)    - require users to be listed <span class="hljs-keyword">in</span> /etc/passwd
+passwd (1)           - change user password
+passwd (1ssl)        - compute password hashes
+passwd (5)           - the password file
+update-passwd (8)    - safely update /etc/passwd, /etc/shadow and /etc/group
+</div></code></pre>
+<h4 id="comando-info">Comando <code>info</code></h4>
+<p>El comando <code>info</code> también proporciona documentación sobre funciones y comandos del sistema operativo. El objetivo de este comando es ligeramente diferente de las páginas <code>man</code>: <em>proporcionar un recurso de documentación que proporciona una estructura lógica</em>, facilitando la lectura de la documentación.</p>
+<pre class="hljs"><code><div>info passwd
+</div></code></pre>
+<pre class="hljs"><code><div>info apt
+</div></code></pre>
+<h3 id="opcion---help">Opcion <code>--help</code></h3>
+<p>Esto es útil para aprender el uso básico de un comando</p>
+<h4 id="encontrar-archivos-whereis-locate">Encontrar archivos <code>whereis</code> <code>locate</code></h4>
+<pre class="hljs"><code><div>sysadmin@localhost:~$  ps --<span class="hljs-built_in">help</span>
+</div></code></pre>
+<h4 id="readme-del-sistema">Readme del sistema</h4>
+<p>Estos archivos de documentación se suelen llamar archivos &quot;readme&quot; , ya que los archivos tienen nombres como README o readme.txt. La ubicación de estos archivos puede variar según la distribución que estés utilizando. Ubicaciones típicas incluyen <code>/usr/share/doc</code> y <code>/usr/doc</code>.</p>
+<h3 id="comando-whereis-o-locate">Comando <code>whereis</code> o <code>Locate</code></h3>
+<p><code>locate - find files by name</code></p>
+<p>El comando <code>whereis</code> está diseñado para encontrar de manera específica las páginas <code>man</code> y los comandos. Si bien esto es útil, hay veces en las que quieras encontrar un archivo o directorio, no sólo archivos de comandos o páginas mas.</p>
+<p>Para encontrar cualquier archivo o directorio, puede utilizar el comando <code>locate</code>. Este comando buscará en una base de datos de todos los archivos y directorios que estaban en el sistema cuando se creó la base de datos. Por lo general, el comando que genera tal base de datos se ejecuta por la noche.</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ whereis ls
+ls: /bin/ls /usr/share/man/man1/ls.1.gz
+</div></code></pre>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ locate ls
+/bin/<span class="hljs-literal">false</span>
+/bin/ls
+/bin/lsblk
+/bin/lsmod
+/etc/initramfs-tools
+</div></code></pre>
+<p>Puede que quieras empezar listando <strong>cuántos archivos coincidirán</strong>. Lo puedes hacer mediante la opción <code>-c</code> del comando <code>locate</code>:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ locate -c passwd
+97
+</div></code></pre>
+<p><strong>Para limitar la salida aún más, coloca un carácter</strong> <code>\</code> delante del término de búsqueda. Este carácter limita la salida a los nombres de archivo que coincidan exactamente con el término:</p>
+<pre class="hljs"><code><div>sysadmin@localhost:~$ locate -b <span class="hljs-string">"\passwd"</span>
+/etc/passwd
+/etc/cron.daily/passwd
+/etc/pam.d/passwd
+/usr/bin/passwd
+/usr/share/doc/passwd
+/usr/share/lintian/overrides/passwd
+</div></code></pre>
+<p>Los archivos que creaste hoy normalmente no los vas a poder buscar con el comando <code>locate</code>. Si tienes acceso al sistema como usuario root (con la cuenta del administrador de sistema), puede actualizar manualmente la base de datos <code>locate</code> ejecutando el comando <code>updatedb</code>. Los usuarios regulares no pueden actualizar el archivo de base de datos.</p>
+<h4 id="updatedb"><code>updatedb</code></h4>
+<pre class="hljs"><code><div>updatedb
+</div></code></pre>
+<p><code>updatedb - update a database for mlocate</code></p>
+<h3 id="comando-ls">Comando <code>ls</code></h3>
+<ul>
+<li><code>-S</code> ordena por size</li>
+<li><code>-R</code> muestra todo los archivos, inlcuyendo los subdirectorios</li>
+<li><code>-t</code> ordena por fecha</li>
+<li><code>--full-time</code> visualiza la fecha y la hora completas (incluyendo horas, segundos, minutos...):</li>
+<li><code>-r</code> los ordena de forma inversa</li>
+</ul>
+<h3 id="comando-copiar-cp">Comando copiar <code>cp</code></h3>
+<p><code>cp</code> - copy files and directories</p>
+<pre class="hljs"><code><div>cp [fuente] [destino]
+</div></code></pre>
+<p>Argumentos</p>
+<ul>
+<li><code>-v</code> verboso</li>
+<li><code>-i</code> al copiar verificar si existe, en caso de existir pregunta si se desea sobreescribir</li>
+<li><code>-n</code> se pasa para indicar que no sobreescriba
+<ul>
+<li><code>cp -i -n archivo.txt archivo.copy</code></li>
+</ul>
+</li>
+<li><code>-r</code> copia el directorio completo
+<ul>
+<li><code>cp -r /usr/share/doc /home/usuario/</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="comando-mover-mv">Comando mover <code>mv</code></h3>
+<p>Mueve y renombra archivos</p>
+<p><code>mv [fuente] [destino]</code></p>
+<p><strong>Aplican los mismos argumento que <code>cp</code></strong>, no tiene la opcion <code>r</code> recursividad</p>
+<h3 id="comando-eliminar-rm">Comando eliminar <code>rm</code></h3>
+<p><code>rm [archivo]</code></p>
+<p>argumentos</p>
+<ul>
+<li><code>-i</code> confirma eliminar el archivo</li>
+<li><code>-r</code> borra la carpeta</li>
+</ul>
+<h3 id="enlances-duros-y-simbolicos-ln">Enlances duros y simbolicos <code>ln</code></h3>
+<p>Permite hacer referencias a directorios o archivos</p>
+<pre class="hljs"><code><div>ln &lt;opciones&gt; &lt;ruta origen&gt; &lt;ruta destino&gt;
+</div></code></pre>
+<p>Donde:</p>
+<p><code>&lt;ruta origen&gt;</code> es la ruta del directorio o archivo original.
+<code>&lt;ruta destino&gt;</code> el la ruta en la que se realizará el enlace.</p>
+<p>Argumentos:</p>
+<ul>
+<li><code>-s</code> crea un enlace simbólico</li>
+<li><code>-f</code> o <code>--force</code> elimina un objeto de destino en caso de que ya exista.</li>
+<li><code>-i</code> o <code>--interactive</code> pregunta si se eliminará un objeto de destino.</li>
+</ul>
+<p>Enlace duro</p>
+<pre class="hljs"><code><div>ln ~/original ~/copia
+</div></code></pre>
+<p>Enlace simbolico</p>
+<pre class="hljs"><code><div>ln -s ~/ejemplo_1 ~/simbolico_1
+</div></code></pre>
+<h3 id="comando-stat">Comando <code>stat</code></h3>
+<p>El comando <code>stat</code> permite desplegar los datos generales de un objeto.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">stat</span> &lt;opciones&gt; &lt;ruta&gt;
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-built_in">stat</span> Documents
+</div></code></pre>
+<p>Salida</p>
+<pre class="hljs"><code><div>File: `Documents/'
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 3000c2h/3145922d        Inode: 9049952     Links: 2
+Access: (0755/drwxr-xr-x)  Uid: ( 1001/sysadmin)   Gid: ( 1001/sysadmin)
+Access: 2020-01-10 21:53:30.476732135 +0000
+Modify: 2016-03-14 17:34:24.000000000 +0000
+Change: 2020-01-10 21:53:30.436732017 +0000
+ Birth: -
+</div></code></pre>
+<h3 id="comando-file">Comando <code>file</code></h3>
+<p>El comando file regresa el tipo de archivo que se consulta.</p>
+<pre class="hljs"><code><div>file &lt;ruta&gt;
+</div></code></pre>
+<pre class="hljs"><code><div>file .bashrc
+.bashrc: ASCII English text
+</div></code></pre>
+<h3 id="comando-tree">Comando <code>tree</code></h3>
+<p>Este comando permite desplegar la estructura de archivos y subdirectorios de un directorio dado.</p>
+<pre class="hljs"><code><div>tree &lt;opciones&gt; &lt;ruta&gt;
+</div></code></pre>
+<p>Argumentos:</p>
+<ul>
+<li><code>-L #</code> Define el número de niveles de subdirectorios a los que accederá. # indica con un entero hasta que nivel se mostrará.</li>
+<li><code>-a</code> para desplegar los archivos y directorios ocultos.</li>
+</ul>
+<p>Muesta el arbol a 1 nivel</p>
+<pre class="hljs"><code><div>tree -L 1
+</div></code></pre>
+<p>Muesta el arbol a 1 nivel y los archivos ocultos</p>
+<pre class="hljs"><code><div>tree -aL 1
+</div></code></pre>
+<p>Muestra los directorios a su máximo nivel</p>
+<pre class="hljs"><code><div>tree ./
+.
+|-- Desktop
+|-- Documents
+|-- Downloads
+|-- Music
+|-- Pictures
+|-- Public
+|-- Templates
+`-- Videos
+8 directories, 0 files
+</div></code></pre>
+<h3 id="comando-du">Comando <code>du</code></h3>
+<p>Este comando despliega el tamaño que ocupa un directorio.</p>
+<pre class="hljs"><code><div>du &lt;opciones&gt; &lt;ruta&gt;
+</div></code></pre>
+<p>Argumentos:</p>
+<ul>
+<li><code>-m</code> permite desplegar el tamaño de los directorios en MB.</li>
+</ul>
+<p>Desplegara el contenido y el peso de la carpeta</p>
+<pre class="hljs"><code><div>du -m Documents
+</div></code></pre>
+<h3 id="compresion-de-archivos-gzip-y-gunzip">Compresion de archivos <code>gzip</code> y <code>gunzip</code></h3>
+<p>Para comprimir archivos</p>
+<p><code>gzip [archivo]</code></p>
+<p>Argumentos:</p>
+<ul>
+<li><code>-l</code> conocer el porcentaje de compresion
+<ul>
+<li><code>gzip -l [archivo].gz</code></li>
+</ul>
+</li>
+<li><code>-d</code> descomprimir
+<ul>
+<li><code>gzip -l [archivo].gz</code></li>
+</ul>
+</li>
+</ul>
+<p>Descomprimir archivos</p>
+<pre class="hljs"><code><div>gzip -d [archivo].gz
+</div></code></pre>
+<pre class="hljs"><code><div>gunzip [archivo].gz
+</div></code></pre>
+<h3 id="empaquetamiento-tarballs-tar-tape-archive">Empaquetamiento <em>tarballs</em> <code>tar</code> (Tape ARchive )</h3>
+<p><code>Tar</code> tiene 3 modos que deberás conocer:</p>
+<ul>
+<li><strong>Crear</strong>: hacer un archivo nuevo de una serie de archivos</li>
+<li><strong>Extraer</strong>: sacar uno o más archivos de un archivo</li>
+<li><strong>Listar</strong>: mostrar el contenido del archivo sin extraer</li>
+</ul>
+<p>Empaqueta, se la da un nombre y los archivos o carpeta</p>
+<p><code>tar -cf [nombre_pkg].tar [files...]</code></p>
+<h4 id="empaqueta-y-lo-comprime-con-gzip">Empaqueta y lo comprime con <strong><code>gzip</code></strong></h4>
+<pre class="hljs"><code><div>tar -czf [nombre_pkg].tar.gz  [files...]
+</div></code></pre>
+<pre class="hljs"><code><div>tar -czf [nombre_pkg].tgz  [files...]
+</div></code></pre>
+<pre class="hljs"><code><div>tar -rvf [archivo].tar [file_to_add]
+</div></code></pre>
+<p>Argumentos:</p>
+<ul>
+<li><code>-c</code> creacion</li>
+<li><code>-f</code> que se le pasara el nombre</li>
+<li><code>-t</code> listar documentos en el archivo en el archivo empaquetado</li>
+<li><code>-z</code> que use <strong>gzip</strong> para la tarea</li>
+<li><code>j</code> que use <strong>bzip2</strong> para la tarea</li>
+<li><code>x</code> para descomprimir</li>
+<li><code>-r</code> recursividad (para agregar mas archivos a un <em>tar</em>)</li>
+</ul>
+<h4 id="empaquetado-y-lo-comprime-con-bzip2">Empaquetado y lo comprime con <strong>bzip2</strong></h4>
+<pre class="hljs"><code><div>tar -cjf [nombre_pack].tar.bz2  [nombre_archivos]
+</div></code></pre>
+<pre class="hljs"><code><div>tar -cjf [nombre_pack].tbz  [nombre_archivos]
+</div></code></pre>
+<pre class="hljs"><code><div>tar -cjf [nombre_pack].tbz2  [nombre_archivos]
+</div></code></pre>
+<p><strong>En listar el contenido de un <code>tar</code> comprimido</strong></p>
+<pre class="hljs"><code><div>tar -tf access_logs.tgz
+</div></code></pre>
+<pre class="hljs"><code><div>tar -tvf access_logs.tgz
+</div></code></pre>
+<pre class="hljs"><code><div>tar -tjf access_logs.tbz
+</div></code></pre>
+<pre class="hljs"><code><div>tar -tzf access_logs.tgz
+</div></code></pre>
+<h4 id="descomprimiendo-los-tar">Descomprimiendo los <code>tar</code></h4>
+<pre class="hljs"><code><div>tar -xjf access_logs.tbz
+</div></code></pre>
+<pre class="hljs"><code><div>tar -xzf access_logs.tar.gz
+</div></code></pre>
+<p>Si sólo quieres algunos documentos del archivo empaquetado puedes agregar sus nombres al final del comando, pero por defecto deben coincidir exactamente con el nombre del archivo o puedes utilizar un patrón:</p>
+<pre class="hljs"><code><div>tar -xjvf [archivo_comprimido].tbz [path/exacta_file]
+</div></code></pre>
+<pre class="hljs"><code><div>tar -xzvf [archivo_comprimido].tgz [path/exacta_file]
+</div></code></pre>
+<h4 id="zip">Zip</h4>
+<p>Compresion de archivos</p>
+<pre class="hljs"><code><div>zip -r [nombre_compress].zip [archivos...]
+</div></code></pre>
+<ul>
+<li><code>-r</code> recursividad</li>
+</ul>
+<p>El listado de los archivos en el <code>zip</code> se realiza por el comando <code>unzip</code> y la opción <code>–l</code> (listar):</p>
+<pre class="hljs"><code><div>unzip -l logs.zip
+</div></code></pre>
+<p><strong>Para descomprimir</strong></p>
+<pre class="hljs"><code><div>unzip [archivo].zip
+</div></code></pre>
+<h3 id="pipe">Pipe ( | )</h3>
+<p>Se utilizarse para enviar la salida de un comando a otro. Se utiliza a menudo para refinar los resultados de un comando inicial.</p>
+<p>Múltiples barras verticales pueden utilizarse consecutivamente para unir varios comandos. Si se unen tres comandos con la barra vertical, la salida del primer comando se pasa al segundo comando. La salida del segundo comando se pasa al tercer comando. La salida del tercer comando se imprime en la pantalla.</p>
+<p>En lugar de mostrar la salida del comando anterior, poner la barra vertical junto al comando <code>head</code> muestra sólo las primeras diez líneas:</p>
+<pre class="hljs"><code><div>ls /etc | head
+</div></code></pre>
+<p>Despliega el listado de archivo, enumera las lineas y saca las ultimas 5 lineas</p>
+<pre class="hljs"><code><div>ls -l /etc/ppp | nl | tail -5
+</div></code></pre>
+<h2 id="redirecci%C3%B3n-de-io">Redirección de I/O</h2>
+<p>Entras, salidas y errores estandars</p>
+<ul>
+<li>STDIN</li>
+<li>STDOUT</li>
+<li>STDERR</li>
+</ul>
+<p>Rederigir hacia un archivo, lo crea y escribe <code>&gt;</code></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-string">"Line 1"</span> &gt; example.txt
+</div></code></pre>
+<p>Rederigir hacia un archivo, lo crea y agrega <code>&gt;&gt;</code></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-string">"Line 1"</span> &gt;&gt; example.txt
+</div></code></pre>
+<p>Puedes redirigir el STDERR de una manera similar a la STDOUT. STDOUT es también conocida como secuencia o canal («stream» o «channel» en inglés) #1. Al STDERR se asigna la secuencia #2.</p>
+<ul>
+<li>Canal 1 STDOUT</li>
+<li>Canal 2 STDERR</li>
+</ul>
+<pre class="hljs"><code><div>ls /fake 2&gt; error.txt
+cat error.txt
+ls: cannot access /fake: No such file or directory <span class="hljs-comment"># mensaje del archivo</span>
+</div></code></pre>
+<p>Guardar todo lo que <strong>no marca error</strong></p>
+<pre class="hljs"><code><div>ls /fake /etc/ppp &gt; example.txt
+</div></code></pre>
+<p>Guardar todo lo <strong>marca error</strong></p>
+<pre class="hljs"><code><div>ls /fake /etc/ppp 2&gt; error.txt
+</div></code></pre>
+<p>Las salidas <em>STDOUT</em> y <em>STDERR</em> pueden enviarse a un archivo mediante el uso de <code>&amp;&gt;</code> un conjunto de caracteres que significan «ambos <code>1&gt;</code> y <code>2&gt;</code>»</p>
+<pre class="hljs"><code><div>ls /fake /etc/ppp &amp;&gt; all.txt
+</div></code></pre>
+<p>La salida aparece en el archivo con todos los mensajes <em>STDERR</em> en la parte superior y todos los mensaje <em>STDOUT</em> debajo de todos los mensajes de <em>STDERR</em>.</p>
+<p><strong>Enviando a archivos distintos</strong>, <code>example.txt</code> guarda los <em>STDOUT</em> y <code>error.txt</code> guarda los <em>STDERR</em>; no importa el órden:</p>
+<pre class="hljs"><code><div> ls /fake /etc/ppp &gt; example.txt 2&gt; error.txt
+</div></code></pre>
+<p><strong>STDIN</strong></p>
+<p>Con <code>cat</code> se queda esperando recibir datos, pero al recibirlos, el resultado lo devuelve a la salida.</p>
+<pre class="hljs"><code><div>cat
+</div></code></pre>
+<p>Con <code>cat &gt; new.txt</code> lo que se escribe los manda al archivo</p>
+<pre class="hljs"><code><div>cat &gt; new.txt
+</div></code></pre>
+<h3 id="comando-tr">Comando <code>tr</code></h3>
+<p>Transforma o borrar caracteres. Lo que escribe lo convierte a mayúsculas</p>
+<pre class="hljs"><code><div>tr <span class="hljs-string">'a-z'</span> <span class="hljs-string">'A-Z'</span>
+watch how this works
+WATCH HOW THIS WORKS
+</div></code></pre>
+<p>Para transformar todos los caracteres de un archivo a mayusculas</p>
+<pre class="hljs"><code><div>tr <span class="hljs-string">'a-z'</span> <span class="hljs-string">'A-Z'</span> &lt; example.txt
+</div></code></pre>
+<p>Para transformar todo a mayusculas de un archivo y la salida mandarlo a otro archivo</p>
+<pre class="hljs"><code><div>tr <span class="hljs-string">'a-z'</span> <span class="hljs-string">'A-Z'</span> &lt; example.txt &gt; newexample.txt
+</div></code></pre>
+<h3 id="comando-find">Comando <code>find</code></h3>
+<p>Search for files in a directory hierarchy</p>
+<pre class="hljs"><code><div>find [directorio de inicio] [opción de búsqueda] [criterio de búsqueda] [opción de resultado]
+</div></code></pre>
+<pre class="hljs"><code><div>find [starting directory] [search option] [search criteria] [result option]
+</div></code></pre>
+<p>Opciones</p>
+<ul>
+<li><code>-name</code> para agregar el nombre del archivo, no afecta mayúsculas y minúsculas</li>
+<li><code>-ls</code> imprime la descripción como si fuera el comando <code>ls -l</code></li>
+<li><code>-size</code> busca por tamaño de archivo. Tamaño en bytes (c), kilobytes (k), megabytes (M) o gigabytes (G)</li>
+<li><code>-maxdepth</code>	Permite al usuario especificar la profundidad en la estructura de los directorios a buscar. Por ejemplo, <code>-maxdepth 1</code> significaría sólo buscar en el directorio especificado y en sus subdirectorios inmediatos.</li>
+<li><code>-mmin</code>	Devuelve los archivos que fueron modificados según el tiempo de modificación en minutos. Por ejemplo, <code>-mmin 10</code> coincidirá con los archivos que fueron modificados hace 10 minutos.</li>
+<li><code>-type</code>	Devuelve los archivos que coinciden con el tipo de archivo. Por ejemplo, <code>-type f</code> devuelve los archivos que son archivos regulares. <code>d</code>para directorios</li>
+</ul>
+<p>Buscar un archivo <code>hosts</code> por su nombre en todo el sistema y los errores tirarlos a la basura</p>
+<pre class="hljs"><code><div>find /etc -name hosts 2&gt; /dev/null
+</div></code></pre>
+<p>Despliega los archivos como si era con el comando <code>ls -l</code> y los errores los manda a la basuca</p>
+<pre class="hljs"><code><div>find /etc -name hosts -ls 2&gt; /dev/null
+</div></code></pre>
+<p>La búsqueda de archivos en la estructura de directorios <code>/etc</code> con el tamaño exacto de <code>10 bytes</code>:</p>
+<pre class="hljs"><code><div>find /etc -size 10c -ls 2&gt;/dev/null
+</div></code></pre>
+<p>Buscará todos los archivos en la estructura de directorio <code>/usr</code> que su tamaño sea mayor a <code>100 megabytes</code>; se usa <code>+</code> o <code>-</code> para indicar si son mayores que o menores que la cantidad:</p>
+<pre class="hljs"><code><div>find /usr -size +100M -ls 2&gt; /dev/null
+</div></code></pre>
+<pre class="hljs"><code><div>find /etc -size 10c -<span class="hljs-built_in">type</span> f -ls 2&gt;/dev/null
+</div></code></pre>
+<h2 id="vizualizaci%C3%B3n-de-archivos-cat-less-more-head-tails">Vizualización de archivos <code>cat</code> <code>less</code> <code>more</code> <code>head</code> <code>tails</code></h2>
+<ul>
+<li><code>cat</code> visualización de archivos pequeños</li>
+<li><code>less</code> visualización de archivos avanzado</li>
+<li><code>more</code> Este comando ha existido desde los primeros días de UNIX.</li>
+<li><code>head</code>, <code>tails</code> : ver archivos con delimitación de lineas
+<ul>
+<li><code>head -n 5 archivo.ext</code> (muestra las primero 5 lineas)</li>
+<li><code>head -n 10 archivo.txt</code></li>
+<li><code>head -5 archivo.txt</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>Enfocado a <code>less</code></strong></p>
+<ul>
+<li>Ventana hacia adelante	<code>Barra espaciadora</code></li>
+<li>Ventana hacia atrás	<code>b</code></li>
+<li>Línea hacia adelante	<code>Enter</code></li>
+<li>Salir	<code>q</code></li>
+<li>Ayuda	<code>h</code></li>
+</ul>
+<p><strong><code>tail</code></strong></p>
+<p>Puedes ver los cambios en vivo en los archivos mediante la opción -f del comando tail. Esto es útil cuando quieres seguir cambios en un archivo mientras están sucediendo.</p>
+<pre class="hljs"><code><div>tail -f /var/<span class="hljs-built_in">log</span>/mail.log
+</div></code></pre>
+<h3 id="comando-sort-ordenar-archivos-o-entradas-stdin">Comando <code>sort</code> Ordenar archivos o entradas (STDIN)</h3>
+<p>Puede utilizarse el comando sort para reorganizar las líneas de archivos o entradas en orden alfabético o numérico basado en el contenido de uno o más campos. Los campos están determinados por un separador de campos contenido en cada línea, que por defecto son espacios en blanco (espacios y tabuladores).</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-n</code> ordena por numeros</li>
+<li><code>-r</code> invierte el orden</li>
+<li><code>-t</code> se puede agregar el separador <code>-t,</code>, <code>-t:</code></li>
+<li><code>-k</code> se indica el campo por el cual se va a ordenar</li>
+</ul>
+<p>Ordena por numeros y despues por letra en orden ascendente</p>
+<pre class="hljs"><code><div>sort archivo
+</div></code></pre>
+<p>El separador es <code>:</code>, se invierte el orden <code>-r</code> con base al campo 3 <code>-k3</code></p>
+<pre class="hljs"><code><div>sort -t: -n -r -k3 mypasswd
+</div></code></pre>
+<p>Puede que quieras ordenar primero por el apellido (campo #2), luego el nombre (campo #1) y luego por edad (campo #3). Esto se puede hacer con el siguiente comando:</p>
+<pre class="hljs"><code><div>sort -t: -k2 -k1 -k3n filename
+</div></code></pre>
+<h3 id="comando-wc">Comando <code>wc</code></h3>
+<p><code>print newline, word, and byte counts for each file</code></p>
+<p>El comando <code>wc</code> permite que se impriman hasta tres estadísticas por cada archivo, así como el total de estas estadísticas, siempre que se proporcione más de un nombre de archivo.</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-l</code> imprime el numero de lineas que tiene el archivo</li>
+<li><code>-m</code> imprime el numero de caracteres</li>
+<li><code>-c</code> imprime el peso en bytes del archivo</li>
+</ul>
+<p>Imprime la cantidad de lineas, caracteres y peso en bytes del archivo</p>
+<pre class="hljs"><code><div>wc /etc/passwd
+</div></code></pre>
+<p>Imprime la suma de cantidad de lineas, caracteres y peso en bytes de los archivos, maximo puede imprimir de 2 archivos</p>
+<pre class="hljs"><code><div>wc /etc/passwd /etc/passwd-
+</div></code></pre>
+<pre class="hljs"><code><div>wc /etc/passwd -l
+</div></code></pre>
+<p>Forma de uso:</p>
+<p>Indica el número de arhivos que tiene el directorio <code>etc</code></p>
+<pre class="hljs"><code><div>ls /etc/ | wc -l
+</div></code></pre>
+<h3 id="comando-cut">Comando <code>cut</code></h3>
+<p><code>remove sections from each line of files</code></p>
+<p>Puede extraer columnas de texto de un archivo o entrada estándar. El uso primario del comando <code>cut</code> es para trabajar con los archivos delimitados de las bases de datos.</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-d</code> delimitador, por defaul <code>tab</code> es el delimitador; <code>-d:</code></li>
+<li><code>-f</code> Los campos a mostrar, al estar delimitado selecciona esos campos; <code>-f1,5-7</code></li>
+<li><code>-c</code> selecciona los carecteres; <code>-c1-11,50-</code></li>
+</ul>
+<pre class="hljs"><code><div>cut -d: -f1,5-7 passwd
+</div></code></pre>
+<pre class="hljs"><code><div>ls -l | cut -c1-11,50-
+</div></code></pre>
+<h2 id="expresiones-regulares">Expresiones regulares</h2>
+<p>Es una colección de caracteres <em>«normales»</em> y <em>«especiales»</em> que se utilizan para que coincida con un patrón simple o complejo. Los caracteres normales son caracteres alfanuméricos que coinciden con ellos mismos.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Expresión Regular</th>
+<th>Coincidencias</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>.</strong></td>
+<td>Cualquier carácter individual</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>[ ]</strong></td>
+<td><strong>Una lista o rango</strong> de caracteres que coinciden con un carácter, a menos que el primer carácter sea el símbolo de intercalación ^, lo que entonces significa cualquier carácter que no esté en la lista</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>*</strong></td>
+<td><strong><em>El carácter previo</em> que se repite cero o más veces</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>^</strong></td>
+<td><strong>El texto siguiente</strong> debe aparecer al <strong>principio de la línea</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>$</strong></td>
+<td><strong>El texto anterior</strong> debe aparecer al <strong>final de la línea</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Coincide el patron porque busca que comience con <code>a</code> y los <code>..</code> indica que hay 2 caracteres más cual sea</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> abcddd &gt; example
+sysadmin@localhost:~$ grep --color <span class="hljs-string">'a..'</span> example
+`abc`ddd
+</div></code></pre>
+<p>Busca 2 palabras, la primera que contenga <code>a</code> o <code>b</code>, y la segunda letra en el rango de <code>a</code> hasta <code>d</code></p>
+<pre class="hljs"><code><div>grep --color <span class="hljs-string">'[ab][a-d]'</span> example
+`ab`cddd
+</div></code></pre>
+<p>Busca el patron donde primero exista cualquier letra que no este en rango <code>a</code> a <code>c</code>, contigua a una <code>d</code></p>
+<pre class="hljs"><code><div>grep --color <span class="hljs-string">'[^abc]d'</span> example.txt
+abc`dd`d
+</div></code></pre>
+<p>Busca que contenga la letra <code>d</code> seguido de ningun o mas del mismo caracter</p>
+<pre class="hljs"><code><div>grep --color <span class="hljs-string">'d*'</span> example.txt
+abc`ddd`
+</div></code></pre>
+<p>Busca todas las coincidencia con la letra <code>a</code></p>
+<pre class="hljs"><code><div>grep  <span class="hljs-string">'a'</span> example
+`a`bcddd
+xyz`a`bc
+</div></code></pre>
+<p>Busca solo las que comienzan con <code>a</code></p>
+<pre class="hljs"><code><div>grep  <span class="hljs-string">'^a'</span> example
+`a`bcddd
+</div></code></pre>
+<p>Buscará todas las palabras que terminan con <code>c</code></p>
+<pre class="hljs"><code><div>grep <span class="hljs-string">"c$"</span> example
+xyzab`c`
+</div></code></pre>
+<p>Busca la coincidencia de la letra <code>cd</code> y que se repita la <code>d</code></p>
+<pre class="hljs"><code><div>grep <span class="hljs-string">"cd*"</span> example
+ab`cddd`
+xyzab`c`
+ab`<span class="hljs-built_in">cd</span>`*
+</div></code></pre>
+<p>Si queremos seleccionar con el <code>*</code> en la busqueda, se debe escapar el caracter</p>
+<pre class="hljs"><code><div>grep <span class="hljs-string">"cd\*"</span> example
+ab`<span class="hljs-built_in">cd</span>*`
+</div></code></pre>
+<h3 id="expresiones-regulares-extendidas">Expresiones regulares Extendidas</h3>
+<p>Para aplicar las expresiones extendidas se aplica la opcion <code>-E</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">RE</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>?</strong></td>
+<td>Coincide con el carácter anterior cero o una vez más, así que es un carácter opcional</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>+</strong></td>
+<td>Coincide con el carácter anterior repetido una o más veces</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>|</strong></td>
+<td>Alternación o como un operador lógico</td>
+</tr>
+</tbody>
+</table>
+<p>Haz coincidir <code>colo</code> seguido por cero o un carácter <code>u</code></p>
+<pre class="hljs"><code><div>grep -E <span class="hljs-string">'colou?r'</span> example
+</div></code></pre>
+<p>Coincide con uno o más <code>d</code> caracteres</p>
+<pre class="hljs"><code><div>grep -E <span class="hljs-string">'d+'</span> example
+</div></code></pre>
+<p>Coincide con <code>gray</code> o <code>grey</code></p>
+<pre class="hljs"><code><div>grep -E <span class="hljs-string">'gray|grey'</span> example
+</div></code></pre>
+<h2 id="comando-xargs">Comando <code>xargs</code></h2>
+<p>El comando <code>xargs</code> se utiliza para construir y ejecutar líneas de comandos de una entrada estándar. Este comando es muy útil cuando se necesita ejecutar un comando con una lista de argumentos muy larga, que en algunos casos puede resultar en un error si la lista de argumentos es demasiado larga.</p>
+<p>Su objetivo es construir la línea de comandos para que un comando se ejecute las menos veces posibles con tantos argumentos como sea posible, en lugar de ejecutar el comando muchas veces con un argumento cada vez.</p>
+<p>Opciones</p>
+<ul>
+<li><code>-0</code>  desactiva la cadena de fin de archivo, permitiendo el uso de los argumentos que contengan espacios, comillas o barras diagonales inversas.</li>
+</ul>
+<pre class="hljs"><code><div>ls | xargs rm
+</div></code></pre>
+<h2 id="bash-scripting">Bash Scripting</h2>
+<p>Comparaciones</p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test –f /dev/ttyS0	0</code></td>
+<td>si el archivo existe</td>
+</tr>
+<tr>
+<td><code>test ! –f /dev/ttyS0</code></td>
+<td>0 si el archivo no existe</td>
+</tr>
+<tr>
+<td><code>test –d /tmp</code></td>
+<td>0 si el directorio existe</td>
+</tr>
+<tr>
+<td><code>test –x </code>which ls<code>\</code></td>
+<td>sustituir la ubicación de <code>ls</code> y luego (probar) <code>test</code>, si el usuario puede ejecutar</td>
+</tr>
+<tr>
+<td><code>test 1 –eq 1</code></td>
+<td>0 si tiene éxito la comparación numérica</td>
+</tr>
+<tr>
+<td><code>test ! 1 –eq 1</code></td>
+<td>NO – 0 si la comparación falla</td>
+</tr>
+<tr>
+<td><code>test 1 –ne 1</code></td>
+<td>Más fácil, ejecutar test (probar) si hay desigualdad numérica</td>
+</tr>
+<tr>
+<td><code>test “a” = “a”</code></td>
+<td>0  si tiene éxito la comparación de cadenas</td>
+</tr>
+<tr>
+<td><code>test “a” != “a”</code></td>
+<td>0  si las cadenas son diferentes</td>
+</tr>
+<tr>
+<td><code>test 1 –eq 1 –o 2 –eq 2</code></td>
+<td><code>-o</code> es OR: cualquiera de las opciones pueden ser igual</td>
+</tr>
+<tr>
+<td><code>test 1 –eq 1 –a 2 –eq 2</code></td>
+<td><code>-a</code> es AND: ambas comparaciones deben ser iguales</td>
+</tr>
+</tbody>
+</table>
+<h3 id="condicionales">Condicionales</h3>
+<h4 id="condicional-if-elif-else">Condicional <code>if</code> <code>elif</code> <code>else</code></h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash</span>
+<span class="hljs-comment"># script.sh</span>
+
+<span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> = <span class="hljs-string">"hello"</span> ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"hello yourself"</span>
+<span class="hljs-keyword">elif</span> [ <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> = <span class="hljs-string">"goodbye"</span> ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"nice to have met you"</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I hope to see you again"</span>
+<span class="hljs-keyword">else</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I didn't understand that"</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Ejecucion</p>
+<pre class="hljs"><code><div>./script.sh hello
+hello yourself
+
+./script.sh goodbye
+nice to have met you
+I hope to see you again
+
+./script.sh
+I didn<span class="hljs-string">'t understand that
+</span></div></code></pre>
+<h4 id="condicional-case">Condicional <code>case</code></h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash
+</span>
+<span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> <span class="hljs-keyword">in</span>
+hello|hi)
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"hello yourself"</span>
+  ;;
+goodbye)
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"nice to have met you"</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I hope to see you again"</span>
+  ;;
+*)
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I didn't understand that"</span>
+<span class="hljs-keyword">esac</span>
+</div></code></pre>
+<h3 id="loops">Loops</h3>
+<p>Hay dos loops principales en los scripts del shell: el loop <code>for</code> y el loop <code>while</code>.</p>
+<h4 id="ciclo-for">Ciclo <code>for</code></h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash
+</span>
+SERVERS=<span class="hljs-string">"servera serverb serverc"</span>
+
+<span class="hljs-keyword">for</span> S <span class="hljs-keyword">in</span> <span class="hljs-variable">$SERVERS</span>; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Doing something to <span class="hljs-variable">$S</span>"</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>Resultado</p>
+<pre class="hljs"><code><div>Doing something to servera
+Doing something to serverb
+Doing something to serverc
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash
+</span>
+<span class="hljs-keyword">for</span> NAME <span class="hljs-keyword">in</span> Sean Jon Isaac David; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello <span class="hljs-variable">$NAME</span>"</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-keyword">for</span> S <span class="hljs-keyword">in</span> *; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Doing something to <span class="hljs-variable">$S</span>"</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>El segundo loop utiliza comodín <code>*</code> que es un file glob. El shell expande eso a todos los archivos en el directorio actual.</p>
+<p>Resultado:</p>
+<pre class="hljs"><code><div>Hello Sean
+Hello Jon
+Hello Isaac
+Hello David
+Doing something to Readme.md
+Doing something to sc.sh
+</div></code></pre>
+<p><em>Cuenta la cantidad de palabras en cada archivo</em></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> /etc/passwd /etc/hosts /etc/group
+<span class="hljs-keyword">do</span>
+  wc <span class="hljs-variable">$name</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<h4 id="ciclo-while">Ciclo <code>while</code></h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash
+</span>
+i=0
+<span class="hljs-keyword">while</span> [ <span class="hljs-variable">$i</span> -lt 10 ]; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span>
+  i=$(( <span class="hljs-variable">$i</span> + 1))
+<span class="hljs-keyword">done</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Done counting"</span>
+</div></code></pre>
+<p>Resultado:</p>
+<pre class="hljs"><code><div>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Done counting
+</div></code></pre>
+<h2 id="hardware">Hardware</h2>
+<ul>
+<li><code>arch</code> Para conocer la arquitectura</li>
+<li><code>lscpu</code> información del CPU y arquitectura</li>
+<li><code>cat /proc/cpuinfo</code> La manera más detallada de obtener la información acerca de tu CPU es visualizando el archivo</li>
+<li><code>dmidecode</code> ver los dispositivos conectados directamente a la tarjeta madre</li>
+<li><code>free</code> ver la información de la RAM, tiene para ver en mega, giga <code>-m</code> <code>-g</code></li>
+<li><code>lspci</code> ver todos los dispositivos conectados por un bus PCI
+<ul>
+<li><code>-nn</code>es para ver más detalles del vendor</li>
+<li><code>-d vendor:device</code> para ver detalles del dispositivo <code>lspci -d 15ad:07b0 -vvv</code></li>
+</ul>
+</li>
+<li><code>lsusb</code> el listado de dispositivos usb
+<ul>
+<li><code>-v</code> para ver más detalles</li>
+</ul>
+</li>
+<li><code>lshal</code> te permite ver los dispositivos detectados por HAL.</li>
+<li><code>fdisk</code> manipulate disk partition table
+<ul>
+<li><code>fdisk -l</code> En lista los discos duros en cilindros</li>
+<li><code>fdisk -cul</code> en lista los discos en sectores</li>
+<li><code>fdisk -l /dev/sda</code> Muestra la información de la partición en el primer dispositivo de <code>sd</code></li>
+<li><code>df</code> manipulate disk partition table
+<ul>
+<li><code>df -l</code> lo muestra en forma de lista los espacios del disco duro</li>
+</ul>
+</li>
+<li><code>lsmod</code> program to show the status of modules in the Linux Kernel</li>
+</ul>
+</li>
+</ul>
+<h2 id="gestion-de-paquetes-y-procesos">Gestion de paquetes y procesos</h2>
+<h3 id="debian-deb">Debian <code>.deb</code></h3>
+<ul>
+<li><code>sudo apt-get update</code> actualizo el sistema</li>
+<li><code>sudo apt-cache search keyword</code> busco paquetes</li>
+<li><code>sudo apt-get install package</code> installar paquetes</li>
+<li><code>sudo apt-get upgrade</code> actualiza a nuevas versiones los paquetes</li>
+<li><code>sudo apt-get remove package</code> Si quieres eliminar todos los archivos de un paquete de software, excepto los archivos de configuración</li>
+<li><code>sudo apt-get --purge remove package</code> Si quieres eliminar todos los archivos de un paquete de software, incluyendo los archivos de configuración</li>
+<li><code>dpkg -l</code> listar los paquetes instalados</li>
+<li><code>dpkg -L package</code>  listar los archivos que componen un paquete especial</li>
+<li><code>dpkg -s package</code> Para consultar un paquete y obtener información o su estado</li>
+<li><code>dpkg -S /path/to/file</code> Para determinar si un determinado archivo fue puesto en el sistema de archivos como el resultado de la instalación de un paquete</li>
+</ul>
+<h3 id="red-hat-rpm">Red Hat <code>.rpm</code></h3>
+<ul>
+<li><code>yum install package</code> instala paquetes</li>
+<li><code>yum search keyword</code> busca paquetes</li>
+<li><code>yum update package</code> Si quieres actualizar un paquete de software individual</li>
+<li><code>yum remove package</code> remueve paquetes</li>
+<li><code>rpm -qa</code> Para obtener una lista de todos los paquetes que están instalados actualmente en el sistema ejecuta</li>
+<li><code>rpm -ql package</code> Para listar los archivos que componen un paquete especial</li>
+<li><code>rpm -qi package</code> Para consultar un paquete y obtener información o su estado</li>
+<li><code>rpm -qf /path/to/file</code> Para determinar si un archivo en particular fue puesto en el sistema de archivos como el resultado de la instalación de un paquete</li>
+</ul>
+<h3 id="procesos">Procesos</h3>
+<p>Todo lo relacionado a los procesos se encuentra en el directorio <code>/proc/sys/</code>.</p>
+<p>El archivo <code>/proc/sys/kernel/pid_max</code> define el numero maximo de procesos, cuando llega al topo reinicia y toma los numeros disponibles</p>
+<ul>
+<li><code>pstree</code> display a tree of processes</li>
+<li><code>ps</code>  sólo mostrará los procesos actuales en el shell, snapshot
+<ul>
+<li><code>--forest</code> indica las ramificaciones de los procesos</li>
+<li><code>aux</code> para ver todos los procesos del sistema; <code>ps aux</code></li>
+<li><code>-ef</code> para ver todos los procesos del sistema; <code>ps -ef</code></li>
+<li><code>top</code> display Linux processes
+<ul>
+<li>con la tecla <code>k</code> activo para eliminar un proceso, con <code>9</code> se manda a cerrar de manera forzosa</li>
+<li><code>ps -o pid,tty,time,%cpu,cmd</code> el argumento <code>-o</code> indica las columnas que se van a mostrar</li>
+<li><code>ps -o pid,tty,time,%mem,cmd --sort %mem</code> la opcion <code>--sort</code> los esta enlistando en orden de consumo de memoria</li>
+</ul>
+</li>
+<li><code>uptime</code> o <code>cat /proc/loadavg</code> ver la carga promedio del sistema</li>
+<li><code>free</code> sin opciones proporciona una foto de la memoria RAM utilizada en ese momento
+<ul>
+<li><code>free -s 10</code> actualizaría la salida cada 10 segundos.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="mandar-procesos-a-segundo-plano">Mandar procesos a segundo plano <code>&amp;</code></h3>
+<p>Al añadir el signo <code>&amp;</code> al final del comando, el proceso se inicia en el segundo plano y permite al usuario mantener el control de la terminal.</p>
+<pre class="hljs"><code><div>ping localhost &gt; /dev/null &amp;
+[1] 158
+</div></code></pre>
+<p><em>Esto significa que este proceso tiene un número de trabajo 1 (como lo muestra la salida [1]) y un identificador de proceso (PID) de 158</em></p>
+<p>Para ver los comandos en ejecucion en la terminal actual</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">jobs</span>
+[1]+  Running                 ping localhost &gt; /dev/null &amp;
+</div></code></pre>
+<p>Para traerlos a primer plano, se usa el comando <code>fg</code> <code>%</code> y el numero de <code>job</code></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">fg</span> %1
+</div></code></pre>
+<p>Para <code>suspender</code> el proceso, no detener se ocupa <code>ctl+z</code>, se pausa pero continua como un <code>job</code> en la terminal</p>
+<p>Para que este proceso continúe ejecutándose en segundo plano, ejecuta el siguiente comando, se usa el comando <code>bg</code> <code>%</code> y el numero de <code>job</code></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">bg</span> %1
+</div></code></pre>
+<h3 id="comando-kill-pkill">Comando <code>kill</code> <code>pkill</code></h3>
+<p>Sirve para eliminar los procesos que estan corriendo</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">kill</span> PID 
+</div></code></pre>
+<pre class="hljs"><code><div>pkill [opciones] [name_process] 
+</div></code></pre>
+<p>Elimina el proceso con ese ID</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">kill</span> 182 
+</div></code></pre>
+<p>Elimina todos todos los procesos sleep</p>
+<pre class="hljs"><code><div>pkill -15 sleep 
+</div></code></pre>
+<h2 id="archivos-de-registros-logs">Archivos de registros <code>logs</code></h2>
+<p>Los demonios que se ejecutan en segundo plano para realizar el registro se llaman <code>syslogd</code> y <code>klogd</code>. En otras distribuciones, un demonio como el <code>rsyslogd</code> en Red Hat y Centos o <code>systemd journald</code> en Fedora puede servir para esta función de registro.</p>
+<p>Independientemente del nombre del proceso de demonio, los archivos de registro se colocan casi siempre en la estructura del directorio <code>/var/log</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Archivo</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>boot.log</strong></td>
+<td>Mensajes generados cuando servicios se inician durante el arranque del sistema.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>cron</strong></td>
+<td>Mensajes generados por el demonio crond para las tareas que se deben ejecutar en forma recurrente.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>dmesg</strong></td>
+<td>Mensajes generados por el kernel durante el arranque del sistema.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>maillog</strong></td>
+<td>Mensajes producidos por el demonio de correo para mensajes de correo electrónico enviados o recibidos</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>messages</strong></td>
+<td>Mensajes del kernel y otros procesos que no pertenecen a ninguna otra parte. A veces se denomina <code>dsyslog</code> en lugar de <code>messages</code> cuando el demonio haya grabado este archivo.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>secure</strong></td>
+<td>Mensajes de los procesos que requieren autorización o autenticación (por ejemplo, el proceso de inicio de sesión).</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Xorg.0.log</strong></td>
+<td>Mensajes del servidor de ventanas X (GUI).</td>
+</tr>
+</tbody>
+</table>
+<p>Los comandos lastb y last se pueden usar para ver los archivos /var/log/btmp y /var/log/wtmp respectivamente.</p>
+<h2 id="command-dmesg">Command <code>dmesg</code></h2>
+<p><code>print or control the kernel ring buffer</code></p>
+<p>El archivo <code>/var/log/dmesg</code> contiene los mensajes del kernel que se produjeron durante el arranque del sistema. El archivo <code>/var/log/messages</code> contiene mensajes del kernel que se producen mientras el sistema está corriendo, pero los mensajes se mezclarán con otros mensajes de demonios o procesos.</p>
+<p><em>Si estuvieras resolviendo problemas con tu dispositivo USB, entonces buscando el texto «USB» con el comando grep siendo sensible a mayúsculas y minúsculas.</em></p>
+<pre class="hljs"><code><div>dmesg | grep -i usb
+</div></code></pre>
+<h2 id="red">Red</h2>
+<p>Archivos para configuraciones de <code>red</code></p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/etc/hosts</code></td>
+<td>Este archivo contiene una tabla de nombres de host para las direcciones IP. Puede utilizarse para complementar un servidor DNS.</td>
+</tr>
+<tr>
+<td><code>/etc/sysconfig/network</code></td>
+<td>Este archivo tiene dos configuraciones. La configuración de NETWORK (o «red» en español) puede determinar si la red está activada (yes) o desactivada (no). La configuración de HOSTNAME (O «nombre de host» en español) define un nombre de host de la máquina local.</td>
+</tr>
+<tr>
+<td><code>/etc/nsswitch.conf</code></td>
+<td>Este archivo se puede utilizar para modificar dónde se producen las búsquedas de nombre de host. Por ejemplo, la configuración hosts : files dns buscaría los nombres de host primero en el archivo /etc/hosts y después en el servidor DNS. Si cambias a hosts: dns files, la búsqueda se lleva a cabo primero en el servidor DNS.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comandos-para-red-ip-ping-ss-dig-host">Comandos para red <code>ip</code> <code>ping</code> <code>ss</code> <code>dig</code> <code>host</code></h3>
+<p>Para ver las interfaces de red</p>
+<ul>
+<li><code>ip -a addr</code> muestras las interfaces</li>
+<li><code>ip addr show</code> muestras las interfaces</li>
+<li><code>routel</code> o <code>route</code> list routes with pretty output format</li>
+<li><code>ping</code> se puede utilizar para determinar si otra máquina es «accesible»
+<ul>
+<li><code>-c</code> comando para definir cuantos ping lanzara; <code>-c 4</code> lanzara 4 pings y termina</li>
+</ul>
+</li>
+<li><code>netstat</code> Puede utilizarse para mostrar información acerca de conexiones de red, el nuevo comando es <code>ss</code>
+<ul>
+<li><code>-i</code> indica las conexiones de las interfaces de red</li>
+<li><code>-r</code> muestra el enrutamiento</li>
+<li><code>-tln</code> para ver los puertos abiertos
+<ul>
+<li><code>-t</code> indica tcp</li>
+<li><code>-l</code> indica las que esta escuchando <strong>LISTEN</strong></li>
+<li><code>-n</code> indica el numero de puerto</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>dig</code> DNS lookup utility
+<ul>
+<li><code>dig example.com</code></li>
+</ul>
+</li>
+<li><code>host</code> DNS lookup utility
+<ul>
+<li><code>host example.com</code></li>
+<li><code>host 192.168.0.1</code></li>
+<li><code>host -t CNAME example.com</code></li>
+<li><code>host -t SOA example.com</code> los registros <code>SOA</code> (Start of Authority) indican el servidor principal para el dominio</li>
+<li><code>host -a example.com</code> da todos los registros del dominio</li>
+</ul>
+</li>
+</ul>
+<h2 id="usuarios-y-cuentas-archivos-passwd-shadow-group">Usuarios y cuentas archivos <code>passwd</code> <code>shadow</code> <code>group</code></h2>
+<h3 id="passwd">passwd</h3>
+<pre class="hljs"><code><div>root:x:0:0:root:/root:/bin/bash                                               
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh                                         
+bin:x:2:2:bin:/bin:/bin/sh                                                    
+sys:x:3:3:sys:/dev:/bin/sh                                                    
+sync:x:4:65534:sync:/bin:/bin/sync 
+</div></code></pre>
+<p>Formato</p>
+<pre class="hljs"><code><div>name:password placeholder:user id:primary group id:comment:home directory:shell
+</div></code></pre>
+<p>La siguiente tabla describe cada uno de estos campos en detalle, usando la primera línea de la salida en el ejemplo anterior <code>(root:x:0:0:root:/root:/bin/bash)</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th style="text-align:center">Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td style="text-align:center">root</td>
+<td>Es el nombre de la cuenta. Este nombre lo utiliza una persona cuando inicia sesión en el sistema y cuando la propiedad del archivo viene proporcionada por el comando ls -l. Por lo general, el sistema utiliza el ID de usuario (véase abajo) internamente y se proporciona el nombre de cuenta para que a los usuarios regulares se les haga más fácil referirse a la cuenta. Normalmente, la cuenta root es una cuenta administrativa especial. Sin embargo, es importante tener en cuenta que no todos los sistemas tienen una cuenta root, y en realidad, el ID de usuario 0 (cero) proporciona los privilegios administrativos en el sistema.</td>
+</tr>
+<tr>
+<td>password placeholder</td>
+<td style="text-align:center">x</td>
+<td>Antes, la contraseña se guardaba en esta ubicación, ahora se almacena en el archivo /etc/shadow. La x en el campo del marcador de posición de la contraseña indica al sistema que la contraseña no se almacena aquí, sino más bien en el archivo /etc/shadow.</td>
+</tr>
+<tr>
+<td>user id</td>
+<td style="text-align:center">0</td>
+<td>Cada cuenta tiene asignado un Id. de usuario (UID «User ID» en inglés). El UID es lo que realmente define la cuenta, ya que el nombre de usuario normalmente no es utilizado directamente por el sistema. Por ejemplo, los archivos son propiedad de los UID, no de los nombres de usuario.Algunos UID son especiales. Por ejemplo, el UID 0 le da a la cuenta de usuario privilegios administrativos. Los UID por debajo de 500 (en algunas distribuciones de Linux 1.000) están reservados para las cuentas del sistema. Las cuentas del sistema se tratarán con más detalle más adelante en este capítulo.</td>
+</tr>
+<tr>
+<td>primary group id</td>
+<td style="text-align:center">0</td>
+<td>Cada archivo y directorio es propiedad de una cuenta de usuario. Normalmente la persona que crea la cuenta posee el archivo. Además, cada archivo es propiedad de un grupo, normalmente del grupo primario del usuario. A los grupos se les asignan identificadores numéricos al igual que a los usuarios. Cuando un usuario crea un archivo, el archivo es propiedad del UID del usuario y también de un id de grupo (GID «Group ID» en inglés), el GID primario del usuario. Este campo define que GID es el GID primario del usuario. Además, al proporcionar la propiedad del grupo por defecto en un archivo, este campo también indica que el usuario es un miembro del grupo, lo que significa que el usuario tendrá permisos especiales en cualquier archivo que pertenece a este grupo. Los permisos se cubrirán en detalle en un capítulo posterior.</td>
+</tr>
+<tr>
+<td>comment</td>
+<td style="text-align:center">root</td>
+<td>Este campo puede contener cualquier información sobre el usuario, incluyendo su nombre real (completo) y otra información útil. Este campo también se llama el campo GECOS (General Electric Comprehensive Operating System). El GECOS es un formato predefinido usado raramente para este campo que define una lista de elementos separada por comas, incluyendo el nombre completo del usuario, ubicación de la oficina, número de teléfono e información adicional. El administrador puede modificar la información GECOS con el comando chfn y los usuarios pueden ver esta información con el comando finger.</td>
+</tr>
+<tr>
+<td>home directory</td>
+<td style="text-align:center">/root</td>
+<td>Este campo define la ubicación del directorio home del usuario. Para los usuarios regulares, esto sería normalmente /home/username donde username se reemplaza con el nombre de usuario del usuario. Por ejemplo, un nombre de usuario bob tendría un directorio home /home/bob. El usuario root tiene normalmente una ubicación diferente para el directorio home: /root. Las cuentas del sistema raramente tienen directorios, ya que normalmente no se utilizan para crear o guardar los archivos.</td>
+</tr>
+<tr>
+<td>shell</td>
+<td style="text-align:center">/bin/bash</td>
+<td>Aquí está ubicado el shell del inicio de la sesión del usuario. De forma predeterminada, el usuario se &quot;ubica en&quot; este shell siempre que el usuario inicia la sesión en un entorno de línea de comandos o abre una ventana de terminal. El usuario luego puede pasar a un shell diferente escribiendo el nombre del shell, por ejemplo: /bin/tcsh. El shell bash (/bin/bash) es el más común para los usuarios de Linux.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shadow">shadow</h3>
+<pre class="hljs"><code><div>head /etc/shadow                                           
+root:$6$4Yga95H9$8HbxqsMEIBTZ0YomlMffYCV9VE1SQ4T2H3SHXw41M02SQtfAdDVE9mqGp2hr20q
+.ZuncJpLyWkYwQdKlSJyS8.:16464:0:99999:7:::                                    
+daemon:*:16463:0:99999:7:::                                                   
+bin:*:16463:0:99999:7:::                                                      
+sys:*:16463:0:99999:7:::                                                      
+sync:*:16463:0:99999:7:::                                                     
+games:*:16463:0:99999:7:::                                                    
+man:*:16463:0:99999:7:::                                                      
+lp:*:16463:0:99999:7:::                                                       
+mail:*:16463:0:99999:7:::                                                     
+news:*:16463:0:99999:7:::   
+</div></code></pre>
+<p>Los campos del archivo <code>/etc/shadow</code> son:</p>
+<p><code>name:password:last change:min:max:warn:inactive:expire:reserved</code></p>
+<p>Se describre el siguiente registro</p>
+<p><code>sysadmin:$6$lS6WJ9O/fNmEzrIi$kO9NKRBjLJJTlZD.L1Dc2xwcuUYaYwCTS.gt4elijSQW8ZDp6GLYAx.TRNNpUdAgUXUrzDuAPsYs5YHZNAorI1:15020:5:30:7:60:15050:</code></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>sysadmin</td>
+<td>Este es el nombre de la cuenta, que coincide con el nombre de cuenta en el archivo /etc/passwd.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>$6$.........rI1</td>
+<td>El campo passwd contiene la contraseña cifrada de la cuenta. Esta cadena muy larga (que está truncada en el ejemplo a la izquierda de esta celda) es un cifrado unidireccional, lo que significa que no puede &quot;revertirse&quot; para determinar la contraseña original. Mientras que los usuarios habituales tienen contraseñas encriptadas en este campo, las cuentas del sistema tendrán un carácter de * en este campo. Verás más detalles sobre las cuentas de sistema más adelante en este capítulo.</td>
+</tr>
+<tr>
+<td>last change</td>
+<td>15020</td>
+<td>Este campo contiene un número que representa la última vez que la contraseña fue cambiada. El número 15020 es el número de días desde el 01 de enero de 1970 (llamada la Época) y el último día en el que la contraseña de la cuenta fue cambiada. Este valor se genera automáticamente cuando se modifica la contraseña del usuario. Este valor es importante ya que se utiliza por característica de envejecimiento de la contraseña proporcionado por el resto de los campos de este archivo.</td>
+</tr>
+<tr>
+<td>min</td>
+<td>5</td>
+<td>Este es uno de los campos del envejecimiento de la contraseña; un valor distinto de cero en este campo indica que después de que un usuario cambiara su contraseña, la contraseña no se puede cambiar otra vez por un número específico de días (5 en este ejemplo). Este campo es importante cuando se utiliza el campo max (véase abajo). Un valor de cero en este campo significa que el usuario siempre puede cambiar su contraseña.</td>
+</tr>
+<tr>
+<td>max</td>
+<td>5</td>
+<td>Este campo se utiliza para obligar a los usuarios a cambiar regularmente sus contraseñas. Un valor de 30 en este campo significa que el usuario debe cambiar su contraseña al menos cada 30 días para evitar que su cuenta quede «bloqueada» Ten en cuenta que si el campo min se establece en 0, el usuario puede restablecer inmediatamente su contraseña al valor original, anulando el propósito de obligar al usuario a cambiar su contraseña cada 30 días. Así que, si se establece el campo max, normalmente se establece también el campo min. Por ejemplo, un min:max de 5:60 se refiere a que el usuario debe cambiar su contraseña cada 60 días y, después de cambiarla, el usuario debe esperar 5 días antes de que pueda cambiar su contraseña otra vez. Si el campo max se establece a 99999, el valor máximo posible, entonces el usuario esencialmente nunca debe cambiar su contraseña (porque 99999 días son aproximadamente 274 años).</td>
+</tr>
+<tr>
+<td>warn</td>
+<td>7</td>
+<td>Si se establece el campo max, el campo warn indica que al usuario se le «advertirá» cuando se acerca el plazo máximo max. Por ejemplo, si se establece warn a 7, entonces en cualquier momento durante los 7 días anteriores al plazo max se le advertirá al usuario que cambie su contraseña durante el proceso del inicio de sesión. El usuario sólo se advierte en el inicio de sesión, por lo que algunos administradores prefieren establecer el campo de advertencia a un valor alto para proporcionar una mayor probabilidad de tener una advertencia emitida.Si el plazo máximo max se establece al valor de 99999, entonces el campo warn es esencialmente inútil</td>
+</tr>
+<tr>
+<td>inactive</td>
+<td>60</td>
+<td>Si el usuario hace caso omiso a las advertencias y se excede el plazo max para la contraseña, se bloqueará su cuenta. En tal caso, el campo inactive proporciona al usuario un período de «gracia» en el que puede cambiar su contraseña, pero sólo durante el proceso del inicio de sesión. Si el campo inactive viene establecido a un valor de 60, el usuario tiene 60 días de gracia para cambiar la contraseña a una nueva. Si no lo hace, entonces necesitará que el administrador restablezca la contraseña para el usuario.</td>
+</tr>
+<tr>
+<td>expire</td>
+<td>15050</td>
+<td>Este campo representa el número de días a partir del 01 de enero del 1970 y el día en el que la cuenta «vencerá». Una cuenta vencida se bloqueará, no se borra, lo que significa que el administrador puede restablecer la contraseña para desbloquear la cuenta. Las cuentas con fechas de vencimiento normalmente se ofrecen a los empleados temporales o contratistas. La cuenta caducará automáticamente después del último día laboral del usuario. Cuando un administrador establece este campo, se utiliza una herramienta para convertir una fecha real en una fecha de «Época». En Internet hay varios convertidores disponibles.</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td></td>
+<td>Actualmente este campo no se utiliza y está reservado para su uso futuro.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="archivo-group-comando-groups">Archivo <code>group</code> Comando <code>groups</code></h3>
+<p>Ubicación <code>/etc/group</code>
+El archivo /etc/group es un archivo delimitado por dos puntos con los siguientes campos:</p>
+<ul>
+<li><code>groups</code> retorna los grupos del usuario actual</li>
+</ul>
+<pre class="hljs"><code><div>group_name:password_placeholder:GID:user_list
+</div></code></pre>
+<p>La siguiente tabla describe los campos del archivo /etc/group con más detalle, utilizando una línea que describe a una cuenta de grupo típica:</p>
+<pre class="hljs"><code><div>mail:x:12:mail,postfix
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th style="text-align:center">Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group_name</td>
+<td style="text-align:center">mail</td>
+<td>Este campo contiene el nombre del grupo. Igual que en el caso de los nombres de usuario, para las personas es más fácil recordar los nombres de grupo. El sistema utiliza típicamente IDs de grupos (GID) en lugar de nombres de grupo.</td>
+</tr>
+<tr>
+<td>password_placeholder</td>
+<td style="text-align:center">x</td>
+<td>Aunque hay contraseñas para grupos, raramente se utilizan en Linux. Si el administrador creará una contraseña de grupo, se almacenaría en un archivo diferente (/etc/gshadow) ya que la contraseña de grupo ya no se almacena en el archivo /etc/group. La x en este campo se utiliza para indicar que la contraseña no se almacena en este archivo. Las contraseñas de grupo están más allá del alcance de este curso.</td>
+</tr>
+<tr>
+<td>GID</td>
+<td style="text-align:center">12</td>
+<td>Cada grupo está asociado con un ID de grupo único (GID) que se coloca en este campo.</td>
+</tr>
+<tr>
+<td>user_list</td>
+<td style="text-align:center">mail,postfix</td>
+<td>Este último campo se utiliza para indicar quién es un miembro del grupo. Mientras que la pertenencia a un grupo primario se define en el archivo /etc/passwd, los usuarios que se asignan a los grupos adicionales tendrían su nombre de usuario en este campo del archivo /etc/group. En este caso, los usuarios mail y postfix son miembros secundarios del grupo mail. Es muy común para un nombre de usuario aparecer también como un nombre del grupo. También es común que un usuario pertenezca a un grupo con el mismo nombre.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comando-getent">Comando <code>getent</code></h3>
+<p>Otra técnica para recuperar la información del usuario que se encuentra normalmente en los archivos <code>/etc/passwd</code> y <code>/etc/shadow</code>, <code>/etc/group</code> es utilizar el comando <code>getent</code></p>
+<pre class="hljs"><code><div>getent [passwd | shadow | group] [user]
+</div></code></pre>
+<p>Ejemplo:</p>
+<pre class="hljs"><code><div>getent passwd sysadmin
+</div></code></pre>
+<pre class="hljs"><code><div>getent shadow root
+</div></code></pre>
+<pre class="hljs"><code><div>getent group mail
+</div></code></pre>
+<p><em>El signo <code>!</code> que aparece en el campo de la contraseña (segundo campo) del archivo shadow, muestra que la contraseña para student no fue configurada.</em></p>
+<h3 id="cambiando-de-grupo-los-archivos---comando-chgrp">Cambiando de grupo los archivos - Comando <code>chgrp</code></h3>
+<p>Para cambiar al grupo propietario de un archivo existente se puede utilizar el comando <code>chgrp group_name file</code></p>
+<p>Si quieres cambiar el grupo propietario de un archivo existente, puedes utilizar el comando chgrp. Como un usuario sin privilegios administrativos, el comando chgrp puede utilizarse solamente para cambiar el grupo propietario del archivo a un grupo del que el usuario ya sea miembro. Como usuario <code>root</code>, el comando chgrp puede utilizarse para cambiar el grupo propietario de cualquier archivo a cualquier grupo.</p>
+<ul>
+<li><code>-R</code> La opcion de recursividad para cambiar todos los archivos de grupo</li>
+</ul>
+<p>Cambio al grupo <code>games</code> el archivo sample</p>
+<pre class="hljs"><code><div>chgrp games sample
+</div></code></pre>
+<h3 id="comando-stat">Comando <code>stat</code></h3>
+<p>El comando stat muestra información más detallada acerca de un archivo.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">stat</span> Documents/                                           
+File: `Documents<span class="hljs-string">'
+Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: c7h/199d        Inode: 73669082    Links: 2                
+Access: (0755/drwxr-xr-x)  Uid: ( 1001/sysadmin)   Gid: ( 1001/sysadmin)
+Access: 2020-01-10 21:37:13.450191690 +0000
+Modify: 2016-03-14 17:34:24.000000000 +0000
+Change: 2020-01-10 21:37:13.414190649 +0000
+Birth: -
+</span></div></code></pre>
+<h3 id="comando-id">Comando <code>id</code></h3>
+<p>El comando <code>id</code> informará la identidad actual, tanto por nombre del usuario como por el identificador de usuario</p>
+<ul>
+<li>
+<p><code>id</code> : return user identity</p>
+</li>
+<li>
+<p><code>id</code> muestra la identificacion del usuario actual</p>
+</li>
+<li>
+<p><code>id [user]</code> da los datos del <em>user</em>; <code>id root</code></p>
+</li>
+<li>
+<p><code>id -g</code> da el grupo primario de usuario actual</p>
+</li>
+<li>
+<p><code>id -G</code> da todos los grupos del usuario actual</p>
+</li>
+<li>
+<p><code>cat /etc/group | grep sysadmin</code> filta para mostrar los grupos del usario que se le paso</p>
+</li>
+</ul>
+<h3 id="comando-su-sudo-visudo">Comando <code>su</code> <code>sudo</code> <code>visudo</code></h3>
+<ul>
+<li>
+<p>su: <code>change user ID or become superuser</code></p>
+</li>
+<li>
+<p>sudo: <code>execute a command as another user</code></p>
+</li>
+<li>
+<p>visudo: <code>edit the sudoers file</code></p>
+</li>
+<li>
+<p><code>su -</code> o <code>su -l [user]</code> o <code>su - root</code> inicias sesion con el usario en forma root</p>
+</li>
+<li>
+<p><code>sudo</code> permite a un usuario ejecutar comandos que necesite privilegios <code>root</code></p>
+</li>
+<li>
+<p><code>visudo</code> entra a modificar y configurar los usuarios que pueden ejecutar acciones <code>sudo</code></p>
+</li>
+</ul>
+<h3 id="archivo-visudo">Archivo <code>visudo</code></h3>
+<p>Al activar este comando se abre un editor y se modica el archivo <code>/etc/sudoers</code>, lo cual define quien puede ejecutar comandos <code>sudo</code></p>
+<pre class="hljs"><code><div>sudo visudo
+
+<span class="hljs-comment"># User privilege specification</span>
+root    ALL=(ALL:ALL) ALL
+usuario ALL=(ALL:ALL) ALL
+</div></code></pre>
+<h2 id="comando-who-w-last">Comando <code>who</code> <code>w</code> <code>last</code></h2>
+<h3 id="comnado-who">Comnado <code>who</code></h3>
+<p>Muestra una lista de usuarios que están conectados actualmente en el sistema, desde dónde están conectados y cuándo iniciaron sesión.</p>
+<p>Opciones;</p>
+<ul>
+<li><code>-b</code> mostrará la última vez que el sistema se inició (fue arrancado)</li>
+<li><code>-r</code> mostrará el tiempo en el cual el sistema haya alcanzado un cierto nivel ejecución</li>
+</ul>
+<p>Ejemplo:</p>
+<pre class="hljs"><code><div>who -b -r
+system boot  	2013-10-11 09:54
+run-level 5    2013-10-11 09:54
+</div></code></pre>
+<pre class="hljs"><code><div>who
+root     	tty2        2013-10-11 10:00
+sysadmin	tty1        2013-10-11 09:58 (:0)
+sysadmin 	pts/0       2013-10-11 09:59 (:0.0)
+sysadmin 	pts/1       2013-10-11 10:00 (example.com)
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th style="text-align:center">Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td style="text-align:center">root</td>
+<td>Esta columna indica el nombre del usuario que inició la sesión. Ten en cuenta que por &quot;sesión&quot; nos referimos a «cualquier proceso de inicio de sesión y cualquier ventana de la terminal abierta».</td>
+</tr>
+<tr>
+<td>terminal</td>
+<td style="text-align:center">tty2</td>
+<td>Esta columna indica en qué ventana de terminal está trabajando el usuario. Si el nombre de la terminal inicia con tty , entonces esto es una indicación de un inicio de sesión local, está es una terminal de línea de comandos regular. Si el nombre de la terminal inicia con pts, entonces esto indica que el usuario está usando una pseudo terminal o corriendo un proceso que actúa como la terminal. Esto puede significar que el usuario tiene una aplicación de terminal corriendo en X Windows, como gnome-terminal o xterm o pueden haber usado un protocolo de red para conectarse al sistema, como ssh o telnet.</td>
+</tr>
+<tr>
+<td>date</td>
+<td style="text-align:center">2013-10-11 10:00 (example.com)</td>
+<td>Esto indica cuándo inició sesión el usuario. Después de la fecha y la hora en que el usuario inició sesión en el sistema, puede aparecer alguna información de localización. Si la información de localización contiene un nombre de host, nombre de dominio o dirección IP, entonces el usuario inició sesión remotamente. Si hay dos puntos y un número, entonces esto indica que han hecho un inicio de sesión gráfico local. Si no se muestra información de localización en la última columna, entonces esto significa que el usuario inició sesión mediante un proceso de línea de comandos local.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comandos-w-whoami">Comandos <code>w</code> <code>whoami</code></h3>
+<p>Proporciona una lista más detallada sobre los usuarios que actualmente están en el sistema que el comando <code>who</code>. También proporciona un resumen del estado del sistema.</p>
+<ul>
+<li><code>w</code> sesiones en la maquina</li>
+<li><code>whoami</code> : display effective user id</li>
+</ul>
+<pre class="hljs"><code><div>w                                                       
+23:45:49 up 84 days,  7:34,  2 users,  load average: 0.07, 0.13, 0.12          
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT            
+sysadmin pts/0                     23:11    5.00s  0.14s  0.01s ssh localhost   
+sysadmin pts/1    localhost        23:39    5.00s  0.00s  0.00s w 
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Ejemplo</th>
+<th>Descipción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USER</td>
+<td>root</td>
+<td>Esta columna indica el nombre del usuario que inició la sesión.</td>
+</tr>
+<tr>
+<td>TTY</td>
+<td>tty2</td>
+<td>Esta columna indica en qué ventana de terminal el usuario está trabajando.</td>
+</tr>
+<tr>
+<td>FROM</td>
+<td>example.com</td>
+<td>Desde dónde inició sesión el usuario.</td>
+</tr>
+<tr>
+<td>LOGIN@</td>
+<td>10:00</td>
+<td>Cuándo inició sesión el usuario.</td>
+</tr>
+<tr>
+<td>IDLE</td>
+<td>43:44</td>
+<td>Cuánto tiempo el usuario ha estado inactivo desde la ejecución del último comando.</td>
+</tr>
+<tr>
+<td>JCPU</td>
+<td>0.01s</td>
+<td>El tiempo total de cpu (s=segundos) utilizado por todos los procesos (programas) ejecutados desde el inicio de sesión.</td>
+</tr>
+<tr>
+<td>PCPU</td>
+<td>0.01s</td>
+<td>El tiempo total de cpu para el proceso actual.</td>
+</tr>
+<tr>
+<td>WHAT</td>
+<td>-bash</td>
+<td>El proceso actual que está ejecutando el usuario.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comando-last-lastb">Comando <code>last</code> <code>lastb</code></h3>
+<ul>
+<li>
+<p><code>show listing of last logged in users</code></p>
+</li>
+<li>
+<p><code>last</code> muestra cuando ingreso un usuario con exito</p>
+</li>
+<li>
+<p><code>lastb</code> muestra cuantas veces fallaron al ingresar</p>
+</li>
+</ul>
+<p>Muestra el historial de logues en el sistema.
+<em>El comando last lee la historia completa de la sesión desde el archivo</em> <code>/var/log/wtmp</code></p>
+<h2 id="creacion-de-usuarios-y-grupos">Creacion de usuarios y grupos</h2>
+<h3 id="grupos">Grupos</h3>
+<p>Ver los grupos a los que pertener un usuario</p>
+<pre class="hljs"><code><div>grep root /etc/group <span class="hljs-comment"># despliega todos los grupos a los que pertence el usuario</span>
+root:x:0:
+</div></code></pre>
+<p>o</p>
+<pre class="hljs"><code><div>getent group root <span class="hljs-comment">#solo muestra el grupo principal</span>
+root:x:0:
+</div></code></pre>
+<h4 id="comando-groupadd">Comando <code>groupadd</code></h4>
+<p>El comando <code>groupadd</code> puede ser ejecutado por el usuario <code>root</code> para crear un nuevo grupo</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-g</code> indica el id del grupo: si no se indica, el pone automaticamente uno GID</li>
+<li><code>-r</code> se forza a un GID para la zona de procesos internos; es decir, a grupos reservados para el sistema</li>
+</ul>
+<pre class="hljs"><code><div>groupadd -g [group_id] [name_group]
+</div></code></pre>
+<pre class="hljs"><code><div>groupadd -g 506 research
+</div></code></pre>
+<p><strong>Modificar un grupo <code>groupmod</code></strong></p>
+<p>Opciones:</p>
+<ul>
+<li><code>-n</code> Se puede utilizar para cambiar el nombre del grupo</li>
+<li><code>-g</code> cambiar el GID para el grupo.</li>
+</ul>
+<p>Si se modica el GID se pierde el acceso al aunque tenga el mismo nombre, porque todo esta refenciado hacia el GID, no al nombre del grupo</p>
+<p>Cambiar el nombre de <code>sales</code> a <code>marketing</code></p>
+<pre class="hljs"><code><div>groupmod -n marketing sales
+</div></code></pre>
+<p>Encontrar archivos huerfanos; es decir, sin grupo</p>
+<pre class="hljs"><code><div>find / -nogroup 
+</div></code></pre>
+<p><strong>Eliminar grupos <code>groupdel</code></strong></p>
+<p>Eliminar un grupo con el comando groupdel, ten en cuenta que los archivos que pertenecen a ese grupo se convertirán en <code>huérfanos</code>.
+Sólo se puede eliminar a los grupos suplementarios, por lo que si un grupo es el grupo primario para cualquier usuario, no se puede eliminar. El administrador puede modificar qué grupo es el grupo primario del usuario, por lo que un grupo que estaba siendo utilizado como un grupo primario se puede transformar en un grupo suplementario y luego se puede eliminar.</p>
+<pre class="hljs"><code><div>groupdel [name_group]
+</div></code></pre>
+<pre class="hljs"><code><div>groupdel clerks
+</div></code></pre>
+<h3 id="comando-newgrp">Comando <code>newgrp</code></h3>
+<ul>
+<li><code>log in to a new group</code></li>
+</ul>
+<p>Es para cambiar al grupo primario del usario actual; una vez hecho el cambio verificar si cambio el grupo primario con el comando <code>id</code>. Ahora al crear documentos y arhivos, el grupo primario sera el nuevo asignado. El cambio del grupo es temporal hasta cerrar la sesión.</p>
+<pre class="hljs"><code><div>newgrp [name_group]
+</div></code></pre>
+<pre class="hljs"><code><div>newgrp research
+</div></code></pre>
+<p><em>Se requieren privilegios administrativos para cambiar permanentemente el grupo primario del usuario. El usuario root ejecutaría el comando <code>usermod -g groupname username</code>.</em></p>
+<h3 id="comando-chgrp-stat">Comando <code>chgrp</code> <code>stat</code></h3>
+<p>Si quieres cambiar el grupo propietario de un archivo existente, puedes utilizar el comando <code>chgrp</code></p>
+<h3 id="agregar-usuarios---comando-useradd">Agregar usuarios - Comando <code>useradd</code></h3>
+<p>Opciones</p>
+<ul>
+<li><code>-u</code> UID user id, debe ser unico es arriba de 1000 y abajo para servicios del sistema (depende la distro y revisar el archivo <code>passwd</code>)</li>
+<li><code>-m</code> crea la carpeta de home</li>
+<li><code>-g</code> nombre del grupo, normalmente el mismo nombre que el usuario,</li>
+<li><code>-d</code> define el path del home del usuario</li>
+<li><code>-G</code> grupos adicionales, separados por comas sin espacios; <code>grupo1,grupo2</code>; deben existir primero los grupos</li>
+<li><code>-c</code> Comentario, normalmente el nombre completo de la persona o servicio</li>
+<li>Al final el nombre del usuario</li>
+</ul>
+<p>Creando un usuario con <code>useradd</code></p>
+<pre class="hljs"><code><div> useradd -m xizuth <span class="hljs-comment">#crea el usuario con todo por defecto y crea el directorio del home</span>
+</div></code></pre>
+<p>Crea el usuario especificando varios detalles</p>
+<pre class="hljs"><code><div> useradd -u 1000 -g users -G wheel,research -c <span class="hljs-string">'Jane Doe'</span> jane 
+</div></code></pre>
+<p>Se observan los paramentros establecidos para cuando se agregaran usuarios</p>
+<pre class="hljs"><code><div>useradd -D 
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th style="text-align:center">Ejamplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GROUP</td>
+<td style="text-align:center">100</td>
+<td>En las distribuciones que no usan UPG, este será el grupo principal de forma predeterminada para un usuario nuevo, si no se ha especificado uno con el comando <code>useradd</code>. Este normalmente es el grupo de «users» con un GID de 100. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/passwd</code>  bob:<span>x</span>:600:<mark>600</mark>:bob:/home/bob:/bin/bash <br> La opción <code>-g</code> para el comando <code>useradd</code> permite utilizar un grupo principal diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>HOME</td>
+<td style="text-align:center">/home</td>
+<td>El directorio /home es el directorio base predeterminado, en el cuál se creará un nuevo directorio home del usuario. Esto significa que un usuario con un nombre de cuenta de bob tendría un directorio de /home/bob. Esta configuración afecta a la configuración por defecto del archivo /etc/passwd  <br> bob:<span>x</span>:600:600:bob:<mark>/home</mark>/bob:/bin/bash <br> La opción <code>-b</code> para el comando <code>useradd</code> permite utilizar un directorio base diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>INACTIVE</td>
+<td style="text-align:center">-1</td>
+<td>Este valor representa el número de días después de que caduca la contraseña hasta que la cuenta será deshabilitada. Un valor de <code>-1</code> significa que esta función no está habilitada por defecto y no se proporciona ningún valor «inactivo» para las nuevas cuentas por defecto. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/shadow</code>  <br>bob:pw:15020:5:30:7:<mark>60</mark>:15050: <br> La opción <code>-f</code> para el comando <code>useradd</code> permite utilizar un valor INACTIVE diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>EXPIRE</td>
+<td style="text-align:center"></td>
+<td>Por defecto, no hay ningún valor para la fecha de caducidad. Generalmente, una fecha de vencimiento se configura para una cuenta individual, no a todas las cuentas. Por ejemplo, si tuvieras un contratista que fuese contratado para trabajar hasta el final del día 01 de noviembre de 2013, podrías asegurarte de que no pueda iniciar sesión después de esa fecha, utilizando el campo de EXPIRE. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/shadow</code>  <br>bob:pw:15020:5:30:7:60:<mark>15050</mark>: <br>La opción <code>-e</code> para el comando <code>useradd</code> permite utilizar un valor EXPIRE diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td style="text-align:center">/bin/bash</td>
+<td>El valor de SHELL indica el shell por defecto para los usuarios cuando inician sesión en el sistema. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/passwd</code>  <br> bob:<span>x<span>:600:600:bob:/home/bob:<mark>/bin/bash</mark> <br> La opción <code>-s</code> para el comando <code>useradd</code> permite utilizar un shell de inicio de sesión diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>SKEL</td>
+<td style="text-align:center">/etc/skel</td>
+<td>El valor SKEL determina qué directorio «esqueleto» tendrá su contenido copiado en el directorio home de los usuarios nuevos. El contenido de este directorio se copia en el directorio <code>home</code> del usuario nuevo y el nuevo usuario recibe la propiedad de los nuevos archivos. Esto proporciona a los administradores una manera fácil de «rellenar» una nueva cuenta de usuario con los archivos de configuración clave. La opción <code>-k</code> para el comando <code>useradd</code> permite utilizar un directorio SKEL diferente al predeterminado, cuando se crea una nueva cuenta de usuario.</td>
+</tr>
+<tr>
+<td>CREATE_MAIL_SPOOL</td>
+<td style="text-align:center">yes</td>
+<td>El «mail spool» es un archivo donde se coloca el correo entrante. Actualmente el valor para crear un mail spool es <code>yes</code>, lo que significa que los usuarios por defecto están configurados con la capacidad de recibir y guardar correo local. Si no piensas usar el correo local, este valor puede cambiarse a no.</td>
+</tr>
+</tbody>
+</table>
+<p>Para modificar uno de los valores por defecto del <code>useradd</code>, el archivo <code>/etc/default/useradd</code> puede editarse con un editor de texto. Otra técnica (más segura) es usar el comando <code>useradd -D</code>.</p>
+<p>Aquí esta editando la opción <code>INACTIVE</code></p>
+<pre class="hljs"><code><div>useradd -D -f 30
+GROUP=100
+HOME=/home
+INACTIVE=30
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+</div></code></pre>
+<h3 id="comando-usermod">Comando <code>usermod</code></h3>
+<p>El comando <code>usermod</code> ofrece muchas opciones para modificar una cuenta de usuario existente.
+Tiene casi las mismas opciones que <code>useradd</code></p>
+<table>
+<thead>
+<tr>
+<th>Opción corta</th>
+<th>Opción larga</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c</code></td>
+<td><code>COMMENT</code></td>
+<td>Establecer el valor del campo GECOS o comentario a COMMENT.</td>
+</tr>
+<tr>
+<td><code>-d</code>  <code>HOME_DIR</code></td>
+<td><code>--home</code> <code>HOME_DIR</code></td>
+<td>Establecer un nuevo directorio home para el usuario.</td>
+</tr>
+<tr>
+<td><code>-e</code>  <code>EXPIRE_DATE</code></td>
+<td><code>--expiredate </code> <code>EXPIRE_DATE</code></td>
+<td>Configurar la fecha de caducidad de la cuenta a EXPIRE_DATE.</td>
+</tr>
+<tr>
+<td><code>-f</code>  <code>INACTIVE</code></td>
+<td><code>--inactive </code> <code>INACTIVE</code></td>
+<td>Configurar la cuenta para permitir acceso INACTIVE días después de que la contraseña caduque.</td>
+</tr>
+<tr>
+<td><code>-g</code>  <code>GROUP</code></td>
+<td><code>--gid </code> <code>GROUP</code></td>
+<td>Establecer GROUP como grupo primario.</td>
+</tr>
+<tr>
+<td><code>-G</code>  <code>GROUPS</code></td>
+<td><code>--groups </code> <code>GROUPS</code></td>
+<td>Establecer grupos adicionales a una lista especificada en GROUPS.</td>
+</tr>
+<tr>
+<td><code>-a</code></td>
+<td><code>--append</code></td>
+<td>Añadir grupos adicionales del usuario especificados por -G.</td>
+</tr>
+<tr>
+<td><code>-h</code></td>
+<td><code>--help</code></td>
+<td>Mostrar la ayuda para usermod.</td>
+</tr>
+<tr>
+<td><code>-l</code> <code>NEW_LOGIN</code></td>
+<td><code>--login</code> <code>NEW_LOGIN</code></td>
+<td>Cambiar el nombre de inicio de sesión del usuario.</td>
+</tr>
+<tr>
+<td><code>-L</code></td>
+<td><code>--lock</code></td>
+<td>Bloquear la cuenta de usuario.</td>
+</tr>
+<tr>
+<td><code>-s</code> <code>SHELL</code></td>
+<td><code>--shell</code> <code>SHELL</code></td>
+<td>Especificar el shell de inicio de sesión para la cuenta.</td>
+</tr>
+<tr>
+<td><code>-u</code> <code>NEW_UID</code></td>
+<td><code>--uid</code> <code>NEW_UID</code></td>
+<td>Especificarque el UID del usuario sea NEW_UID.</td>
+</tr>
+<tr>
+<td><code>-U</code></td>
+<td><code>--unlock</code></td>
+<td>Desbloquear la cuenta de usuario.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Agrego un usuario a otro grupo</em>; estoy agregando a <code>jane</code> al grupo <code>develomenent</code></p>
+<pre class="hljs"><code><div>usermod -aG development jane
+</div></code></pre>
+<h3 id="comando-userdel">Comando <code>userdel</code></h3>
+<p>Eliminar un usuario del sistema. Borrar un usuario sin borrar su directorio home significa que los archivos del directorio home del usuario son ahora huérfanos.</p>
+<p>Opciones:</p>
+<ul>
+<li><code>-r</code> elimina su directorio <code>home</code></li>
+</ul>
+<p>Solo elimina el usuario sin eliminar ningun archivo</p>
+<pre class="hljs"><code><div>userdel jane
+</div></code></pre>
+<p>Elimina al usuario y su directorio</p>
+<pre class="hljs"><code><div>userdel jane -r
+</div></code></pre>
+<p><strong>Archivo <code>/etc/login.defs</code></strong></p>
+<p>El archivo <code>/etc/login.defs</code> también contiene valores que se aplicarán por defecto a los nuevos usuarios que vayas a crear con el comando <code>useradd</code>. A diferencia del <code>/etc/default/useradd</code>, que puede ser actualizado con el comando useradd <code>-D</code>, el archivo <code>/etc/login.defs</code> generalmente lo edita directamente el administrador para modificar sus valores.</p>
+<p>Con esta linea se extrae lo importante, evidiendo el relleno</p>
+<pre class="hljs"><code><div>grep -Ev <span class="hljs-string">'^#|^$'</span> /etc/login.defs
+MAIL_DIR          /var/spool/mail
+PASS_MAX_DAYS     99999
+PASS_MIN_DAYS     0
+PASS_MIN_LEN      5
+PASS_WARN_AGE     7
+UID_MIN           500
+UID_MAX           60000
+GID_MIN           500
+GID_MAX           60000
+CREATE_HOME       yes
+UMASK             077
+USERGROUPS_ENAB   yes
+ENCRYPT_METHOD    SHA512
+MD5_CRYPT_ENAB    no
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAIL_DIR</td>
+<td>/var/mail/spool</td>
+<td>El directorio en el que se crea el archivo mail spool del usuario.</td>
+</tr>
+<tr>
+<td>PASS_MAX_DAYS</td>
+<td>99999</td>
+<td>Esta configuración determina el número máximo de días en los que un usuario podrá utilizar la misma contraseña. Puesto que por defecto viene configurado el valor de 99999 días o más de 200 años, significa que los usuarios nunca tienen que cambiar su contraseña. Las organizaciones con políticas eficaces para el mantenimiento de contraseñas seguras comúnmente cambian este valor a 60 o 30 días. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/shadow</code>  bob:pw:15020:5:<mark>30</mark>:7:60:15050:</td>
+</tr>
+<tr>
+<td>PASS_MIN_DAYS</td>
+<td>0</td>
+<td>Con esto configurado a un valor predeterminado de 0 (cero), el tiempo más corto que un usuario tiene que mantener una contraseña es de cero días, lo que significa que inmediatamente después de configurar la contraseña, se puede cambiar. Si el valor <code>PASS_MIN_DAYS</code> se estableció en 3 días, después de establecer una nueva contraseña, el usuario tendría que esperar tres días antes de que pueda cambiarla otra vez. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/shadow</code>  bob:pw:15020:<mark>3</mark>:30:7:60:15050:</td>
+</tr>
+<tr>
+<td>PASS_MIN_LEN</td>
+<td>5</td>
+<td>Esto indica el número mínimo de caracteres que debe contener una contraseña.</td>
+</tr>
+<tr>
+<td>PASS_WARN_AGE</td>
+<td>7</td>
+<td>Este es el valor predeterminado para el campo de advertencia. Cuando un usuario se acerca al número máximo de días durante los que puede usar su contraseña, el sistema comprobará si es hora de empezar a avisar al usuario sobre cambiar su contraseña durante el inicio de sesión. Esta configuración afecta a la configuración por defecto del archivo <code>/etc/shadow</code> bob:pw:15020:3:30:<mark>7</mark>:60:15050:</td>
+</tr>
+<tr>
+<td>UID_MIN</td>
+<td>500</td>
+<td>El <code>UID_MIN</code> determina el primer UID que se asignará a un usuario ordinario. Cualquier usuario con un UID menor que este valor, ya sea para una cuenta del sistema o bien para la cuenta de root.</td>
+</tr>
+<tr>
+<td>UID_MAX</td>
+<td>60000</td>
+<td>Un <code>UID</code> técnicamente podría tener un valor de más de 4 billones. Para la máxima compatibilidad se recomienda dejarlo en su valor predeterminado de 60000.</td>
+</tr>
+<tr>
+<td>GID _MIN</td>
+<td>500</td>
+<td>El <code>GID_MIN</code> determina el primer <code>GID</code> que se asignará a un grupo ordinario. Cualquier grupo con un <code>GID</code> menor que este valor, ya sea para un grupo del sistema o bien para el grupo de root.</td>
+</tr>
+<tr>
+<td>GID _MAX</td>
+<td>60000</td>
+<td>Un <code>GID</code> igual que un <code>UID</code> técnicamente podría tener un valor de más de 4 billones. Cualquier valor que utilices para tu <code>UID_MAX</code> debes utilizar para <code>GID_MAX</code> para soportar UPG.</td>
+</tr>
+<tr>
+<td>CREATE_HOME</td>
+<td>yes</td>
+<td>Este valor determina si se crea o no un nuevo directorio para el usuario, al crear su cuenta.</td>
+</tr>
+<tr>
+<td>UMASK</td>
+<td>077</td>
+<td>Este <code>UMASK</code> funciona en el momento que se crea el directorio <code>home</code> del usuario; determinará cuáles serán los permisos predeterminados de este directorio. Utilizando el valor predeterminado de <code>077</code> para <code>UMASK</code> significa que sólo el usuario propietario tendrá algún tipo de permiso para acceder a su directorio.</td>
+</tr>
+<tr>
+<td>USERGROUPS_ENAB</td>
+<td>yes</td>
+<td>En las distribuciones que cuentan con un grupo privado para cada usuario, como se muestra en este ejemplo CentOS, el <code>USERGROUPS_ENAB</code> tendrá un valor de <code>yes</code>. Si no se utiliza la UPG en la distribución, entonces esto tendrá un valor no.</td>
+</tr>
+<tr>
+<td>ENCRYPT_METHOD</td>
+<td>SHA512</td>
+<td>El método de cifrado que se utiliza para cifrar las contraseñas de los usuarios en el archivo <code>/etc/shadow</code>. El valor de <code>ENCRYPT_METHOD</code> anula la configuración de <code>MD5_CRYPT_ENAB</code>.</td>
+</tr>
+<tr>
+<td>MD5_CRYPT_ENAB</td>
+<td>no</td>
+<td>Este ajuste obsoleto originalmente permitía al administrador especificar el uso del cifrado de contraseñas <code>MD5</code> en lugar del cifrado original <code>DES</code>. Ahora es reemplazado por el valor de <code>ENCRYPT_METHOD</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cambiando-la-contrase%C3%B1a-de-un-usuario---comando-passwd">Cambiando la contraseña de un usuario - Comando <code>passwd</code></h3>
+<p>Ejecutando el comando <code>passwd [name_user]</code>, si todo sale bien, se actualiza el archivo <code>etc/shadow</code></p>
+<h2 id="est%C3%A1ndar-de-jerarqu%C3%ADa-del-sistema-de-archivos">Estándar de Jerarquía del Sistema de Archivos</h2>
+<p>Entre los estándares soportados por la Fundación Linux está el <strong><a href="http://www.pathname.com/fhs">Estándar de Jerarquía del Sistema de Archivos (FHS)</a></strong>.</p>
+<p>El estándar FHS categoriza cada directorio del sistema de dos maneras:</p>
+<ol>
+<li>Un directorio puede ser categorizado como compartible o no, es decir, si el directorio puede ser compartido en una red y utilizado por varios equipos.</li>
+<li>El directorio se pone en una categoría de tener archivos estáticos (el contenido del archivo no cambiará) o archivos variables (el contenido del archivo puede cambiar).</li>
+</ol>
+<p>Con el fin de poder hacer estas clasificaciones, a menudo es necesario hacer referencia a los subdirectorios debajo del nivel superior de los directorios. Por ejemplo, el directorio <code>/var</code> en sí no puede ser clasificado como compartible o no compartible, pero:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th style="text-align:center">No compartible</th>
+<th style="text-align:center">Compartible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Variable</td>
+<td style="text-align:center">/var/lock</td>
+<td style="text-align:center">/var/mail</td>
+</tr>
+<tr>
+<td>Estático</td>
+<td style="text-align:center">/etc</td>
+<td style="text-align:center">/opt</td>
+</tr>
+</tbody>
+</table>
+<h3 id="root"><code>/</code> root</h3>
+<p>El estándar <strong>FHS</strong> define cuatro jerarquías de directorios utilizados en la organización de los archivos del sistema de archivos. El nivel superior o jerarquía <code>root</code> viene seguido por:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Directorio</th>
+<th>Propósito del Directorio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/</td>
+<td>La base de la estructura, o el root del sistema de archivos, este directorio unifica todos los directorios independientemente si son particiones locales, dispositivos extraíbles o recursos compartidos de red</td>
+</tr>
+<tr>
+<td style="text-align:center">/bin</td>
+<td>Para mantener binarios esenciales como los comandos <code>ls</code>, <code>cp</code>, y <code>rm</code>, y ser parte del sistema de archivos root.</td>
+</tr>
+<tr>
+<td style="text-align:center">/boot</td>
+<td>Contiene los archivos necesarios para arrancar el sistema, como el kernel de Linux y los archivos de configuración asociados</td>
+</tr>
+<tr>
+<td style="text-align:center">/dev</td>
+<td>Viene rellenado de archivos que representan los dispositivos de hardware y otros archivos especiales, tales como los archivos <code>/dev/null</code> y <code>/dev/zero</code></td>
+</tr>
+<tr>
+<td style="text-align:center">/etc</td>
+<td>Contiene los archivos de configuración de host esenciales, como los archivos <code>/etc/hosts</code> o <code>/etc/passwd</code></td>
+</tr>
+<tr>
+<td style="text-align:center">/home</td>
+<td>La ubicación de los directorios home de los usuarios</td>
+</tr>
+<tr>
+<td style="text-align:center">/lib</td>
+<td>Las librerías esenciales de soporte para los archivos ejecutables en los directorios <code>/bin</code> y <code>/sbin</code></td>
+</tr>
+<tr>
+<td style="text-align:center">/lib<qual></td>
+<td>Las librerías esenciales creadas para una arquitectura específica. Por ejemplo, el directorio <code>/lib64</code> para los procesadores de 64 bit AMD/Intel x86 compatibles</td>
+</tr>
+<tr>
+<td style="text-align:center">/media</td>
+<td>El punto de montaje para los medios extraíbles que se montan automáticamente</td>
+</tr>
+<tr>
+<td style="text-align:center">/mnt</td>
+<td>Un punto de montaje para montar temporalmente sistemas de archivos de manera manual</td>
+</tr>
+<tr>
+<td style="text-align:center">/opt</td>
+<td>Ubicación opcional de la instalación de software de terceros</td>
+</tr>
+<tr>
+<td style="text-align:center">/proc</td>
+<td>Un sistema de archivos virtual para que el kernel reporte procesos y otra información</td>
+</tr>
+<tr>
+<td style="text-align:center">/root</td>
+<td>El directorio inicial del <code>usuario root</code></td>
+</tr>
+<tr>
+<td style="text-align:center">/sbin</td>
+<td>Los binarios esenciales del sistema utilizados principalmente por el usuario root</td>
+</tr>
+<tr>
+<td style="text-align:center">/sys</td>
+<td>Un sistema de archivos virtual que contiene información acerca de los dispositivos de hardware conectados al sistema</td>
+</tr>
+<tr>
+<td style="text-align:center">/srv</td>
+<td>Ubicación donde los servicios específicos del sitio pueden estar alojados</td>
+</tr>
+<tr>
+<td style="text-align:center">/tmp</td>
+<td>Directorio en el que todos los usuarios tienen permiso para crear archivos temporales que deberían ser borrados durante el arranque (pero a menudo no es así)</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr</td>
+<td>La segunda jerarquía de archivos que no son esenciales para el uso de múltiples usuarios</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/local</td>
+<td>La tercera jerarquía de archivos para software que no sea originario de la distribución</td>
+</tr>
+<tr>
+<td style="text-align:center">/var</td>
+<td>La jerarquía <code>/var</code> contiene archivos que cambian durante el tiempo</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/cache</td>
+<td>Archivos utilizados para almacenar en caché, los datos de la aplicación</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log</td>
+<td>El directorio donde se ubica la mayoría de los archivos de registro</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/lock</td>
+<td>Ubicación para guardar los archivos de bloqueo de los recursos compartidos</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/spool</td>
+<td>Ubicación para almacenar los archivos spool de impresión y correo</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/tmp</td>
+<td>Los archivos temporales que se deben conservar entre los reinicios</td>
+</tr>
+</tbody>
+</table>
+<p><em>La segunda y la tercera jerarquía, que se encuentra bajo los directorios</em> <code>/usr</code> y <code>/usr/local</code>, <em>repiten el patrón de muchos de los directorios clave que se encuentran debajo de la primera jerarquía o el sistema de archivos root</em>. <em>La cuarta jerarquía</em>, el directorio <code>/var</code>, <em>también repite algunos de los directorios de primer nivel</em>, como <code>lib</code>, <code>opt</code> y <code>tmp</code>.</p>
+<p><em>Cuando el sistema de archivos root y su contenido se consideran esenciales o necesarios para arrancar el sistema</em>, los directorios <code>/var</code>, <code>/usr</code> y <code>/usr/local</code> no se consideran esenciales para el proceso de arranque. Como resultado, el sistema de archivos root y sus directorios pueden ser los únicos disponibles en ciertas situaciones, tales como arrancar en modo de usuario único, un entorno diseñado para la solución de problemas del sistema.</p>
+<h3 id="usr">/usr</h3>
+<p>El directorio <code>/usr</code> sirve para <em>contener software para su uso por varios usuarios</em>. El directorio <code>/usr</code> a veces se comparte a través de la red y se monta como de sólo lectura.</p>
+<table>
+<thead>
+<tr>
+<th>Directorio</th>
+<th>Propósito del Directorio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/usr/bin</td>
+<td>Los binarios para el usuario común, usados cuando el sistema está en modo multiusuario</td>
+</tr>
+<tr>
+<td>/usr/include</td>
+<td>Los archivos que se incluyen para compilar el software de distribución</td>
+</tr>
+<tr>
+<td>/usr/lib</td>
+<td>Las librerías de soporte para los archivos ejecutables en los directorios /usr/bin y /usr/sbin</td>
+</tr>
+<tr>
+<td>/usr/lib<qual></td>
+<td>Las librerías no esenciales creadas para una arquitectura específica</td>
+</tr>
+<tr>
+<td>/usr/libexec</td>
+<td>Los programas ejecutables utilizados por otros programas y no directamente por los usuarios</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>Los binarios del sistema para su uso por el administrador en modo multiusuario</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>Ubicación para almacenar documentación de software y otros datos de aplicación</td>
+</tr>
+<tr>
+<td>/usr/src</td>
+<td>El código fuente para compilar el kernel</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usrlocal">/usr/local</h3>
+<p>La jerarquía <code>/usr/local</code> sirve para la instalación del software que no se origina con la distribución. A menudo, este <em>directorio se utiliza para software que se complia a partir del código fuente</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Directorio</th>
+<th>Propósito del Directorio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/usr/local/bin</td>
+<td>Los binarios de software locales para el uso de un usuario ordinario</td>
+</tr>
+<tr>
+<td>/usr/local/etc</td>
+<td>Los archivos de configuración de software locales</td>
+</tr>
+<tr>
+<td>/usr/local/include</td>
+<td>Los archivos que necesitan ser incluidos con el fin de compilar el código fuente local</td>
+</tr>
+<tr>
+<td>/usr/local/lib</td>
+<td>Los archivos de la librería de soporte para los archivos ejecutables en los directorios /usr/local/bin y /usr/local/sbin</td>
+</tr>
+<tr>
+<td>/usr/local/libexec</td>
+<td>Los programas ejecutables utilizados por otros programas y no directamente por los usuarios</td>
+</tr>
+<tr>
+<td>/usr/local/sbin</td>
+<td>Los binarios locales para uso del administrador del sistema</td>
+</tr>
+<tr>
+<td>/usr/local/share</td>
+<td>Ubicación para almacenar las páginas man, páginas de información, y otra información de aplicaciones locales</td>
+</tr>
+<tr>
+<td>/usr/local/src</td>
+<td>La ubicación en la que menudo se coloca el código fuente de software para ser compilado localmente</td>
+</tr>
+</tbody>
+</table>
+<h3 id="la-organizaci%C3%B3n-dentro-de-la-jerarqu%C3%ADa-del-sistema-de-archivos">La Organización Dentro de la Jerarquía del Sistema de Archivos</h3>
+<p>Aunque el estándar FHS es útil para una comprensión detallada de la disposición de los directorios utilizados por la mayoría de las distribuciones de Linux, a continuación se ofrece una descripción más generalizada de la estructura de los directorios como realmente existen en una distribución típica de Linux.</p>
+<h4 id="los-directorios-home">Los Directorios Home</h4>
+<p>El directorio <code>/home</code> tendrá típicamente un directorio inferior para cada cuenta de usuario. Por ejemplo, el usuario bob normalmente tendrá su directorio home de <code>/home/bob</code>. Normalmente, sólo el usuario bob tendrá acceso a este directorio. Sin ser asignados permisos especiales en otros directorios, un usuario normalmente sólo puede crear archivos en su directorio <code>home</code>, en el directorio <code>/tmp</code> y el directorio <code>/var/tmp</code>.</p>
+<h4 id="los-directorios-binarios">Los Directorios Binarios</h4>
+<p>Los directorios binarios contienen programas que los usuarios y los administradores ejecutarán para iniciar los procesos o las aplicaciones del sistema. Los directorios binarios, que están destinados a ser utilizados por los usuarios <em>sin privilegios</em>, incluyen los directorios <code>/bin</code>, <code>/usr/bin</code> y <code>/usr/local/bin</code>. A veces el software de terceros también almacenará sus archivos ejecutables en los directorios, tales como <code>/usr/local/application/bin</code> y <code>/opt/application/bin</code>. Además, no es inusual que cada usuario tenga su propio directorio bin ubicado en su directorio home, tal como <code>/home/bob/bin</code>.</p>
+<p>Por otra parte, los directorios <code>sbin</code> están destinados principalmente a ser utilizados por el administrador del sistema (usuario root). Estos por lo general incluyen los directorios <code>/sbin</code>, <code>/usr/sbin</code> y <code>/usr/local/sbin</code>, aunque las aplicaciones administrativas de terceros también podrían utilizar directorios como <code>/usr/local/application/sbin</code> o <code>/opt/application/sbin</code>.</p>
+<p><em>Dependiendo de la distribución, la variable <code>PATH</code> puede no contener todos los directorios bin y sbin.</em> Con el fin de poder ejecutar un comando en uno de estos directorios, el directorio debe ser incluido en la lista de las variables PATH o el usuario tiene que especificar la ruta al comando, por ejemplo:<code>/sbin/ifconfig</code>.</p>
+<h4 id="los-directorios-de-las-aplicaciones-de-software">Los Directorios de las Aplicaciones de Software</h4>
+<p>Las aplicaciones de Linux pueden tener sus archivos en varios directorios repartidos a lo largo del sistema de archivos de Linux. Para las distribuciones <em>Debian</em>, puedes ejecutar la aplicación <code>dpkg -l</code> para obtener la lista de ubicación de los archivos. En las distribuciones de <em>Red Hat</em>, puedes ejecutar la aplicación <code>rpm -ql</code> para listar la de ubicación de los archivos que pertenecen a esa aplicación.</p>
+<p>Los archivos binarios de los programas ejecutables pueden ir en el directorio <code>/usr/bin</code>, si vienen incluidos en el sistema operativo, o de lo contrario pueden ir a los directorios <code>/usr/local/bin</code> o <code>/opt/application/bin</code> en caso de que procedan de un tercero.</p>
+<p>Los <strong>datos para la aplicación</strong> pueden ser almacenados en uno de los siguientes subdirectorios:</p>
+<ul>
+<li><code>/usr/share</code></li>
+<li><code>/usr/lib</code></li>
+<li><code>/opt/application</code></li>
+<li><code>/var/lib</code></li>
+</ul>
+<p>El <strong>archivo relacionado con la documentación</strong> se puede almacenar en uno de los siguientes subdirectorios:</p>
+<ul>
+<li><code>/usr/share/doc</code></li>
+<li><code>/usr/share/man</code></li>
+<li><code>/usr/share/info</code></li>
+</ul>
+<p>El <strong>archivo(s) de configuración global</strong> para una aplicación muy probablemente se almacene en un subdirectorio bajo el directorio <code>/etc</code>, mientras que los <strong>archivos de configuración personalizados</strong> (específicos para un usuario) para la aplicación están, probablemente, <em>en un subdirectorio oculto del directorio home del usuario</em>.</p>
+<h4 id="los-directorios-de-librer%C3%ADas">Los Directorios de Librerías</h4>
+<p>Las librerías son archivos que contienen código que se comparte entre varios programas. La mayoría de <em>los nombres de archivo de la librería terminan con una extensión de archivo <code>.so</code></em>, lo que significa objeto compartido (shared object).</p>
+<p>Puede haber varias versiones de una librería debido a que el código puede ser diferente dentro de cada archivo a pesar de que puede llevar a cabo funciones similares a las otras versiones de la librerías. Una de las razones por las que el código puede ser diferente, a pesar de que puede hacer lo mismo que otro archivo de la biblioteca, es que está compilado para ejecutarse en un tipo diferente de procesador. Por ejemplo, es habitual que los sistemas que utilizan un código diseñado para los procesadores de tipo Intel/AMD de 64 bits, tengan las dos bibliotecas, la de 32 bits y de 64 bits.</p>
+<p><strong>Las librerías que dan soporte a los programas binarios esenciales</strong> que se encuentran en los directorios <code>/bin</code> y <code>/sbin</code> típicamente se encuentran en <code>/lib</code> o <code>/lib64</code>.</p>
+<p>Para dar soporte a los ejecutables <code>/usr/bin</code> y <code>/usr/sbin</code>, normalmente se usan los directorios librerías <code>/usr/lib</code> y <code>/usr/lib64</code>.</p>
+<p>Para dar <em>soporte a las aplicaciones que no se distribuyen con el sistema operativo</em>, a menudo se utilizan los directorios librería <code>/usr/local/lib</code> y <code>/opt/application/lib</code>.</p>
+<h4 id="los-directorios-de-datos-variables">Los Directorios de Datos Variables</h4>
+<p>Los directorios <code>/var</code> y muchos de sus subdirectorios pueden contener datos que vayan a cambiar con frecuencia. Si el sistema se utiliza para correo electrónico, normalmente se utilizará <code>/var/mail</code> o <code>/var/spool/mail</code> para almacenar los datos de correo electrónico del usuario. Si vas a imprimir desde tu sistema, entonces el directorio <code>/var/spool/cups</code> se utilizará para almacenar temporalmente los trabajos de impresión.</p>
+<p>Dependiendo de los eventos que el sistema está registrando y la cantidad de actividad que hay en el sistema, se determinará el tamaño de tu archivo de registro. En un sistema ocupado, puede haber una considerable cantidad de datos en los archivos de registro. Estos archivos se almacenan en el directorio <code>/var/log</code>.</p>
+<p><em>Mientras que los archivos de registro pueden ser extremadamente útiles para solucionar los problemas, también pueden causar problemas. Una de las principales preocupaciones de todos estos directorios es que pueden llenar rápidamente el espacio del disco en un sistema activo. Si el directorio /var no es una partición separada, entonces el sistema de archivos root se podría llenar por completo y bloquear el sistema.</em></p>
+<h2 id="trucos">Trucos</h2>
+<p>Para generar archivos y carpetas con un patron</p>
+<pre class="hljs"><code><div>mkdir {2000..2020}-{1..9}
+</div></code></pre>
+<p>Creara carpertas con la nomeclatura 2000-1 hasta 2020-9, todas las combinaciones posibles</p>
+<h2 id="extras">Extras</h2>
+<p>Especificación de la estructura de archivos</p>
+<p>https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html</p>
+<h2 id="lista-de-comandos-que-aun-no-tienen-seccion">Lista de comandos que aun no tienen seccion</h2>
+<ul>
+<li><code>dd</code> : copiar particiones, discos, etc a nivel de <em>bits</em>
+<ul>
+<li><code>dd if=/dev/sda of=/dev/sdb</code> -- clonar un disco duro</li>
+</ul>
+</li>
+<li><code>which</code></li>
+<li><code>type</code> para conocer el tipo de un comando
+<ul>
+<li><code>type ls</code></li>
+</ul>
+</li>
+<li><code>nl</code> : regresa numero de lineas que contiene un archivo</li>
+</ul>
+
+</body>
+</html>

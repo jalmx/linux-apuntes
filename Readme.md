@@ -444,7 +444,7 @@ Si intentaras ver el contenido del archivo (enlace simbolico), éste seguiría e
 
 ```bash
 ln -s /etc/passwd mypasswd
-sysadmin@localhost:~$  ls -l mypasswd
+ ls -l mypasswd
 lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd
 ```
 
@@ -453,7 +453,7 @@ lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd
 ```bash
 ls -i file.original 
 278772 file.original
-sysadmin@localhost:~$ find / -inum 278772 2> /dev/null
+find / -inum 278772 2> /dev/null
 /home/sysadmin/file.hard.1
 /home/sysadmin/file.original
 ```
@@ -552,13 +552,13 @@ sysadmin@localhost:~/Documents$ ls
 En lista dentro de la carpeta que se pasa como argumento:
 
 ```bash
-sysadmin@localhost:~$ ls Documents
+ls Documents
 ```
 
 En lista dentro de las carpetas que se pasa como argumento:
 
 ```bash
-sysadmin@localhost:~$ ls /etc/ppp /etc/ssh
+ls /etc/ppp /etc/ssh
 ```
 
 **Flags**
@@ -576,7 +576,7 @@ ls -r #invierte el orden
 Fecha
 
 ```bash
-sysadmin@localhost:~$ date
+date
 Sun Nov  1 00:40:28 UTC 2015
 ```
 
@@ -585,7 +585,7 @@ Sun Nov  1 00:40:28 UTC 2015
 Calendario
 
 ```bash
-sysadmin@localhost:~$ cal
+cal
    November 2020
 Su Mo Tu We Th Fr Sa
  1  2  3  4  5  6  7
@@ -600,7 +600,7 @@ Su Mo Tu We Th Fr Sa
 Historial de comandos
 
 ```bash
-sysadmin@localhost:~$ history
+history
     1  date
     2  ls
     3  cal 5 2015
@@ -644,10 +644,10 @@ total 160
 El símbolo de ampersand doble `&&` actúa como un operador "y" lógico. Si el primer comando tiene éxito, entonces el segundo comando (a la derecha de la `&&`) también se ejecutará. Si el primer comando falla, entonces el segundo comando no se ejecutará.
 
 ```bash
-sysadmin@localhost:~$ ls /etc/xml && echo success
+ls /etc/xml && echo success
 catalog  catalog.old  xml-core.xml  xml-core.xml.old
 success
-sysadmin@localhost:~$ ls /etc/junk && echo success
+ls /etc/junk && echo success
 ls: cannot access /etc/junk: No such file or directory
 ```
 
@@ -657,9 +657,9 @@ La línea vertical doble `||` es un operador lógico "o".
 Con la línea vertical doble, si el primer comando se ejecuta con éxito, el segundo comando es omitido. Si el primer comando falla, entonces se ejecutará el segundo comando. En otras palabras, esencialmente estás diciendo al shell, "O bien ejecuta este primer comando o bien el segundo".
 
 ```bash
-sysadmin@localhost:~$ ls /etc/xml || echo failed
+ls /etc/xml || echo failed
 catalog  catalog.old  xml-core.xml  xml-core.xml.old
-sysadmin@localhost:~$ ls /etc/junk || echo failed
+ls /etc/junk || echo failed
 ls: cannot access /etc/junk: No such file or directory
 failed
 ```
@@ -709,8 +709,8 @@ alias mycal="cal 2014"
 ```
 
 ```bash
-sysadmin@localhost:~$ alias lh='ls -Shl'
-sysadmin@localhost:~$ lh /etc/ppp
+alias lh='ls -Shl'
+lh /etc/ppp
 total 0
 drwxr-xr-x 1 root root 10 Jan 29  2015 ip-down.d
 drwxr-xr-x 1 root root 10 Jan 29  2015 ip-up.d
@@ -725,20 +725,20 @@ drwxr-xr-x 1 root root 10 Jan 29  2015 ip-up.d
 | Corchetes     | [ ]     | `echo /etc/[gu]*` `echo /etc/[a-d]*` | Los corchetes se utilizan para coincidir con un carácter único representando un intervalo de caracteres que pueden coincidir con los caracteres. mostrará todos los archivos que comiencen con cualquier letra entre e incluyendo `a` y `d` |
 | Exclamación   | !       | `echo [!DP]*`                        | El signo de exclamación se utiliza en conjunto con los corchetes para negar un intervalo. Por ejemplo, el comando echo [!DP]\* mostrará cualquier archivo que no comienza con `D` o `P`.                                                    |
 
- `sysadmin@localhost:~$ echo /etc/*???????????????????? /etc/bindresvport.blacklist /etc/ca-certificates.conf `
+ `echo /etc/*???????????????????? /etc/bindresvport.blacklist /etc/ca-certificates.conf `
   - **\*** : 0 o más carácteres
   - **?** : 1 coincidencia
   - **[ ]** : coincide con el contenido
     - [gu] : coinciede con las letras _gu_
     - [a-d] : invertvalos
-      - `sysadmin@localhost:~$ echo /etc/[gu]* /etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf`
+      - `echo /etc/[gu]* /etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf`
   - **!** : negación
     - `echo [!DP]*`: que no comience con DP
   - **" "** : texto dentro de la comillas
     - `echo "hola"`
-    - `sysadmin@localhost:~$ echo "The path is $PATH" The path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
+    - `echo "The path is $PATH" The path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
   - **\\** : escapa carácteres
-    - `sysadmin@localhost:~$ echo The service costs \$100 and the path is $PATH The service costs $100 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
+    - `echo The service costs \$100 and the path is $PATH The service costs $100 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
   - **\` \`** : Las comillas invertidas se utilizan para especificar un comando dentro de un comando, un proceso de sustitución del comando. Esto permite un uso muy potente y sofisticado de los comandos.
     - sysadmin@localhost:~\$ echo Today is \`date\`
       Today is Mon Nov 2 03:40:04 UTC 2015`
@@ -752,9 +752,9 @@ Hay tres tipos de comillas que tienen significado especial para el shell Bash: c
 Las comillas dobles detendrán al shell de la interpretación de algunos metacaracteres, incluyendo los comodines. Dentro de las comillas dobles, el asterisco es sólo un asterisco, un signo de interrogación es sólo un signo de interrogación y así sucesivamente. Esto significa que cuando se utiliza el segundo comando `echo` más abajo, el shell BASH no convierte el patrón de globbing en nombres de archivos que coinciden con el patrón:
 
 ```bash
-sysadmin@localhost:~$ echo /etc/[dp]*
+echo /etc/[dp]*
 /etc/DIR_COLORS /etc/DIR_COLORS.256color /etc/DIR_COLORS.lightbgcolor /etc/PackageKit
-sysadmin@localhost:~$ echo "/etc/[DP]*"
+echo "/etc/[DP]*"
 /etc/[DP]*
 ```
 
@@ -763,9 +763,9 @@ sysadmin@localhost:~$ echo "/etc/[DP]*"
 Las comillas simples evitan que el shell interprete algunos caracteres especiales. Esto incluye comodines, variables, sustitución de comando y otro metacarácter que aún no hemos visto.
 
 ```bash
-sysadmin@localhost:~$ echo The car costs $100
+echo The car costs $100
 The car costs 00
-sysadmin@localhost:~$ echo 'The car costs $100'
+echo 'The car costs $100'
 The car costs $100
 ```
 
@@ -774,13 +774,13 @@ The car costs $100
 Si colocas una barra diagonal invertida \ antes del otro carácter, tratará al otro carácter como un carácter de "comillas simples". El tercer comando más abajo muestra cómo utilizar el carácter \, mientras que los otros dos muestran cómo las variables serían tratadas si las pones entre las comillas dobles y simples:
 
 ```bash
-sysadmin@localhost:~$ echo "The service costs $100 and the path is $PATH"
+echo "The service costs $100 and the path is $PATH"
 The service costs 00 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
-sysadmin@localhost:~$ echo 'The service costs $100 and the path is $PATH'
+echo 'The service costs $100 and the path is $PATH'
 The service costs $100 and the path is $PATH
 
-sysadmin@localhost:~$ echo The service costs \$100 and the path is $PATH
+echo The service costs \$100 and the path is $PATH
 The service costs $100 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 ```
 
@@ -789,12 +789,12 @@ The service costs $100 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/l
 Las comillas invertidas se utilizan para especificar un comando dentro de un comando, un proceso de sustitución del comando. Esto permite un uso muy potente y sofisticado de los comandos.
 
 ```bash
-sysadmin@localhost:~$ date
+date
 Mon Nov  2 03:35:50 UTC 2015
 ```
 
 ```bash
-sysadmin@localhost:~$ echo Today is `date`
+echo Today is `date`
 Today is Mon Nov 2 03:40:04 UTC 2015
 ```
 
@@ -880,7 +880,7 @@ Esto es útil para aprender el uso básico de un comando
 #### Encontrar archivos `whereis` `locate`
 
 ```bash
-sysadmin@localhost:~$  ps --help
+ ps --help
 ```
 
 #### Readme del sistema
@@ -896,12 +896,12 @@ El comando `whereis` está diseñado para encontrar de manera específica las p�
 Para encontrar cualquier archivo o directorio, puede utilizar el comando `locate`. Este comando buscará en una base de datos de todos los archivos y directorios que estaban en el sistema cuando se creó la base de datos. Por lo general, el comando que genera tal base de datos se ejecuta por la noche.
 
 ```bash
-sysadmin@localhost:~$ whereis ls
+whereis ls
 ls: /bin/ls /usr/share/man/man1/ls.1.gz
 ```
 
 ```bash
-sysadmin@localhost:~$ locate ls
+locate ls
 /bin/false
 /bin/ls
 /bin/lsblk
@@ -912,14 +912,14 @@ sysadmin@localhost:~$ locate ls
 Puede que quieras empezar listando **cuántos archivos coincidirán**. Lo puedes hacer mediante la opción `-c` del comando `locate`:
 
 ```bash
-sysadmin@localhost:~$ locate -c passwd
+locate -c passwd
 97
 ```
 
 **Para limitar la salida aún más, coloca un carácter** `\` delante del término de búsqueda. Este carácter limita la salida a los nombres de archivo que coincidan exactamente con el término:
 
 ```bash
-sysadmin@localhost:~$ locate -b "\passwd"
+locate -b "\passwd"
 /etc/passwd
 /etc/cron.daily/passwd
 /etc/pam.d/passwd
@@ -1549,16 +1549,17 @@ Es una colección de caracteres *«normales»* y *«especiales»* que se utiliza
 | Expresión Regular | Coincidencias                                                                                                                                                                                             |
 | :---------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |       **.**       | Cualquier carácter individual                                                                                                                                                                             |
-|      **[ ]**      | **Una lista o rango** de caracteres que coinciden con un carácter, a menos que el primer carácter sea el símbolo de intercalación ^, lo que entonces significa cualquier carácter que no esté en la lista |
+|      **[  ]**      | **Una lista o rango** de caracteres que coinciden con un carácter, a menos que el primer carácter sea el símbolo de intercalación ^, lo que entonces significa cualquier carácter que no esté en la lista |
 |      **\***       | ***El carácter previo* que se repite cero o más veces**                                                                                                                                                   |
 |       **^**       | **El texto siguiente** debe aparecer al **principio de la línea**                                                                                                                                         |
 |       **$**       | **El texto anterior** debe aparecer al **final de la línea**                                                                                                                                              |
+**[^]**|	Cualquier carácter que no es el carácter especificado
 
 Coincide el patron porque busca que comience con `a` y los `..` indica que hay 2 caracteres más cual sea
 
 ```bash
 echo abcddd > example
-sysadmin@localhost:~$ grep --color 'a..' example
+grep --color 'a..' example
 `abc`ddd
 ```
 
@@ -1574,6 +1575,13 @@ Busca el patron donde primero exista cualquier letra que no este en rango `a` a 
 ```bash
 grep --color '[^abc]d' example.txt
 abc`dd`d
+```
+
+Busca las lineas que comiencen con la palabra `root`
+
+```bash
+grep '^root' /etc/passwd
+`root`:x:0:0:root:/root:/bin/bash
 ```
 
 Busca que contenga la letra `d` seguido de ningun o mas del mismo caracter
@@ -1614,32 +1622,72 @@ xyzab`c`
 ab`cd`*
 ```
 
-Si queremos seleccionar con el `*` en la busqueda, se debe escapar el caracter
+Si queremos seleccionar con el `*` en la busqueda, se debe escapar el caracter con backslash
 
 ```bash
 grep "cd\*" example
 ab`cd*`
 ```
 
- El patrón r..f encontrará cualquier línea que contenga la letra r seguida de exactamente dos caracteres (que pueden ser cualquier carácter excepto el de nueva línea) y luego la letra f:
+El carácter de expresión regular `*` se utiliza para indicar la ausencia o la presencia una o más veces del carácter o patrón que lo precede. Por ejemplo, `e*` *indicaría la ausencia (cero) o la presencia, una o más veces, de la letra e*:
+
+```bash
+grep 're*d' red.txt
+`red`
+`reeed`
+`rd`
+`reed`
+```
+
+El patrón r..f encontrará cualquier línea que contenga la letra r seguida de exactamente dos caracteres (que pueden ser cualquier carácter excepto el de nueva línea) y luego la letra f:
 
 ```bash
 grep 'r..f' red.txt
-reef
-roof
+`reef`
+`roof`
 ```
 
 Este carácter se puede utilizar tantas veces como se desee. Para encontrar todas las palabras de al menos cuatro caracteres se puede utilizar el siguiente patrón:
 
 ```bash
-sysadmin@localhost:~/Documents$ grep '....' red.txt
-reef
-reeed
-roof
-reed
-root
-reel
-read
+grep '....' red.txt
+`reef`
+`reee`d
+`roof`
+`reed`
+`root`
+`reel`
+`read`
+```
+
+Para encontrar todas las líneas en el archivo profile.txt que contienen un número, utilice el patrón [0123456789] o [0-9]:
+
+```bash
+grep '[0-9]' profile.txt
+I am `37` years old.
+`3121991`
+I have `2` dogs.
+`123456789101112`
+```
+
+Para encontrar todas las líneas que contienen caracteres no numéricos, inserte un `^` como primer carácter dentro de los corchetes. Esta expresión se refiere a líneas que contienen no-números (caracteres no numéricos). Este carácter niega los caracteres que lo siguen:
+
+```bash
+grep '[^0-9]' profile.txt
+`Hello my name is Joe.`
+`I am` 37 `years old.`
+`My favorite food is avocados.`
+`I have` 2 `dogs.`
+```
+
+Cuando otros caracteres de expresión regular se colocan dentro de corchetes, se tratan como caracteres literales. Por ejemplo, el carácter . normalmente indica cualquier carácter. Pero `si se coloca dentro de corchetes simplemente se referirá al carácter . (punto)`. En el siguiente ejemplo, sólo las líneas que contienen el carácter `.` se mostrarán en el resultado.
+
+```bash
+grep '[.]' profile.txt
+Hello my name is Joe`.`
+I am 37 years old`.`
+My favorite food is avocados`.`
+I have 2 dogs`.`
 ```
 
 ### Expresiones regulares Extendidas
@@ -1650,6 +1698,8 @@ Para aplicar las expresiones extendidas se aplica la opcion `-E`
 | **?**  | Coincide con el carácter anterior cero o una vez más, así que es un carácter opcional |
 | **+**  | Coincide con el carácter anterior repetido una o más veces                            |
 | **\|** | Alternación o como un operador lógico                                                 |
+**{ }**	|Especificar mínimo, máximo, o coincidencias exactas en el patrón anterior
+**( )**	|Se usa para crear grupos
 
 Haz coincidir `colo` seguido por cero o un carácter `u`
 
@@ -2651,6 +2701,19 @@ Los directorios `/var` y muchos de sus subdirectorios pueden contener datos que 
 Dependiendo de los eventos que el sistema está registrando y la cantidad de actividad que hay en el sistema, se determinará el tamaño de tu archivo de registro. En un sistema ocupado, puede haber una considerable cantidad de datos en los archivos de registro. Estos archivos se almacenan en el directorio `/var/log`.
 
 *Mientras que los archivos de registro pueden ser extremadamente útiles para solucionar los problemas, también pueden causar problemas. Una de las principales preocupaciones de todos estos directorios es que pueden llenar rápidamente el espacio del disco en un sistema activo. Si el directorio /var no es una partición separada, entonces el sistema de archivos root se podría llenar por completo y bloquear el sistema.*
+
+
+## Apagar - Comando `shutdown`
+
+El comando `shutdown` prepara el sistema para un apagado seguro. Todos los usuarios que han iniciado una sesión reciben la notificación de que el sistema se está apagando y se evitan nuevos inicios de sesión en los cinco minutos previos al apagado completo del sistema.
+
+```bash
+shutdown [OPCIONES] HORA [MENSAJE]
+```
+
+- `shutdown now` Apagar ahora
+- `shutdown 01:51` Apagar a la hh:mm
+- `shutdown +1 "Goodbye World!"` Apagar en +min "mensaje"
 
 ## Trucos
 
